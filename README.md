@@ -25,7 +25,57 @@
 ```
 ## Примеры использования
 ### Создание платежа
+```php
+<?php
+// нам надо оплатить пару товаров или услуг
+$product1 = new Product([
+	'name'  => 'Синий Мяч',
+	'sku'  => 'ball-05',
+	'unitPrice'  => '500',
+	'quantity'  => '1',
+	'vat'  => '20',
+]);
 
+$product2 = new Product([
+	'name'  => 'Жёлтый Круг',
+	'sku'  => 'toy-15',
+	'unitPrice'  => '1600',
+	'quantity'  => '3',
+	'vat'  => '12',
+]);
+
+// опишем биллинговую информацию
+$billing = (new Billing)
+	->setCountryCode('RU')
+	->setCity('Москва')
+	->setState('Центральный регион')
+	->setFirstName('Иван')
+	->setLastName('Петров')
+	->setPhone('+79670660742')
+	->setEmail('test@payu.ru');
+
+// создадим клиента
+$client = (new Client)
+	->setBilling($billing)
+	->setCurrentClientIp()
+	->setCurrentClientTime();
+
+// создадим тестовый платёж
+$payment = (new Payment)
+	->setCurrency('RUB')
+	->addProduct($product1)
+	->addProduct($product2)
+	->setAuthorization(new Authorization('CCVISAMC',true))
+	->setMerchantPaymentReference('primer_nomer__' . rand(1,999))
+	->setReturnUrl('http://127.0.0.1:8080/?function=returnPage')
+	->setClient($client);
+
+$paymentRequest = new PaymentsApiRequest();
+$responseData = $paymentRequest->sendRequest($payment, $merchant);
+
+$responseData = json_decode((string) $responseData["response"], true);
+echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a>';
+```
 ### Страница пользователя после совершения платежа
 
 ### Приём информации о состоянии платежа (webhook)
