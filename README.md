@@ -35,4 +35,5 @@
 
 -------------
 ![](https://www.nco-payu.ru/media/images/global/payu@2x.png)
+ 
 [PayU.ru](https://PayU.ru/ "Платёжная система для сайтов и не только")
