@@ -4,8 +4,9 @@
 [TOC]
 
 ## Ссылки
-- ['Докуметация по API'](https://dev.payu.ru/ru/documents/apiv4/)
-- ['Основной сайт PayU Россия'](https://payu.ru/)
+- [Докуметация по API](https://dev.payu.ru/ru/documents/apiv4/)
+- [Основной сайт PayU Россия](https://payu.ru/)
+- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 
 ## Установка
 ### Composer
