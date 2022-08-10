@@ -1,10 +1,11 @@
 # php-payu4
-Примеры использования PayU v4
+Примеры использования PayU API v4
 
 [TOC]
 
-## Докуметация по API
-- https://dev.payu.ru/ru/documents/apiv4/
+## Ссылки
+- ['Докуметация по API'](https://dev.payu.ru/ru/documents/apiv4/)
+- ['Основной сайт PayU Россия'](https://payu.ru/)
 
 ## Установка
 ### Composer
