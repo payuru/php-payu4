@@ -7,7 +7,6 @@ interface ProductInterface
     /**
      * Создание Продукта из массива параметров
      * @param array $params параметры товара
-     * @throws PaymentException Ошибка оплаты
      */
     public function __construct(array $params);
 
