@@ -19,6 +19,8 @@ class PaymentsApiRequest
         $encodedJsonData = $payment->jsonSerialize();
         $encodedJsonDataHash = md5($encodedJsonData);
 
+        echo "<pre>" . print_r($encodedJsonData, true) . "</pre>";
+
         $curl = curl_init();
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
         $urlToPostTo = self::HOST . self::AUTHORIZE_API;

@@ -4,7 +4,7 @@ namespace payuru\phpPayu4;
 
 use JsonSerializable;
 
-class Capture implements CaptureInterface, JsonSerializable, TransactionInterface
+class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 {
     /**
      * Использование режима отладки (вывод системных сообщений)
@@ -59,7 +59,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
-    public function setPayuPaymentReference(string $paymentIdString): CaptureInterface
+    public function setPayuPaymentReference(string $paymentIdString): RefundInterface
     {
         $this->payuPaymentReference = $paymentIdString;
 
@@ -71,7 +71,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this->payuPaymentReference;
     }
 
-    public function setOriginalAmount(float $originalAmount): CaptureInterface
+    public function setOriginalAmount(float $originalAmount): RefundInterface
     {
         $this->originalAmount = $originalAmount;
 
@@ -83,7 +83,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this->originalAmount;
     }
 
-    public function setAmount(float $amount): CaptureInterface
+    public function setAmount(float $amount): RefundInterface
     {
         if ($amount > $this->originalAmount) {
             throw new PaymentException('Списываемая сумма не должна быть больше суммы авторизации');
@@ -98,7 +98,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this->amount;
     }
 
-    public function setCurrency(string $currency): CaptureInterface
+    public function setCurrency(string $currency): RefundInterface
     {
         // TODO: Implement Currency check method (in Currency Class).
         // TODO: Create Class Currency, pass Currency object to the constructors... (Payment, Capture and Refund Classes)

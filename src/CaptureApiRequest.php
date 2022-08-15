@@ -10,7 +10,7 @@ use DateTimeInterface;
  */
 class CaptureApiRequest
 {
-    const AUTHORIZE_API = '/api/v4/payments/capture';
+    const AUTHORIZE_API = '/api/v4/payments/refund';
     const HOST = 'https://sandbox.payu.ru';
 
 //    public function sendRequest(array $data, $merchantCode, $secret): array

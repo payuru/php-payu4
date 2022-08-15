@@ -2,7 +2,7 @@
 //TODO: CaptureInterface и PaymentInterface и RefundInterface имеют много общих методов, реорганизовать интерфейсы
 namespace payuru\phpPayu4;
 
-interface CaptureInterface
+interface RefundInterface
 {
     /**
      * Переключить режим отладки

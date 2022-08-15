@@ -197,7 +197,6 @@ class Product implements ProductInterface
             'sku'               => $this->getSku(),
             'unitPrice'         => $this->getUnitPrice(),
             'quantity'          => $this->getQuantity(),
-            'amount'            => $this->getAmount(),
             'additionalDetails' => $this->getAdditionalDetails(),
             'vat'               => $this->getVat(),
         ];
