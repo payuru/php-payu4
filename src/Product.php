@@ -44,32 +44,28 @@ class Product implements ProductInterface
     private string $additionalDetails;
 
     /**
-     * @var array Необходимые параметры Продукта
-     */
-    private array $neededParams = [
-        'name'          =>  'Наименование',
-        'sku'           =>  'Артикул, либо идентификатор',
-        'unitPrice'     =>  'Цена за 1 штуку',
-        'quantity'      =>  'Количество',
-        'vat'           =>  'СтавкаНДС',
-    ];
-
-    /**
      * @inheritDoc
-     * @throws PaymentException Ошибка оплаты
      */
     public function __construct(array $params)
     {
-        foreach ($this->neededParams as $variableName => $help) {
-            if (!isset($params[$variableName])) {
-                throw new PaymentException('В продукте не хватает параметра: ' . $help . '( ' . $variableName . ' )');
-            }
+        if ($params['name']) {
+            $this->setName($params['name']);
         }
-
-        $this->setName($params['name']);
-        $this->setSku($params['sku']);
-        $this->setUnitPrice($params['unitPrice']);
-        $this->setQuantity($params['quantity']);
+        if ($params['sku']) {
+            $this->setSku($params['sku']);
+        }
+        if ($params['unitPrice']) {
+            $this->setUnitPrice($params['unitPrice']);
+        }
+        if ($params['quantity']) {
+            $this->setQuantity($params['quantity']);
+        }
+        if ($params['vat']) {
+            $this->setVat($params['vat']);
+        }
+        if ($params['amount']) {
+            $this->setAmount($params['amount']);
+        }
     }
     /**
      * @inheritDoc
@@ -201,7 +197,6 @@ class Product implements ProductInterface
             'sku'               => $this->getSku(),
             'unitPrice'         => $this->getUnitPrice(),
             'quantity'          => $this->getQuantity(),
-            'amount'            => $this->getAmount(),
             'additionalDetails' => $this->getAdditionalDetails(),
             'vat'               => $this->getVat(),
         ];
