@@ -59,6 +59,9 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setPayuPaymentReference(string $paymentIdString): CaptureInterface
     {
         $this->payuPaymentReference = $paymentIdString;
@@ -66,11 +69,17 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPayuPaymentReference(): string
     {
         return $this->payuPaymentReference;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setOriginalAmount(float $originalAmount): CaptureInterface
     {
         $this->originalAmount = $originalAmount;
@@ -78,11 +87,17 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getOriginalAmount(): float
     {
         return $this->originalAmount;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setAmount(float $amount): CaptureInterface
     {
         if ($amount > $this->originalAmount) {
@@ -93,11 +108,17 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setCurrency(string $currency): CaptureInterface
     {
         // TODO: Implement Currency check method (in Currency Class).
@@ -107,11 +128,17 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров

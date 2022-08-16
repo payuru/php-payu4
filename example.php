@@ -88,7 +88,7 @@ if(isset($_GET['function'])){
             case 'paymentCapture':
                 // списание денег
                 // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response
-                $payuPaymentReference = 2308246;
+                $payuPaymentReference = 2297597;
 
                 // Cумма исходной операции на авторизацию
                 $originalAmount = 5300;
@@ -112,10 +112,10 @@ if(isset($_GET['function'])){
             case 'paymentGetStatus':
                 // списание денег
                 // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response
-                $merchantPaymentReference = 'primer_nomer__156';
+                $merchantPaymentReference = 'primer_nomer__184';
 
                 $apiRequest = new ApiRequest($merchant);
-                $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference, $merchant);
+                $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
                 echo '<pre>' . print_r($responseData, true) . '</pre>';
 
                 break;
@@ -126,7 +126,7 @@ if(isset($_GET['function'])){
                 //инициировать возврат
 
                 // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response
-                $payuPaymentReference = 2308246;
+                $payuPaymentReference = 2297597;
 
                 // Cумма исходной операции на авторизацию
                 $originalAmount = 3700;

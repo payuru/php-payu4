@@ -23,7 +23,6 @@ class ApiRequest
         $this->merchant = $merchant;
     }
 
-    //public function sendRequest(): array
     private function sendGetRequest(string $api): array
     {
         $curl = curl_init();
@@ -31,29 +30,7 @@ class ApiRequest
         $urlToPostTo = self::HOST . $api;
         $requestHttpVerb = 'GET';
 
-        echo "<pre>" . print_r([
-                CURLOPT_URL => $urlToPostTo,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => $requestHttpVerb,
-                CURLOPT_HTTPHEADER => [
-                    'Accept: application/json',
-                    'Content-Type: application/json',
-                    'X-Header-Date: ' . $date,
-                    'X-Header-Merchant: ' . $this->merchant->getCode(),
-                    'X-Header-Signature:' . $this->getSignature(
-                        $this->merchant,
-                        $date,
-                        $urlToPostTo,
-                        $requestHttpVerb
-                    )
-                ]
-            ], true) . "</pre>";
-
-        curl_setopt_array($curl, [
+        $setopt_array = [
             CURLOPT_URL => $urlToPostTo,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -61,7 +38,6 @@ class ApiRequest
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $requestHttpVerb,
-            CURLOPT_POSTFIELDS => $encodedJsonData,
             CURLOPT_HTTPHEADER => [
                 'Accept: application/json',
                 'Content-Type: application/json',
@@ -72,10 +48,12 @@ class ApiRequest
                     $date,
                     $urlToPostTo,
                     $requestHttpVerb,
-                    $encodedJsonDataHash,
+                    md5(''),
                 )
             ]
-        ]);
+        ];
+
+        curl_setopt_array($curl, $setopt_array);
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
@@ -138,15 +116,19 @@ class ApiRequest
         return $this->sendPostRequest($refund, self::REFUND_API);
     }
 
-    public function sendStatusRequest(string $payuPaymentReference): array
+    public function sendStatusRequest(string $merchantPaymentReference): array
     {
-        return $this->sendGetRequest(self::STATUS_API . '/' . $payuPaymentReference);
+        return $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference);
     }
-//    private function getSignature($merchantCode, $secret, $date, $url, $httpMethod, $bodyHash): string
-    private function getSignature(MerchantInterface $merchant, $date, $url, $httpMethod, $bodyHash = ''): string
+
+    private function getSignature(MerchantInterface $merchant, $date, $url, $httpMethod, $bodyHash): string
     {
         $urlParts = parse_url($url);
-        $urlHashableParts = $httpMethod . $urlParts['path'] . $urlParts['query'];
+        $urlHashableParts = $httpMethod . $urlParts['path'];
+
+        if (isset($urlParts['query'])) {
+            $urlHashableParts .= $urlParts['query'];
+        }
         $hashableString = $merchant->getCode() . $date . $urlHashableParts . $bodyHash;
 
         return hash_hmac('sha256', $hashableString, $merchant->getSecret());
