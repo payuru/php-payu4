@@ -19,11 +19,11 @@ interface CardDetailsInterface
 
     /**
      * Установить Месяц прекращения действия Карты
-     * @param int $month Месяц прекращения действия Карты
+     * @param int $expiryMonth Месяц прекращения действия Карты
      * @return $this
      * @throws PaymentException
      */
-    public function setExpiryMonth(int $month) : self;
+    public function setExpiryMonth(int $expiryMonth) : self;
 
     /**
      * Получить Месяц прекращения действия Карты
@@ -33,11 +33,11 @@ interface CardDetailsInterface
 
     /**
      * Установить Год прекращения действия Карты
-     * @param int $year Год прекращения действия Карты
+     * @param int $expiryYear Год прекращения действия Карты
      * @return $this
      * @throws PaymentException
      */
-    public function setExpiryYear(int $year) : self;
+    public function setExpiryYear(int $expiryYear) : self;
 
     /**
      * Получить Год прекращения действия Карты
@@ -47,16 +47,16 @@ interface CardDetailsInterface
 
     /**
      * Установить CVV Карты
-     * @param int $code CVV Карты
+     * @param int $cvv CVV Карты
      * @return $this
      */
-    public function setCvv(int $code) : self;
+    public function setCvv(int $cvv) : self;
 
     /**
      * Получить CVV Карты
      * @return int CVV Карты
      */
-    public function fetCvv() : int;
+    public function getCvv() : int;
 
     /**
      * Установить Имя Владельца Карты
@@ -96,4 +96,56 @@ interface CardDetailsInterface
      * @return int Время набора Имени Владельца Карты (сек)
      */
     public function getTimeSpentTypingOwner() : int;
+
+    /**
+     * Установить BIN (Bank Identification Number)
+     * @param int $bin BIN (Bank Identification Number)
+     * @return $this
+     */
+    public function setBin(int $bin) : self;
+
+    /**
+     * Получить BIN (Bank Identification Number)
+     * @return int BIN (Bank Identification Number)
+     */
+    public function getBin() : int;
+
+    /**
+     * Установить PAN (Permanent Account Number)
+     * @param string $pan PAN (Permanent Account Number)
+     * @return $this
+     */
+    public function setPan(string $pan) : self;
+
+    /**
+     * Получить PAN (Permanent Account Number)
+     * @return string PAN (Permanent Account Number)
+     */
+    public function getPan() : string;
+
+    /**
+     * Установить Тип Карты (например, Visa, MIR)
+     * @param string $type Тип Карты
+     * @return $this
+     */
+    public function setType(string $type) : self;
+
+    /**
+     * Получить Тип Карты (например, Visa, MIR)
+     * @return string Тип Карты
+     */
+    public function getType() : string;
+
+    /**
+     * Установить Банк, выпустивший карту
+     * @param string $cardIssuerBank Банк, выпустивший карту
+     * @return $this
+     */
+    public function setCardIssuerBank(string $cardIssuerBank) : self;
+
+    /**
+     * Получить Банк, выпустивший карту
+     * @return string Банк, выпустивший карту
+     */
+    public function getCardIssuerBank() : string;
 }

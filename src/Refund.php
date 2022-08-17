@@ -4,6 +4,9 @@ namespace payuru\phpPayu4;
 
 use JsonSerializable;
 
+/**
+ * Запрос на возврат средств
+ */
 class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 {
     /**

@@ -2,6 +2,9 @@
 
 namespace payuru\phpPayu4;
 
+/**
+ * Мерчант
+ */
 class Merchant implements MerchantInterface
 {
     /**

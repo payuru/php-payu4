@@ -22,11 +22,12 @@ use payuru\phpPayu4\Refund;
 
 // TODO: нужен публичный тестовый мерчант, которого можно включить в документацию
 // Создадим тестового мерчанта
-$merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
+//$merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
+$merchant = new Merchant('CC1', 'SECRET_KEY');
+//ePayment Code: и Secret
 
 if(isset($_GET['function'])){
     try {
-        //TODO: надо реально создать эти функции в классе PaymentsApiRequest
         switch ($_GET['function']) {
             case 'getPaymentLink':
                 // получение ссылки на оплату заказа

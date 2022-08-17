@@ -5,6 +5,9 @@ namespace payuru\phpPayu4;
 
 use JsonSerializable;
 
+/**
+ * Платеж
+ */
 class Payment implements PaymentInterface, JsonSerializable
 {
     /**
@@ -20,40 +23,26 @@ class Payment implements PaymentInterface, JsonSerializable
      */
     private bool $sandboxMode = false;
 
-    /**
-     * @var string Идентификатор платежа
-     */
+    /** @var string Идентификатор платежа у Мерчанта */
     private string $merchantPaymentReference;
 
-    /**
-     * @var string код валюты
-     */
+    /** @var string код валюты */
     private string $currency = 'RUB';
 
-    /**
-     * @var string URL страницы после оплаты
-     */
+    /** @var string URL страницы после оплаты */
     private string $returnUrl;
 
-    /**
-     * @var AuthorizationInterface Авторизация
-     */
+    /** @var AuthorizationInterface Авторизация */
     private AuthorizationInterface $authorization;
 
-    /**
-     * @var ClientInterface Клиент
-     */
+    /** @var ClientInterface Клиент */
     private ClientInterface $client;
 
-    /**
-     * @var Product[] Массив продуктов
-     */
+    /** @var Product[] Массив продуктов */
     private array $products;
 
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setDebugMode(bool $isOn) : self
     {
         $this->debugMode = $isOn;
@@ -61,9 +50,7 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setSandboxMode(bool $isOn) : self
     {
         $this->sandboxMode = $isOn;
@@ -71,9 +58,7 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setMerchantPaymentReference(string $paymentIdString) : self
     {
         $this->merchantPaymentReference = $paymentIdString;
@@ -81,17 +66,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getMerchantPaymentReference() : string
     {
         return $this->merchantPaymentReference;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setCurrency(string $currency) : self
     {
         // TODO: Implement Currency check method.
@@ -100,17 +81,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setReturnUrl(string $returnUrl) : self
     {
         $this->returnUrl = $returnUrl;
@@ -118,17 +95,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getReturnUrl(): string
     {
         return  $this->returnUrl;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setAuthorization(AuthorizationInterface $authorization) : self
     {
         $this->authorization = $authorization;
@@ -136,17 +109,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getAuthorization() : AuthorizationInterface
     {
         return $this->authorization;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setClient(ClientInterface $client) : self
     {
         $this->client = $client;
@@ -154,17 +123,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getClient(): ClientInterface
     {
         return $this->client;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function addProduct(ProductInterface $product) : self
     {
         $this->products[] = $product;
@@ -172,17 +137,13 @@ class Payment implements PaymentInterface, JsonSerializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getProducts(): array
     {
         return $this->products;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getProductsArray(): array
     {
         $productsArray = [];
@@ -193,9 +154,7 @@ class Payment implements PaymentInterface, JsonSerializable
         return $productsArray;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
