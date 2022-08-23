@@ -12,66 +12,66 @@ interface ProductInterface
 
     /**
      * Установить Наименование
-     * @param string $name
+     * @param string $name Наименование
      * @return $this
      */
     public function setName(string $name) : self;
 
     /**
      * Получить Наименование
-     * @return string
+     * @return string Наименование
      */
     public function getName() : string;
 
     /**
      * Установить Артикул, либо идентификатор
-     * @param string $name
+     * @param string $sku Артикул, либо идентификатор
      * @return $this
      */
-    public function setSku(string $name) : self;
+    public function setSku(string $sku) : self;
 
     /**
      * Получить Артикул, либо идентификатор
-     * @return string
+     * @return string Артикул, либо идентификатор
      */
     public function getSku() : string;
 
     /**
      * Установить Цена за 1 штуку
      * @param float $unitPrice
-     * @return $this
+     * @return $this Цена за 1 штуку
      */
     public function setUnitPrice(float $unitPrice) : self;
 
     /**
      * Получить Цена за 1 штуку
-     * @return float
+     * @return float Цена за 1 штуку
      */
     public function getUnitPrice() : float;
 
     /**
      * Установить Количество
-     * @param int $quantity
+     * @param int $quantity Количество
      * @return $this
      */
     public function setQuantity(int $quantity) : self;
 
     /**
      * Получить Количество
-     * @return int
+     * @return int Количество
      */
     public function getQuantity() : int;
 
     /**
      * Установить Ставка НДС, по-умолчанию 20
-     * @param int $vat
+     * @param int $vat Ставка НДС, по-умолчанию 20
      * @return $this
      */
     public function setVat(int $vat) : self;
 
     /**
      * Получить Ставка НДС, по-умолчанию 20
-     * @return int
+     * @return int Ставка НДС, по-умолчанию 20
      */
     public function getVat() : int;
 
@@ -92,19 +92,20 @@ interface ProductInterface
 
     /**
      * Установить Любые доп. сведения
-     * @param string $additionalDetails
+     * @param string $additionalDetails Любые доп. сведения
      * @return $this
      */
     public function setAdditionalDetails(string $additionalDetails) : self;
 
     /**
      * Получить Любые доп. сведения
-     * @return null|string
+     * @return null|string Любые доп. сведения
      */
     public function getAdditionalDetails() : ?string;
 
     /**
-     * @return array получить Продукт в виде массива
+     * Получить Продукт в виде массива
+     * @return array Продукт в виде массива
      */
     public function arraySerialize(): array;
 }

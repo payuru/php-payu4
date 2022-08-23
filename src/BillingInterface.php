@@ -104,9 +104,9 @@ interface BillingInterface
 
     /**
      * Получить Название Компании
-     * @return string
+     * @return null|string
      */
-    public function getCompanyName() : string;
+    public function getCompanyName() : ?string;
 
     /**
      * Установить ИНН
@@ -117,9 +117,9 @@ interface BillingInterface
 
     /**
      * Получить ИНН
-     * @return string
+     * @return null|string
      */
-    public function getTaxId() : string;
+    public function getTaxId() : ?string;
 
     /**
      * Установить Адрес - строка 1
@@ -130,9 +130,9 @@ interface BillingInterface
 
     /**
      * Получить Адрес - строка 1
-     * @return string
+     * @return null|string
      */
-    public function getAddressLine1() : string;
+    public function getAddressLine1() : ?string;
 
     /**
      * Установить Адрес - строка 2
@@ -143,9 +143,9 @@ interface BillingInterface
 
     /**
      * Получить Адрес - строка 2
-     * @return string
+     * @return null|string
      */
-    public function getAddressLine2() : string;
+    public function getAddressLine2() : ?string;
 
     /**
      * Установить Почтовый Индекс
@@ -156,7 +156,20 @@ interface BillingInterface
 
     /**
      * Получить Почтовый Индекс
-     * @return string
+     * @return null|string
      */
-    public function getZipCode() : string;
+    public function getZipCode() : ?string;
+
+    /**
+     * Установить Удостоверение Личности
+     * @param IdentityDocumentInterface $identityDocument Удостоверение Личности
+     * @return $this
+     */
+    public function setIdentityDocument(IdentityDocumentInterface $identityDocument): self;
+
+    /**
+     * Получить Удостоверение Личности
+     * @return null|IdentityDocumentInterface Удостоверение Личности
+     */
+    public function getIdentityDocument(): ?IdentityDocumentInterface;
 }

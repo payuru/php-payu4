@@ -3,26 +3,14 @@
 namespace payuru\phpPayu4;
 
 
-use JsonSerializable;
+use \JsonSerializable;
+use payuru\phpPayu4\Std;
 
 /**
  * Платеж
  */
-class Payment implements PaymentInterface, JsonSerializable
+class Payment implements PaymentInterface, JsonSerializable, TransactionInterface
 {
-    /**
-     * Использование режима отладки (вывод системных сообщений)
-     * @var bool Использовать режим отладки?
-     */
-    private bool $debugMode = false;
-
-    /**
-     * Использование тестовый сервер Sandbox.PayU.ru
-     * Переключение между Sandbox.PayU.ru и Secure.PayU.ru
-     * @var bool Использовать тестовый сервер Sandbox.PayU.ru?
-     */
-    private bool $sandboxMode = false;
-
     /** @var string Идентификатор платежа у Мерчанта */
     private string $merchantPaymentReference;
 
@@ -40,23 +28,6 @@ class Payment implements PaymentInterface, JsonSerializable
 
     /** @var Product[] Массив продуктов */
     private array $products;
-
-
-    /** @inheritDoc */
-    public function setDebugMode(bool $isOn) : self
-    {
-        $this->debugMode = $isOn;
-
-        return $this;
-    }
-
-    /** @inheritDoc */
-    public function setSandboxMode(bool $isOn) : self
-    {
-        $this->sandboxMode = $isOn;
-
-        return $this;
-    }
 
     /** @inheritDoc */
     public function setMerchantPaymentReference(string $paymentIdString) : self
@@ -166,6 +137,8 @@ class Payment implements PaymentInterface, JsonSerializable
             'client' => $this->getClient()->arraySerialize(),
             'products' => $this->getProductsArray(),
         ];
+
+        $requestData = Std::removeNullValues($requestData);
 
         return json_encode($requestData, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }

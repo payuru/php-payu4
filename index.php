@@ -3,7 +3,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-//TODO: сложный пример, заменить его на простую проверку автозагрузчика Composer vendor/autoload и include файлов
+// Эта фукнция подключает клас
 spl_autoload_register(function ($className) {
     $className = explode('\\', $className);
     $className =  end($className);

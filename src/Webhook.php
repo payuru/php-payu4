@@ -1,7 +1,10 @@
 <?php
 
 namespace payuru\phpPayu4;
-
+/**
+ * Принятие информации о запросе на стороне мерчанта
+ * https://secure.payu.ru/docs/#tag/Webhooks/paths/~1merchant-ipn-url/post
+ */
 class Webhook implements WebhookInterface
 {
     /** @var PaymentResultInterface Результат Платежа */
@@ -45,20 +48,50 @@ class Webhook implements WebhookInterface
         $this->paymentResult->setAuthCode((int) $request['paymentResult']['authCode']);
         $this->paymentResult->setMerchantId($request['paymentResult']['merchantId']);
 
-        if (isset($request['paymentResult']['rrn'])) {
-            $this->paymentResult->setRrn((int) $request['paymentResult']['rrn']);
+        if (isset($request['paymentResult']['captureDate'])) {
+            $this->paymentResult->setCaptureDate($request['paymentResult']['captureDate']);
         }
 
-        if (isset($request['paymentResult']['installmentsNumber'])) {
-            $this->paymentResult->setInstallmentsNumber($request['paymentResult']['installmentsNumber']);
+        if (isset($request['paymentResult']['rrn'])) {
+            $this->paymentResult->setRrn((int) $request['paymentResult']['rrn']);
         }
 
         if (isset($request['paymentResult']['cardProgramName'])) {
             $this->paymentResult->setCardProgramName($request['paymentResult']['cardProgramName']);
         }
 
-        if (isset($request['paymentResult']['captureDate'])) {
-            $this->paymentResult->setCaptureDate($request['paymentResult']['captureDate']);
+        if (isset($request['paymentResult']['installmentsNumber'])) {
+            $this->paymentResult->setInstallmentsNumber($request['paymentResult']['installmentsNumber']);
+        }
+
+        if (isset($request['client']) && count($request['client']) > 0) {
+            $billing = new Billing;
+            $billing->setFirstName($request['client']['billing']['firstName']);
+            $billing->setLastName($request['client']['billing']['lastName']);
+            $billing->setEmail($request['client']['billing']['email']);
+            $billing->setPhone($request['client']['billing']['phone']);
+            $billing->setCountryCode($request['client']['billing']['countryCode']);
+            $billing->setCity($request['client']['billing']['city']);
+            $billing->setState($request['client']['billing']['state']);
+            $billing->setCompanyName($request['client']['billing']['companyName']);
+            $billing->setTaxId($request['client']['billing']['taxId']);
+            $billing->setAddressLine1($request['client']['billing']['addressLine1']);
+            $billing->setAddressLine1($request['client']['billing']['addressLine2']);
+            $billing->setZipCode($request['client']['billing']['zipCode']);
+
+            if (isset($request['client']['billing']['identityDocument']) && count($request['client']['billing']['identityDocument']) > 0) {
+                $identityDocument = new IdentityDocument(
+                    (int) $request['client']['billing']['identityDocument']['number'],
+                    $request['client']['billing']['identityDocument']['type']
+                );
+                $billing->setIdentityDocument($identityDocument);
+            }
+
+            $delivery = new Delivery;
+
+            $client = new Client;
+            $client->setBilling($billing);
+            $client->setDelivery($delivery);
         }
 
         return $this;

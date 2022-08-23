@@ -2,26 +2,13 @@
 
 namespace payuru\phpPayu4;
 
-use JsonSerializable;
+use \JsonSerializable;
 
 /**
  * Запрос на возврат средств
  */
 class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 {
-    /**
-     * Использование режима отладки (вывод системных сообщений)
-     * @var bool Использовать режим отладки?
-     */
-    private bool $debugMode = false;
-
-    /**
-     * Использование тестовый сервер Sandbox.PayU.ru
-     * Переключение между Sandbox.PayU.ru и Secure.PayU.ru
-     * @var bool Использовать тестовый сервер Sandbox.PayU.ru?
-     */
-    private bool $sandboxMode = false;
-
     /**
      * @var string Номер платежа PayU
      */

@@ -43,126 +43,101 @@ class Product implements ProductInterface
      */
     private string $additionalDetails;
 
-    /**
-     * @inheritDoc
-     */
-    public function __construct(array $params)
+    /** @inheritDoc */
+    public function __construct(array $params=[])
     {
-        if ($params['name']) {
+        if (isset($params['name'])) {
             $this->setName($params['name']);
         }
-        if ($params['sku']) {
+        if (isset($params['sku'])) {
             $this->setSku($params['sku']);
         }
-        if ($params['unitPrice']) {
+        if (isset($params['unitPrice'])) {
             $this->setUnitPrice($params['unitPrice']);
         }
-        if ($params['quantity']) {
+        if (isset($params['quantity'])) {
             $this->setQuantity($params['quantity']);
         }
-        if ($params['vat']) {
+        if (isset($params['vat'])) {
             $this->setVat($params['vat']);
         }
-        if ($params['amount']) {
+        if (isset($params['amount'])) {
             $this->setAmount($params['amount']);
         }
     }
-    /**
-     * @inheritDoc
-     */
+
+    /** @inheritDoc */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setName(string $name): Product
     {
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getSku(): string
     {
         return $this->sku;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setSku(string $sku): Product
     {
         $this->sku = $sku;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getUnitPrice(): float
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setUnitPrice(float $unitPrice): Product
     {
         $this->unitPrice = $unitPrice;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setQuantity(int $quantity): Product
     {
         $this->quantity = $quantity;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getVat(): int
     {
         return $this->vat;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setVat(int $vat): Product
     {
         $this->vat = $vat;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getAmount(): ?float
     {
-        return (isset($this->amount) ? $this->amount : null);
+        return ($this->amount ?? null);
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setAmount(float $amount): Product
     {
         //TODO: ВАЖНО: не должно превышать оригинальную стоимость (unitPrice * quantity) продукта при авторизации
@@ -170,26 +145,20 @@ class Product implements ProductInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getAdditionalDetails(): ?string
     {
-        return (isset($this->additionalDetails) ? $this->additionalDetails : null);
+        return ($this->additionalDetails ?? null);
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setAdditionalDetails(string $additionalDetails): Product
     {
         $this->additionalDetails = $additionalDetails;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function arraySerialize(): array
     {
         return [
@@ -198,6 +167,7 @@ class Product implements ProductInterface
             'unitPrice'         => $this->getUnitPrice(),
             'quantity'          => $this->getQuantity(),
             'additionalDetails' => $this->getAdditionalDetails(),
+            'amount'            => $this->getAmount(),
             'vat'               => $this->getVat(),
         ];
     }

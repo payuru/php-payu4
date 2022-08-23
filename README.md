@@ -36,54 +36,123 @@ $merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
 либо после отправки метода "capture". 
 ```php
 <?php
-// нам надо оплатить пару товаров или услуг
-$product1 = new Product([
-	'name'  => 'Синий Мяч',
-	'sku'  => 'ball-05',
-	'unitPrice'  => '500',
-	'quantity'  => '1',
-	'vat'  => '20',
-]);
+// Оплата по ссылке PayU
+                // Представим, что нам надо оплатить пару позиций: Синий Мяч и Жёлтый Круг
 
-$product2 = new Product([
-	'name'  => 'Жёлтый Круг',
-	'sku'  => 'toy-15',
-	'unitPrice'  => '1600',
-	'quantity'  => '3',
-	'vat'  => '12',
-]);
+                // Опишем первую позицию
+                $product1 = new Product;
+                // Установим Наименование (название товара или услуги)
+                $product1->setName('Синий Мяч');
+                // Установим Артикул
+                $product1->setSku('ball-05');
+                // Установим Стоимость за единицу
+                $product1->setUnitPrice('500');
+                // Установим Количество
+                $product1->setQuantity(1);
+                // Установим НДС
+                $product1->setVat(20);
 
-// опишем биллинговую информацию
-$billing = (new Billing)
-	->setCountryCode('RU')
-	->setCity('Москва')
-	->setState('Центральный регион')
-	->setFirstName('Иван')
-	->setLastName('Петров')
-	->setPhone('+79670660742')
-	->setEmail('test@payu.ru');
+                //Опишем вторую позицию с помощью сокращённого синтаксиса:
+                $product2 = new Product([
+                    'name'  => 'Жёлтый Круг',
+                    'sku'  => 'toy-15',
+                    'unitPrice'  => '1600',
+                    'quantity'  => '3',
+                    'vat'  => 0,
+                ]);
 
-// создадим клиента
-$client = (new Client)
-	->setBilling($billing)
-	->setCurrentClientIp()
-	->setCurrentClientTime();
+                // Опишем Биллинговую (платёжную) информацию
+                $billing = (new Billing);
+                // Установим Код страны
+                $billing->setCountryCode('RU');
+                // Установим Город
+                $billing->setCity('Москва');
+                // Установим Регион
+                $billing->setState('Центральный регион');
+                // Установим Адрес Плательщика (первая строка)
+                $billing->setAddressLine1('Улица Старый Арбат, дом 10');
+                // Установим Адрес Плательщика (вторая строка)
+                $billing->setAddressLine1('Офис PayU');
+                // Установим Почтовый Индекс Плательщика
+                $billing->setZipCode('121000');
+                // Установим Имя Плательщика
+                $billing->setFirstName('Иван');
+                // Установим Фамилия Плательщика
+                $billing->setLastName('Петров');
+                // Установим Телефон Плательщика
+                $billing->setPhone('+79670660742');
+                // Установим Email Плательщика
+                $billing->setEmail('test1@payu.ru');
 
-// создадим тестовый платёж
-$payment = (new Payment)
-	->setCurrency('RUB')
-	->addProduct($product1)
-	->addProduct($product2)
-	->setAuthorization(new Authorization('CCVISAMC',true))
-	->setMerchantPaymentReference('primer_nomer__' . rand(1,999))
-	->setReturnUrl('http://127.0.0.1:8080/?function=returnPage')
-	->setClient($client);
+                // (необязательно) Опишем Доствку и принимающее лицо
+                $delivery = (new Delivery);
+                // Установим документ, подтверждающий право приёма доставки
+                $delivery->setIdentityDocument(
+                    new IdentityDocument('123456', 'PERSONALID')
+                );
+                // Установим Код страны
+                $delivery->setCountryCode('RU');
+                // Установим Город
+                $delivery->setCity('Москва');
+                // Установим Регион
+                $delivery->setState('Центральный регион');
+                // Установим Адрес Лица, принимающего заказ (первая строка)
+                $delivery->setAddressLine1('Улица Старый Арбат, дом 10');
+                // Установим Адрес Лица, принимающего заказ (вторая строка)
+                $delivery->setAddressLine1('Офис PayU');
+                // Установим Почтовый Индекс Лица, принимающего заказ
+                $delivery->setZipCode('121000');
+                // Установим Имя Лица, принимающего заказ
+                $delivery->setFirstName('Мария');
+                // Установим Фамилия Лица, принимающего заказ
+                $delivery->setLastName('Петрова');
+                // Установим Телефон Лица, принимающего заказ
+                $delivery->setPhone('+79670660743');
+                // Установим Email Лица, принимающего заказ
+                $delivery->setEmail('test2@payu.ru');
+                // Установим Название Компании, в которой можно оставить заказ
+                $delivery->setCompanyName('ООО "Вектор"');
 
-$paymentRequest = new PaymentsApiRequest();
-$responseData = $paymentRequest->sendRequest($payment, $merchant);
+                // Создадим клиентское подключение
+                $client = (new Client);
+                // Установим биллинг
+                $client->setBilling($billing);
+                // Установим доставку
+                $client->setDelivery($delivery);
+                // Установим IP (автоматически)
+                $client->setCurrentClientIp();
+                // И Установим время (автоматически)
+                $client->setCurrentClientTime();
 
-$responseData = json_decode((string) $responseData["response"], true);
-echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a>';
+                // Создадим платёж
+                $payment = (new Payment);
+                // Установим валюту
+                $payment->setCurrency('RUB');
+                // Установим позиции
+                $payment->addProduct($product1);
+                $payment->addProduct($product2);
+
+                // Установим авторизацию
+                $payment->setAuthorization(new Authorization('CCVISAMC',true));
+                // Установим номер заказа (должен быть уникальным)
+                $payment->setMerchantPaymentReference('primer_nomer__' . time());
+                // Установим адрес перенаправления пользователя после оплаты
+                $payment->setReturnUrl('http://127.0.0.1:8080/?function=returnPage');
+                // Установим клиентское подключение
+                $payment->setClient($client);
+
+                // Создадим запрос к API
+                $apiRequest = new ApiRequest($merchant);
+                // Установим вывод сообщений отладки
+                $apiRequest->setDebugMode();
+                // Установим режим песочницы
+                $apiRequest->setSandboxMode();
+                // Отправим запрос
+                $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
+                // Преобразуем ответ из JSON в массив
+                $responseData = json_decode((string) $responseData["response"], true);
+                // Нарисуем кнопку оплаты
+                echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a><br><br><br>';
 ```
 ### Страница пользователя после совершения платежа
 

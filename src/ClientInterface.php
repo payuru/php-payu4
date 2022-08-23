@@ -37,7 +37,6 @@ interface ClientInterface
     public function getClientIp() : string;
 
     /**
-     *
      * Установить текущее Время оплаты
      * @return $this
      */
@@ -52,22 +51,35 @@ interface ClientInterface
 
     /**
      * Получить Время оплаты
-     * @return string
+     * @return ?string
      */
-    public function getClientTime() : string;
+    public function getClientTime() : ?string;
 
     /**
-     * Установить Подробности доставки
-     * @param DeliveryInterface $delivery
+     * Установить Подробности Доставки
+     * @param DeliveryInterface $delivery Подробности Доставки
      * @return $this
      */
     public function setDelivery(DeliveryInterface $delivery) : self;
 
     /**
-     * Получить Подробности доставки
-     * @return DeliveryInterface
+     * Получить Подробности Доставки
+     * @return null|DeliveryInterface Подробности Доставки
      */
-    public function getDelivery() : DeliveryInterface;
+    public function getDelivery() : ?DeliveryInterface;
+
+    /**
+     * Получить Язык общения с Клиентом
+     * @return null|string Язык общения с Клиентом
+     */
+    public function getCommunicationLanguage() : ?string;
+
+    /**
+     * Установить Язык общения с Клиентом
+     * @param string $communicationLanguage Язык общения с Клиентом
+     * @return $this
+     */
+    public function setCommunicationLanguage(string $communicationLanguage) : self;
 
     /**
      * Преобразовать в массив
