@@ -4,23 +4,6 @@ namespace payuru\phpPayu4;
 interface PaymentInterface
 {
     /**
-     * Переключить режим отладки
-     * (скрипт будет выводить отладочные сообщения)
-     * @param bool $isOn
-     * @return $this
-     */
-    public function setDebugMode(bool $isOn) : self;
-
-    /**
-     * Переключить режим тестирования PayU Sandbox
-     * оплата будет перенаправлена на тестовый сервер
-     * https://sandbox.payu.ru
-     * @param bool $isOn
-     * @return $this
-     */
-    public function setSandboxMode(bool $isOn) : self;
-
-    /**
      * Установить Номер платежа
      * Используйте удобный вам, например номер заказа или счёта
      * @param string $paymentIdString Номер платежа

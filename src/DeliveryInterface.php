@@ -5,17 +5,17 @@ namespace payuru\phpPayu4;
 interface DeliveryInterface
 {
     /**
-     * Получить Имя
+     * Установить Имя
      * @param string $firstName Имя
      * @return $this
      */
     public function setFirstName(string $firstName) : self;
 
     /**
-     * Установить Имя
-     * @return string Имя
+     * Получить Имя
+     * @return null|string Имя
      */
-    public function getFirstName() : string;
+    public function getFirstName() : ?string;
 
     /**
      * Установить Фамилию
@@ -26,9 +26,9 @@ interface DeliveryInterface
 
     /**
      * Получить Фамилию
-     * @return string Фамилия
+     * @return null|string Фамилия
      */
-    public function getLastName() : string;
+    public function getLastName() : ?string;
 
     /**
      * Установить Email
@@ -39,9 +39,9 @@ interface DeliveryInterface
 
     /**
      * Получить Email
-     * @return string Email
+     * @return null|string Email
      */
-    public function getEmail() : string;
+    public function getEmail() : ?string;
 
     /**
      * Установить Номер телефона
@@ -52,9 +52,9 @@ interface DeliveryInterface
 
     /**
      * Получить Номер телефона
-     * @return string
+     * @return null|string
      */
-    public function getPhone() : string;
+    public function getPhone() : ?string;
 
     /**
      * Установить Код Страны
@@ -65,9 +65,9 @@ interface DeliveryInterface
 
     /**
      * Получить Код Страны
-     * @return string Код Страны
+     * @return null|string Код Страны
      */
-    public function getCountryCode() : string;
+    public function getCountryCode() : ?string;
 
     /**
      * Установить Регион
@@ -78,9 +78,22 @@ interface DeliveryInterface
 
     /**
      * Получить Регион
-     * @return string Регион
+     * @return null|string Регион
      */
-    public function getState() : string;
+    public function getState() : ?string;
+
+    /**
+     * Установить Город
+     * @param string $city
+     * @return $this
+     */
+    public function setCity(string $city) : self;
+
+    /**
+     * Получить Город
+     * @return null|string
+     */
+    public function getCity() : ?string;
 
     /**
      * Установить Адрес - Первую Строку
@@ -91,9 +104,9 @@ interface DeliveryInterface
 
     /**
      * Получить Адрес - Первую Строку
-     * @return string Адрес - Первая Строка
+     * @return null|string Адрес - Первая Строка
      */
-    public function getAddressLine1() : string;
+    public function getAddressLine1() : ?string;
 
     /**
      * Получить Адрес - Вторую Строку
@@ -104,9 +117,9 @@ interface DeliveryInterface
 
     /**
      * Установить Адрес - Вторую Строку
-     * @return string Адрес - Вторая Строка
+     * @return null|string Адрес - Вторая Строка
      */
-    public function getAddressLine2() : string;
+    public function getAddressLine2() : ?string;
 
     /**
      * Установить Почтовый Индекс
@@ -117,7 +130,33 @@ interface DeliveryInterface
 
     /**
      * Плучить Почтовый Индекс
-     * @return string Почтовый Индекс
+     * @return null|string Почтовый Индекс
      */
-    public function getZipCode() : string;
+    public function getZipCode() : ?string;
+
+    /**
+     * Установить Наименование Компании
+     * @param string $companyName Наименование Компании
+     * @return $this
+     */
+    public function setCompanyName(string $companyName): self;
+
+    /**
+     * Плучить Наименование Компании
+     * @return null|string Наименование Компании
+     */
+    public function getCompanyName(): ?string;
+
+    /**
+     * Установить Удостоверение личности
+     * @param IdentityDocumentInterface $identityDocument Удостоверение личности
+     * @return $this
+     */
+    public function setIdentityDocument(IdentityDocumentInterface $identityDocument): self;
+
+    /**
+     * Получить Удостоверение личности
+     * @return IdentityDocumentInterface|null Удостоверение личности
+     */
+    public function getIdentityDocument(): ?IdentityDocumentInterface;
 }

@@ -4,134 +4,145 @@ namespace payuru\phpPayu4;
 
 class Client implements ClientInterface
 {
-    /**
-     * @var BillingInterface Биллинговая информация
-     */
+    /** @var BillingInterface Биллинговая информация */
     private BillingInterface $billing;
 
-    /**
-     * @var string Клиенский IP
-     */
+    /** @var string Клиенский IP */
     private string $clientIp;
 
-    /**
-     * @var string Время оплаты
-     */
+    /** @var string Время оплаты */
     private string $clientTime;
 
-    /**
-     * @var DeliveryInterface Информация о доставке
-     */
+    /** @var string Язык общения с клиентом */
+    private string $communicationLanguage = 'Русский';
+
+    /** @var DeliveryInterface Информация о доставке */
     private DeliveryInterface $delivery;
 
-    /**
-     * @inheritDoc
-     */
+
+    /** @inheritDoc */
     public function getBilling(): BillingInterface
     {
         return $this->billing;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setBilling(BillingInterface $billing): self
     {
         $this->billing = $billing;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setCurrentClientIp(): self
     {
-        $ip = $_SERVER['HTTP_CLIENT_IP']
-            ? $_SERVER['HTTP_CLIENT_IP']
-            : ($_SERVER['HTTP_X_FORWARDED_FOR']
-                ? $_SERVER['HTTP_X_FORWARDED_FOR']
-                : $_SERVER['REMOTE_ADDR']);
-        $this->setClientIp($ip);
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $this->setClientIp($_SERVER['HTTP_CLIENT_IP']);
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $this->setClientIp($_SERVER['HTTP_X_FORWARDED_FOR']);
+        } else {
+            $this->setClientIp($_SERVER['REMOTE_ADDR']);
+        }
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getClientIp(): string
     {
         return $this->clientIp;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setClientIp(string $clientIp): self
     {
         $this->clientIp = $clientIp;
         return $this;
     }
 
-
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setCurrentClientTime(): self
     {
-        // TODO: Implement setCurrentTime() method - установить текущее время оплаты
+        $this->clientTime = date_create()->format('c');
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getClientTime(): string
+    /** @inheritDoc */
+    public function getClientTime(): ?string
     {
-        return $this->clientTime;
+        return $this->clientTime ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setClientTime(string $clientTime): self
     {
         $this->clientTime = $clientTime;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setDelivery(DeliveryInterface $delivery): ClientInterface
+    /** @inheritDoc */
+    public function setDelivery(DeliveryInterface $delivery): self
     {
         $this->delivery = $delivery;
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDelivery(): DeliveryInterface
+    /** @inheritDoc */
+    public function getDelivery(): ?DeliveryInterface
     {
-        return $this->delivery;
+        return $this->delivery ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
+    public function getCommunicationLanguage(): ?string
+    {
+        return $this->communicationLanguage ?? null;
+    }
+
+    /** @inheritDoc */
+    public function setCommunicationLanguage(string $communicationLanguage): self
+    {
+        $this->communicationLanguage = $communicationLanguage;
+        return $this;
+    }
+
+    /** @inheritDoc */
     public function arraySerialize()
     {
-        return [
+        $responseArray = [
             'billing'	=> [
-                'firstName'	=> "John",
-                'lastName'	=> "Doe",
-                'email'		=> "test@payu.ro",
-                'phone'		=> "0771346934",
-                'countryCode'	=> "RU"
+                'firstName'	=> $this->getBilling()->getFirstName(),
+                'lastName'	=> $this->getBilling()->getLastName(),
+                'email'		=> $this->getBilling()->getEmail(),
+                'phone'		=> $this->getBilling()->getPhone(),
+                'countryCode'	=> $this->getBilling()->getCountryCode(),
+                'city'		=> $this->getBilling()->getCity(),
+                'zipCode'		=> $this->getBilling()->getZipCode(),
+                'companyName'		=> $this->getBilling()->getCompanyName(),
+                'taxId'		=> $this->getBilling()->getTaxId(),
+                'addressLine1'		=> $this->getBilling()->getAddressLine1(),
+                'addressLine2'		=> $this->getBilling()->getAddressLine2(),
             ],
-            'ClientIp'		=> "127.0.0.1",
-            'ClientTime'	=> "TEST",
+            'ClientIp'		=> $this->getClientIp(),
+            'ClientTime'	=> $this->getClientTime(),
+            'communicationLanguage'	=> $this->getCommunicationLanguage(),
         ];
+
+        if (null !== $this->getDelivery()) {
+            $responseArray['delivery']	= [
+                'firstName'	=> $this->getDelivery()->getFirstName(),
+                'lastName'	=> $this->getDelivery()->getLastName(),
+                'email'		=> $this->getDelivery()->getEmail(),
+                'phone'		=> $this->getDelivery()->getPhone(),
+                'countryCode'	=> $this->getDelivery()->getCountryCode(),
+                'city'		=> $this->getDelivery()->getCity(),
+                'zipCode'		=> $this->getDelivery()->getZipCode(),
+                'companyName'		=> $this->getDelivery()->getCompanyName(),
+                'addressLine1'		=> $this->getDelivery()->getAddressLine1(),
+                'addressLine2'		=> $this->getDelivery()->getAddressLine2(),
+            ];
+        }
+
+        return $responseArray;
     }
 }

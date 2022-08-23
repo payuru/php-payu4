@@ -2,23 +2,10 @@
 
 namespace payuru\phpPayu4;
 
-use JsonSerializable;
+use \JsonSerializable;
 
 class Capture implements CaptureInterface, JsonSerializable, TransactionInterface
 {
-    /**
-     * Использование режима отладки (вывод системных сообщений)
-     * @var bool Использовать режим отладки?
-     */
-    private bool $debugMode = false;
-
-    /**
-     * Использование тестовый сервер Sandbox.PayU.ru
-     * Переключение между Sandbox.PayU.ru и Secure.PayU.ru
-     * @var bool Использовать тестовый сервер Sandbox.PayU.ru?
-     */
-    private bool $sandboxMode = false;
-
     /**
      * @var string Номер платежа PayU
      */
@@ -39,29 +26,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
      */
     private string $currency;
 
-    /**
-     * @inheritDoc
-     */
-    public function setDebugMode(bool $isOn) : self
-    {
-        $this->debugMode = $isOn;
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setSandboxMode(bool $isOn) : self
-    {
-        $this->sandboxMode = $isOn;
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setPayuPaymentReference(string $paymentIdString): CaptureInterface
     {
         $this->payuPaymentReference = $paymentIdString;
@@ -69,21 +34,16 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getPayuPaymentReference(): string
     {
         return $this->payuPaymentReference;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setOriginalAmount(float $originalAmount): CaptureInterface
     {
         $this->originalAmount = $originalAmount;
-
         return $this;
     }
 
@@ -97,6 +57,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
 
     /**
      * @inheritDoc
+     * @throws PaymentException
      */
     public function setAmount(float $amount): CaptureInterface
     {
@@ -108,17 +69,13 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function setCurrency(string $currency): CaptureInterface
     {
         // TODO: Implement Currency check method (in Currency Class).
@@ -128,17 +85,13 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
