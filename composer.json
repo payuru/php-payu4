@@ -1,5 +1,5 @@
 {
-  "name": "payuru/phpPayu4",
+  "name": "payuru/php-payu4",
   "description": "PayU - powerful payment gateway PHP integration",
   "type": "package",
   "require": {
