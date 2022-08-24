@@ -64,11 +64,11 @@ $product1->setVat(20);
 
 //Опишем вторую позицию с помощью сокращённого синтаксиса:
 $product2 = new Product([
-	'name'  => 'Жёлтый Круг',
-	'sku'  => 'toy-15',
-	'unitPrice'  => '1600',
-	'quantity'  => '3',
-	'vat'  => 0,
+'name'  => 'Жёлтый Круг',
+'sku'  => 'toy-15',
+'unitPrice'  => '1600',
+'quantity'  => '3',
+'vat'  => 0,
 ]);
 
 // Опишем Биллинговую (платёжную) информацию
@@ -136,33 +136,39 @@ $client->setCurrentClientTime();
 
 // Создадим платёж
 $payment = (new Payment);
-// Установим валюту
-$payment->setCurrency('RUB');
 // Установим позиции
 $payment->addProduct($product1);
 $payment->addProduct($product2);
-
-// Установим авторизацию
+// Установим валюту
+$payment->setCurrency('RUB');
+// Создадим и установим авторизацию по типу платежа
 $payment->setAuthorization(new Authorization('CCVISAMC',true));
-// Установим номер заказа (должен быть уникальным)
+// Установим номер заказа (должен быть уникальным в вашей системе)
 $payment->setMerchantPaymentReference('primer_nomer__' . time());
 // Установим адрес перенаправления пользователя после оплаты
 $payment->setReturnUrl('http://127.0.0.1:8080/?function=returnPage');
 // Установим клиентское подключение
 $payment->setClient($client);
 
-// Создадим запрос к API
+// Создадим HTTP-запрос к API
 $apiRequest = new ApiRequest($merchant);
-// Установим вывод сообщений отладки
+// Включить режим отладки (удалите в рабочей программе!)
 $apiRequest->setDebugMode();
-// Установим режим песочницы
+// Переключиться на тестовый сервер (удалите в рабочей программе!)
 $apiRequest->setSandboxMode();
 // Отправим запрос
 $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
 // Преобразуем ответ из JSON в массив
 $responseData = json_decode((string) $responseData["response"], true);
 // Нарисуем кнопку оплаты
-echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a><br><br><br>';S
+echo '<a
+href="'.$responseData["paymentResult"]['url'].'"
+class="btn btn-success"
+target="_b"
+style="font-weight: bolder; color: green;"
+rel="noindex noopener">
+    ОПЛАТА PAYU
+</a>';
 ```
 ### Страница пользователя после совершения платежа
 Данные о состоянии платежа после его создания передаются в параметрах GET ($_GET)

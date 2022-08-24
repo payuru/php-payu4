@@ -121,15 +121,14 @@ if(isset($_GET['function'])){
 
                 // Создадим платёж
                 $payment = (new Payment);
-                // Установим валюту
-                $payment->setCurrency('RUB');
                 // Установим позиции
                 $payment->addProduct($product1);
                 $payment->addProduct($product2);
-
-                // Установим авторизацию
+                // Установим валюту
+                $payment->setCurrency('RUB');
+                // Создадим и установим авторизацию по типу платежа
                 $payment->setAuthorization(new Authorization('CCVISAMC',true));
-                // Установим номер заказа (должен быть уникальным)
+                // Установим номер заказа (должен быть уникальным в вашей системе)
                 $payment->setMerchantPaymentReference('primer_nomer__' . time());
                 // Установим адрес перенаправления пользователя после оплаты
                 $payment->setReturnUrl('http://127.0.0.1:8080/?function=returnPage');
@@ -147,7 +146,14 @@ if(isset($_GET['function'])){
                 // Преобразуем ответ из JSON в массив
                 $responseData = json_decode((string) $responseData["response"], true);
                 // Нарисуем кнопку оплаты
-                echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a><br><br><br>';
+                echo '<a
+                    href="'.$responseData["paymentResult"]['url'].'"
+                    class="btn btn-success"
+                    target="_b"
+                    style="font-weight: bolder; color: green;"
+                    rel="noindex noopener">
+                        ОПЛАТА PAYU
+                    </a>';
                 break;
 
             case 'paymentCapture':

@@ -4,9 +4,9 @@ namespace payuru\phpPayu4;
 interface PaymentInterface
 {
     /**
-     * Установить Номер платежа
+     * Установить Номер Заказа
      * Используйте удобный вам, например номер заказа или счёта
-     * @param string $paymentIdString Номер платежа
+     * @param string $paymentIdString Номер Заказа
      * @return $this
      */
     public function setMerchantPaymentReference(string $paymentIdString) : self;
