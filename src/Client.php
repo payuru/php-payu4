@@ -7,8 +7,8 @@ class Client implements ClientInterface
     /** @var BillingInterface Биллинговая информация */
     private BillingInterface $billing;
 
-    /** @var string Клиенский IP */
-    private string $clientIp;
+    /** @var ?string Клиенский IP */
+    private ?string $clientIp;
 
     /** @var string Время оплаты */
     private string $clientTime;
@@ -48,9 +48,9 @@ class Client implements ClientInterface
     }
 
     /** @inheritDoc */
-    public function getClientIp(): string
+    public function getClientIp(): ?string
     {
-        return $this->clientIp;
+        return $this->clientIp ?? null;
     }
 
     /** @inheritDoc */

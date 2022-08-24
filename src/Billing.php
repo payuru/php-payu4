@@ -13,35 +13,35 @@ class Billing implements BillingInterface
     /** @var string Email */
     private string $email;
 
-    /** @var string Номер телефона */
-    private string $phone;
+    /** @var ?string Номер телефона */
+    private ?string $phone;
 
-    /** @var string Код Страны */
-    private string $countryCode;
+    /** @var ?string Код Страны */
+    private ?string $countryCode;
 
-    /** @var string Город */
-    private string $city;
+    /** @var ?string Город */
+    private ?string $city;
 
-    /** @var string Регион */
-    private string $state;
+    /** @var ?string Регион */
+    private ?string $state;
 
-    /** @var string Название Компании */
-    private string $companyName;
+    /** @var ?string Название Компании */
+    private ?string $companyName;
 
-    /** @var string Налоговый Идентификатор */
-    private string $taxId;
+    /** @var ?string Налоговый Идентификатор */
+    private ?string $taxId;
 
-    /** @var string Первая строка адреса */
-    private string $addressLine1;
+    /** @var ?string Первая строка адреса */
+    private ?string $addressLine1;
 
-    /** @var string Вторая строка адреса */
-    private string $addressLine2;
+    /** @var ?string Вторая строка адреса */
+    private ?string $addressLine2;
 
-    /** @var string Почтовый индекс */
-    private string $zipCode;
+    /** @var ?string Почтовый индекс */
+    private ?string $zipCode;
 
-    /** @var IdentityDocumentInterface удостоверение личности */
-    private IdentityDocumentInterface $identityDocument;
+    /** @var ?IdentityDocumentInterface удостоверение личности */
+    private ?IdentityDocumentInterface $identityDocument;
 
     /** @inheritDoc */
     public function getFirstName(): string
@@ -83,12 +83,6 @@ class Billing implements BillingInterface
     }
 
     /** @inheritDoc */
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    /** @inheritDoc */
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
@@ -96,9 +90,15 @@ class Billing implements BillingInterface
     }
 
     /** @inheritDoc */
-    public function getCountryCode(): string
+    public function getPhone(): ?string
     {
-        return $this->countryCode;
+        return $this->phone ?? null;
+    }
+
+    /** @inheritDoc */
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode ?? null;
     }
 
     /** @inheritDoc */
@@ -110,9 +110,9 @@ class Billing implements BillingInterface
     }
 
     /** @inheritDoc */
-    public function getState(): string
+    public function getState(): ?string
     {
-        return $this->state;
+        return $this->state ?? null;
     }
 
     /** @inheritDoc */
@@ -195,9 +195,9 @@ class Billing implements BillingInterface
     }
 
     /** @inheritDoc */
-    public function getCity(): string
+    public function getCity(): ?string
     {
-        return $this->city;
+        return $this->city ?? null;
     }
 
     /** @inheritDoc */

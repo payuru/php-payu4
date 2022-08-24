@@ -34,7 +34,7 @@ interface ClientInterface
      * Получить IP
      * @return string
      */
-    public function getClientIp() : string;
+    public function getClientIp() : ?string;
 
     /**
      * Установить текущее Время оплаты
