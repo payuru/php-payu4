@@ -178,7 +178,7 @@ $apiRequest->setSandboxMode();
 $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
 // Преобразуем ответ из JSON в массив
 $responseData = json_decode((string) $responseData["response"], true);
-// Нарисуем кнопку оплаты
+// Выведем ссылку для оплаты PayU
 echo '<a
     href="'.$responseData["paymentResult"]['url'].'"
     class="btn btn-success"
