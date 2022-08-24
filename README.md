@@ -31,16 +31,27 @@ composer require payuru/php-payu4
 ```
 
 ```php
-// Подключить загрузчик классов от Composer 
+// Для использования классов, например:
+use payuru\phpPayu4\Authorization;
+use payuru\phpPayu4\Delivery;
+use payuru\phpPayu4\IdentityDocument;
+use payuru\phpPayu4\Merchant;
+use payuru\phpPayu4\Payment;
+use payuru\phpPayu4\Client;
+use payuru\phpPayu4\Billing;
+use payuru\phpPayu4\ApiRequest;
+use payuru\phpPayu4\PaymentException;
+use payuru\phpPayu4\Product;
+use payuru\phpPayu4\Capture;
+use payuru\phpPayu4\Refund;
+
+// Подключите загрузчик классов от Composer
 require vendor/autoload.php;
 ```
 
 ### PHP без фреймворков
 Клонируйте или скачайте, а затем подключите файлы этого репозитория
-```php
-<?php
 
-```
 ## Примеры использования
 ### Начало работы
 ```php
