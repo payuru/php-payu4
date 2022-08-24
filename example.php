@@ -136,11 +136,11 @@ if(isset($_GET['function'])){
                 // Установим клиентское подключение
                 $payment->setClient($client);
 
-                // Создадим запрос к API
+                // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
-                // Установим вывод сообщений отладки
+                // Включить режим отладки (удалите в рабочей программе!)
                 $apiRequest->setDebugMode();
-                // Установим режим песочницы
+                // Переключиться на тестовый сервер (удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
                 // Отправим запрос
                 $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
@@ -151,65 +151,77 @@ if(isset($_GET['function'])){
                 break;
 
             case 'paymentCapture':
-                // списание денег
-                // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response
-                $payuPaymentReference = 2297597;
+                // Запрос на списание денег
+                // В зависимости от настройки мерчанта, PayU может списывать денежные средства автоматически,
+                // Либо с помощью дополнительного запроса, описанного ниже.
+
+                // Создадим такой запрос:
+                $capture = (new Capture);
+
+                // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response)
+                $capture->setPayuPaymentReference(2297597);
 
                 // Cумма исходной операции на авторизацию
-                $originalAmount = 5300;
-
+                $capture->setOriginalAmount(5300);
                 // Cумма фактического списания
-                $amount = 3700;
+                $capture->setAmount(3700);
+                // Валюта
+                $capture->setCurrency('RUB');
 
-                $capture = (new Capture)
-                    ->setPayuPaymentReference($payuPaymentReference)
-                    ->setOriginalAmount($originalAmount)
-                    ->setAmount($amount)
-                    ->setCurrency('RUB');
-
+                // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
+                // Включить режим отладки (удалите в рабочей программе!)
+                $apiRequest->setDebugMode();
+                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                $apiRequest->setSandboxMode();
+                // Отправим запрос к API
                 $responseData = $apiRequest->sendCaptureRequest($capture, $merchant);
 
                 break;
             case 'paymentGetStatus':
-                // получить номер платежа по PayU
-                // Номер заказа PayU (возвращается в ответ на запрос на авторизацию в JSON Response
-                $merchantPaymentReference = 'primer_nomer__184';
+                // Получить номер транзакции в PayU
 
+                // Номер заказа
+                $merchantPaymentReference = 'primer_nomer__184';
+                // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
+                // Включить режим отладки (удалите в рабочей программе!)
+                $apiRequest->setDebugMode();
+                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                $apiRequest->setSandboxMode();
+                // Отправим запрос к API
                 $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
-                echo '<pre>' . print_r($responseData, true) . '</pre>';
 
                 break;
             case 'paymentWebhook':
                 //сформировать вебхук
                 break;
             case 'paymentRefund':
-                //инициировать возврат
+                // Инициировать возврат средств
 
-                // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response)
+                // Номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
+                // см. пример с запросом Payment выше
                 $payuPaymentReference = 2297597;
-
                 // Cумма исходной операции на авторизацию
                 $originalAmount = 3700;
-
                 // Cумма фактического списания
                 $amount = 3700;
 
+                // Сформируем и отправим запрос
                 $refund = (new Refund)
                     ->setPayuPaymentReference($payuPaymentReference)
                     ->setOriginalAmount($originalAmount)
                     ->setAmount($amount)
                     ->setCurrency('RUB');
-
                 $apiRequest = new ApiRequest($merchant);
                 $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
-
                 break;
+
             case 'returnPage':
                 //забрать GET-параметры из страницы возврата
                 echo '<pre>' . print_r($_GET, true) . '</pre>';
                 break;
+
             default:
                 throw new PaymentException('Метод не поддерживается');
         }

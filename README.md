@@ -170,7 +170,35 @@ echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success
 
 ```
 
-### Отмена платежа (refund)
+### Списание средств (Capture)
+В зависимости от настройки мерчанта, PayU может списывать денежные средства автоматически,
+// Либо с помощью дополнительного запроса, описанного ниже.
+```php
+// Запрос на списание денег
+
+// Создадим такой запрос:
+$capture = (new Capture);
+
+// Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response)
+$capture->setPayuPaymentReference(2297597);
+
+// Cумма исходной операции на авторизацию
+$capture->setOriginalAmount(5300);
+// Cумма фактического списания
+$capture->setAmount(3700);
+// Валюта
+$capture->setCurrency('RUB');
+
+// Создадим HTTP-запрос к API
+$apiRequest = new ApiRequest($merchant);
+// Включить режим отладки (удалите в рабочей программе!)
+$apiRequest->setDebugMode();
+// Переключиться на тестовый сервер (удалите в рабочей программе!)
+$apiRequest->setSandboxMode();
+// Отправим запрос к API
+$responseData = $apiRequest->sendCaptureRequest($capture, $merchant);
+```
+### Отмена платежа (Refund)
 
 ### Создание выплаты (payout)
 
