@@ -49,6 +49,9 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setPayuPaymentReference(string $paymentIdString): RefundInterface
     {
         $this->payuPaymentReference = $paymentIdString;
@@ -56,11 +59,17 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPayuPaymentReference(): string
     {
         return $this->payuPaymentReference;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setOriginalAmount(float $originalAmount): RefundInterface
     {
         $this->originalAmount = $originalAmount;
@@ -68,11 +77,17 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getOriginalAmount(): float
     {
         return $this->originalAmount;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setAmount(float $amount): RefundInterface
     {
         if ($amount > $this->originalAmount) {
@@ -83,11 +98,17 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setCurrency(string $currency): RefundInterface
     {
         // TODO: Implement Currency check method (in Currency Class).
@@ -97,11 +118,17 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
