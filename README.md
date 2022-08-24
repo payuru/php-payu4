@@ -15,6 +15,11 @@ Eclipse, Netbeans, etc), чтобы получать подробные подс
 - Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
 класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 
+## Требования
+Актуальные требования для использования пакета можно посмотреть 
+в файле [composer.json](https://github.com/payuru/php-payu4/blob/main/composer.json)
+в секции "require"
+
 ## Установка
 ### Composer
 [Composer](https://getcomposer.org/) - это инструмент для управления зависимостями в PHP. Он позволяет вам объявить

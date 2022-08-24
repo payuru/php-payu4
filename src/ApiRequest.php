@@ -229,7 +229,10 @@ class ApiRequest implements ApiRequestInterface
     private function echoDebugMessage($mixedInput): void
     {
         if ($this->getDebugMode()) {
-            echo '<pre class="w-100 d-block">'.print_r($mixedInput, true).'</pre>';
+            echo '
+                <pre
+                class="w-100 d-block"
+                >'.print_r($mixedInput, true).'</pre>';
         }
     }
 }
