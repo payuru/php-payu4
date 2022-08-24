@@ -20,6 +20,7 @@ use payuru\phpPayu4\PaymentException;
 use payuru\phpPayu4\Product;
 use payuru\phpPayu4\Capture;
 use payuru\phpPayu4\Refund;
+use payuru\phpPayu4\Std;
 
 // TODO: нужен публичный тестовый мерчант, которого можно включить в документацию
 // Создадим тестового мерчанта
@@ -218,14 +219,12 @@ if(isset($_GET['function'])){
                 // Преобразуем ответ из JSON в массив
                 $responseData = json_decode((string) $responseData["response"], true);
                 // Нарисуем кнопку оплаты
-                echo '<a
-                    href="'.$responseData["paymentResult"]['url'].'"
-                    class="btn btn-success"
-                    target="_b"
-                    style="font-weight: bolder; color: green;"
-                    rel="noindex noopener">
-                        Оплата PayU
-                    </a>';
+                echo Std::drawPayuButton([
+                    'url' => $responseData["paymentResult"]['url'],
+                    'sum' => $payment->sumProductsAmount(),
+                ]);
+                // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
+                // echo Std::redirect($responseData["paymentResult"]['url']);
                 break;
 
             case 'paymentCapture':

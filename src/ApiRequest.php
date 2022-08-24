@@ -88,8 +88,6 @@ class ApiRequest implements ApiRequestInterface
     {
         $encodedJsonData = $data->jsonSerialize();
 
-
-
         $encodedJsonDataHash = md5($encodedJsonData);
 
         $curl = curl_init();
@@ -129,7 +127,7 @@ class ApiRequest implements ApiRequestInterface
             $this->echoDebugMessage('Запрос к серверу PayU:');
             $this->echoDebugMessage($encodedJsonData);
             $this->echoDebugMessage('Ответ от сервера PayU:');
-            $this->echoDebugMessage($response);
+            $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
 
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');
@@ -139,6 +137,13 @@ class ApiRequest implements ApiRequestInterface
                 echo '<br><a href="https://github.com/payuru/php-payu4/">Последняя версия примеров на Github</a>';
                 echo '<br><a href="https://github.com/payuru/php-payu4/issues">Оставить заявку на улучшение</a>';
                 echo '<br><a href="https://payu.ru/contacts">Контакты</a>';
+            } else {
+                if ($this->getSandboxMode()) {
+                    echo '<br>Внимание! У вас включен тестовый режим (режим песочницы). Все запросы уходят на sandbox.payu.ru';
+                }
+                $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.payu.ru/cpanel/';
+                echo '<br>Отслеживайте состояние транзакции по адресу <a href="' . $cpanel_url . '" target="_b">' . $cpanel_url . '</a>';
+                echo '<br><br>';
             }
         }
 

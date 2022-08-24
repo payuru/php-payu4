@@ -99,4 +99,11 @@ interface PaymentInterface
      * @return array Продукты
      */
     public function getProductsArray() : array;
+
+    /**
+     * Итоговая сумма товарных позиций
+     * @return int Итог
+     * @throws PaymentException Ошибка оплаты
+     */
+    public function sumProductsAmount() : int;
 }

@@ -347,6 +347,7 @@ $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
 - [Основной сайт PayU Россия](https://payu.ru/)
 - Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
   класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
+- [Задать вопрос или сообщить о проблеме](https://github.com/payuru/php-payu4/issues/new)
 
 -------------
 ![](https://www.nco-payu.ru/media/images/global/payu@2x.png)

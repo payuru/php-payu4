@@ -4,7 +4,6 @@ namespace payuru\phpPayu4;
 
 
 use \JsonSerializable;
-use payuru\phpPayu4\Std;
 
 /**
  * Платеж
@@ -141,5 +140,20 @@ class Payment implements PaymentInterface, JsonSerializable, TransactionInterfac
         $requestData = Std::removeNullValues($requestData);
 
         return json_encode($requestData, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
+    }
+
+    /** @inheritdoc */
+    public function sumProductsAmount() : int
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            if (null === $product->getAmount() && (null === $product->getUnitPrice())) {
+                throw new PaymentException('Опишите цены позиций к оплате');
+            }
+
+            $sum += $product->getAmount() ?? ($product->getUnitPrice() * $product->getQuantity());
+        }
+
+        return $sum;
     }
 }
