@@ -1,16 +1,24 @@
 # php-payu4
 Примеры использования PayU API v4.
  
-PayU - многофункциональная платёжная система, поддерживающая не только простые платежи с банковских карт, но и множество форм оплаты, а также подписки и выплаты на карты.
+PayU - многофункциональная платёжная система, поддерживающая не только простые платежи с банковских карт, но и множество
+форм оплаты, а также подписки и выплаты на карты.
  
+Данный репозиторий написан по принципам SOLID, и каждый программный интерфейс снабжен подробной документацией на
+русском языке. Поэтому для работы рекомендуется использовать любую современную IDE (VS Code, Intellij Idea/PHPStorm,
+Eclipse, Netbeans, etc), чтобы получать подробные подсказки прямо во время редактирования кода.
+
+![IDE screenshot](screenshot.jpg "IDE screenshot")
 ## Ссылки
 - [Докуметация по API](https://dev.payu.ru/ru/documents/apiv4/)
 - [Основной сайт PayU Россия](https://payu.ru/)
-- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
+- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
+- класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 
 ## Установка
 ### Composer
-[Composer](https://getcomposer.org/) - это инструмент для управления зависимостями в PHP. Он позволяет вам объявить библиотеки, от которых зависит ваш проект, и он будет управлять ими (устанавливать/обновлять) за вас.
+[Composer](https://getcomposer.org/) - это инструмент для управления зависимостями в PHP. Он позволяет вам объявить
+библиотеки, от которых зависит ваш проект, и он будет управлять ими (устанавливать/обновлять) за вас.
 ```shell
 composer require payuru/php-payu4
 ```
@@ -19,11 +27,7 @@ composer require payuru/php-payu4
 // Подключить загрузчик классов от Composer 
 require vendor/autoload.php;
 ```
-### Laravel
-```php
-<?php
 
-```
 ### PHP без фреймворков
 Клонируйте или скачайте, а затем подключите файлы этого репозитория
 ```php
@@ -161,8 +165,10 @@ $responseData = json_decode((string) $responseData["response"], true);
 echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success" target="_b" rel="noopener"> ОПЛАТА </a><br><br><br>';S
 ```
 ### Страница пользователя после совершения платежа
+Данные о состоянии платежа после его создания передаются в параметрах GET ($_GET)
+```php
 
-### Приём информации о состоянии платежа (webhook)
+```
 
 ### Отмена платежа (refund)
 
