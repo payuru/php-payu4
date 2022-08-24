@@ -54,7 +54,7 @@ interface BillingInterface
      * Получить Номер Телефона
      * @return string
      */
-    public function getPhone() : string;
+    public function getPhone() : ?string;
 
     /**
      * Установить Код Страны
@@ -67,7 +67,7 @@ interface BillingInterface
      * Получить Код Страны
      * @return string
      */
-    public function getCountryCode() : string;
+    public function getCountryCode() : ?string;
 
     /**
      * Установить Город
@@ -80,7 +80,7 @@ interface BillingInterface
      * Получить Город
      * @return string
      */
-    public function getCity() : string;
+    public function getCity() : ?string;
 
     /**
      * Установить Регион
@@ -93,7 +93,7 @@ interface BillingInterface
      * Получить Регион
      * @return string
      */
-    public function getState() : string;
+    public function getState() : ?string;
 
     /**
      * Установить Название Компании
