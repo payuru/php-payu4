@@ -9,11 +9,6 @@ PayU - многофункциональная платёжная система,
 Eclipse, Netbeans, etc), чтобы получать подробные подсказки прямо во время редактирования кода.
 
 ![IDE screenshot](screenshot.jpg "IDE screenshot")
-## Ссылки
-- [Докуметация по API](https://dev.payu.ru/ru/documents/apiv4/)
-- [Основной сайт PayU Россия](https://payu.ru/)
-- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
-класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 
 ## Требования
 Актуальные требования для использования пакета можно посмотреть 
@@ -252,6 +247,12 @@ $apiRequest->setSandboxMode();
 // Отправим запрос к API
 $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
 ```
+
+## Ссылки
+- [Докуметация по API](https://dev.payu.ru/ru/documents/apiv4/)
+- [Основной сайт PayU Россия](https://payu.ru/)
+- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
+  класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 
 -------------
 ![](https://www.nco-payu.ru/media/images/global/payu@2x.png)
