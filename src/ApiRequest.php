@@ -129,7 +129,7 @@ class ApiRequest implements ApiRequestInterface
             $this->echoDebugMessage('Запрос к серверу PayU');
             $this->echoDebugMessage($encodedJsonData);
             $this->echoDebugMessage('Ответ от сервера PayU');
-            $this->echoDebugMessage($encodedJsonData);
+            $this->echoDebugMessage($response);
 
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');

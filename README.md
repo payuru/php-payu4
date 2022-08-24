@@ -64,15 +64,15 @@ $product1->setVat(20);
 
 //Опишем вторую позицию с помощью сокращённого синтаксиса:
 $product2 = new Product([
-'name'  => 'Жёлтый Круг',
-'sku'  => 'toy-15',
-'unitPrice'  => '1600',
-'quantity'  => '3',
-'vat'  => 0,
+    'name'  => 'Жёлтый Круг',
+    'sku'  => 'toy-15',
+    'unitPrice'  => '1600',
+    'quantity'  => '3',
+    'vat'  => 0,
 ]);
 
 // Опишем Биллинговую (платёжную) информацию
-$billing = (new Billing);
+$billing = new Billing;
 // Установим Код страны
 $billing->setCountryCode('RU');
 // Установим Город
@@ -95,10 +95,10 @@ $billing->setPhone('+79670660742');
 $billing->setEmail('test1@payu.ru');
 
 // (необязательно) Опишем Доствку и принимающее лицо
-$delivery = (new Delivery);
+$delivery = new Delivery;
 // Установим документ, подтверждающий право приёма доставки
 $delivery->setIdentityDocument(
-new IdentityDocument('123456', 'PERSONALID')
+    new IdentityDocument('123456', 'PERSONALID')
 );
 // Установим Код страны
 $delivery->setCountryCode('RU');
@@ -124,7 +124,7 @@ $delivery->setEmail('test2@payu.ru');
 $delivery->setCompanyName('ООО "Вектор"');
 
 // Создадим клиентское подключение
-$client = (new Client);
+$client = new Client;
 // Установим биллинг
 $client->setBilling($billing);
 // Установим доставку
@@ -135,7 +135,7 @@ $client->setCurrentClientIp();
 $client->setCurrentClientTime();
 
 // Создадим платёж
-$payment = (new Payment);
+$payment = new Payment;
 // Установим позиции
 $payment->addProduct($product1);
 $payment->addProduct($product2);
@@ -162,13 +162,13 @@ $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
 $responseData = json_decode((string) $responseData["response"], true);
 // Нарисуем кнопку оплаты
 echo '<a
-href="'.$responseData["paymentResult"]['url'].'"
-class="btn btn-success"
-target="_b"
-style="font-weight: bolder; color: green;"
-rel="noindex noopener">
-    ОПЛАТА PAYU
-</a>';
+    href="'.$responseData["paymentResult"]['url'].'"
+    class="btn btn-success"
+    target="_b"
+    style="font-weight: bolder; color: green;"
+    rel="noindex noopener">
+        Оплата PayU
+    </a>';
 ```
 ### Страница пользователя после совершения платежа
 Данные о состоянии платежа после его создания передаются в параметрах GET ($_GET)

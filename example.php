@@ -57,7 +57,7 @@ if(isset($_GET['function'])){
                 ]);
 
                 // Опишем Биллинговую (платёжную) информацию
-                $billing = (new Billing);
+                $billing = new Billing;
                 // Установим Код страны
                 $billing->setCountryCode('RU');
                 // Установим Город
@@ -80,7 +80,7 @@ if(isset($_GET['function'])){
                 $billing->setEmail('test1@payu.ru');
 
                 // (необязательно) Опишем Доствку и принимающее лицо
-                $delivery = (new Delivery);
+                $delivery = new Delivery;
                 // Установим документ, подтверждающий право приёма доставки
                 $delivery->setIdentityDocument(
                     new IdentityDocument('123456', 'PERSONALID')
@@ -109,7 +109,7 @@ if(isset($_GET['function'])){
                 $delivery->setCompanyName('ООО "Вектор"');
 
                 // Создадим клиентское подключение
-                $client = (new Client);
+                $client = new Client;
                 // Установим биллинг
                 $client->setBilling($billing);
                 // Установим доставку
@@ -120,7 +120,7 @@ if(isset($_GET['function'])){
                 $client->setCurrentClientTime();
 
                 // Создадим платёж
-                $payment = (new Payment);
+                $payment = new Payment;
                 // Установим позиции
                 $payment->addProduct($product1);
                 $payment->addProduct($product2);
@@ -152,7 +152,7 @@ if(isset($_GET['function'])){
                     target="_b"
                     style="font-weight: bolder; color: green;"
                     rel="noindex noopener">
-                        ОПЛАТА PAYU
+                        Оплата PayU
                     </a>';
                 break;
 
