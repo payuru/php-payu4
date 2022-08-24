@@ -167,13 +167,30 @@ echo '<a href="'.$responseData["paymentResult"]['url'].'" class="btn btn-success
 ### Страница пользователя после совершения платежа
 Данные о состоянии платежа после его создания передаются в параметрах GET ($_GET)
 ```php
+print_r($_GET);
+```
+### Получить номер транзакции в PayU (GetStatus)
+```php
+<php
+// Получить номер транзакции в PayU
 
+// Номер заказа
+$merchantPaymentReference = 'primer_nomer__184';
+// Создадим HTTP-запрос к API
+$apiRequest = new ApiRequest($merchant);
+// Включить режим отладки (удалите в рабочей программе!)
+$apiRequest->setDebugMode();
+// Переключиться на тестовый сервер (удалите в рабочей программе!)
+$apiRequest->setSandboxMode();
+// Отправим запрос к API
+$responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
 ```
 
 ### Списание средств (Capture)
 В зависимости от настройки мерчанта, PayU может списывать денежные средства автоматически,
 // Либо с помощью дополнительного запроса, описанного ниже.
 ```php
+<php
 // Запрос на списание денег
 
 // Создадим такой запрос:
@@ -199,8 +216,31 @@ $apiRequest->setSandboxMode();
 $responseData = $apiRequest->sendCaptureRequest($capture, $merchant);
 ```
 ### Отмена платежа (Refund)
+```php
+<?php
+// Инициировать возврат средств
 
-### Создание выплаты (payout)
+// Создадим запрос
+$refund = (new Refund);
+
+// Установим номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
+// См. пример с запросом Payment выше
+$refund->setPayuPaymentReference(2297597);
+// Cумма исходной операции на авторизацию
+$refund->setOriginalAmount(3700);
+// Cумма фактического списания
+$refund->setAmount(3700);
+// Установим валюту
+$refund->setCurrency('RUB');
+// Создадим HTTP-запрос к API
+$apiRequest = new ApiRequest($merchant);
+// Включить режим отладки (удалите в рабочей программе!)
+$apiRequest->setDebugMode();
+// Переключиться на тестовый сервер (удалите в рабочей программе!)
+$apiRequest->setSandboxMode();
+// Отправим запрос к API
+$responseData = $apiRequest->sendRefundRequest($refund, $merchant);
+```
 
 -------------
 ![](https://www.nco-payu.ru/media/images/global/payu@2x.png)

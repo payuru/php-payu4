@@ -199,21 +199,25 @@ if(isset($_GET['function'])){
             case 'paymentRefund':
                 // Инициировать возврат средств
 
-                // Номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
-                // см. пример с запросом Payment выше
-                $payuPaymentReference = 2297597;
-                // Cумма исходной операции на авторизацию
-                $originalAmount = 3700;
-                // Cумма фактического списания
-                $amount = 3700;
+                // Создадим запрос
+                $refund = (new Refund);
 
-                // Сформируем и отправим запрос
-                $refund = (new Refund)
-                    ->setPayuPaymentReference($payuPaymentReference)
-                    ->setOriginalAmount($originalAmount)
-                    ->setAmount($amount)
-                    ->setCurrency('RUB');
+                // Установим номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
+                // См. пример с запросом Payment выше
+                $refund->setPayuPaymentReference(2297597);
+                // Cумма исходной операции на авторизацию
+                $refund->setOriginalAmount(3700);
+                // Cумма фактического списания
+                $refund->setAmount(3700);
+                // Установим валюту
+                $refund->setCurrency('RUB');
+                // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
+                // Включить режим отладки (удалите в рабочей программе!)
+                $apiRequest->setDebugMode();
+                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                $apiRequest->setSandboxMode();
+                // Отправим запрос к API
                 $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
                 break;
 
