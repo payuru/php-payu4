@@ -126,9 +126,9 @@ class ApiRequest implements ApiRequestInterface
         curl_close($curl);
 
         if (true === $this->getDebugMode()) {
-            $this->echoDebugMessage('Запрос к серверу PayU');
+            $this->echoDebugMessage('Запрос к серверу PayU:');
             $this->echoDebugMessage($encodedJsonData);
-            $this->echoDebugMessage('Ответ от сервера PayU');
+            $this->echoDebugMessage('Ответ от сервера PayU:');
             $this->echoDebugMessage($response);
 
             if (mb_strlen($err) > 0) {
@@ -231,7 +231,14 @@ class ApiRequest implements ApiRequestInterface
         if ($this->getDebugMode()) {
             echo '
                 <pre
-                class="w-100 d-block"
+                    class="w-100 d-block"
+                    style="
+                        background: aliceblue;
+                        color: black;
+                        padding: 2px;
+                        border: 1px solid green;
+                        white-space: pre-wrap;
+                    "
                 >'.print_r($mixedInput, true).'</pre>';
         }
     }
