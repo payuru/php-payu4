@@ -316,4 +316,3 @@ if(isset($_GET['function'])){
 }
 
 include 'example_template.html';
-

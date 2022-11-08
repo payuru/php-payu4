@@ -100,7 +100,7 @@ class Std
                 />
                 Оплатить
                 '.(isset($params['sum']) ? '<br><strong>'
-                    . number_format((int)$params['sum'], 0, '.', ' ')
+                    . number_format($params['sum'], 0, '.', ' ')
                     . ' '
                     . ( isset($params['currency']) ? htmlspecialchars($params['currency']) : '₽' ) .'</strong>' : '').'
             </a>

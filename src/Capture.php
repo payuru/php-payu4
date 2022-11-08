@@ -92,6 +92,20 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     }
 
     /** @inheritDoc */
+    public function setDebugMode(bool $isOn): CaptureInterface
+    {
+        // TODO: Implement setDebugMode() method.
+        return $this;
+    }
+
+    /** @inheritDoc */
+    public function setSandboxMode(bool $isOn): CaptureInterface
+    {
+        // TODO: Implement setSandboxMode() method.
+        return $this;
+    }
+
+    /** @inheritDoc */
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров

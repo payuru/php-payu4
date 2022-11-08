@@ -8,7 +8,7 @@ class Client implements ClientInterface
     private BillingInterface $billing;
 
     /** @var ?string Клиенский IP */
-    private ?string $clientIp;
+    private ?string $clientIp = null;
 
     /** @var string Время оплаты */
     private string $clientTime;
