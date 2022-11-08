@@ -14,7 +14,7 @@ class Client implements ClientInterface
     private string $clientTime;
 
     /** @var string Язык общения с клиентом */
-    private string $communicationLanguage = 'Русский';
+    private string $communicationLanguage = 'RU';
 
     /** @var DeliveryInterface Информация о доставке */
     private DeliveryInterface $delivery;

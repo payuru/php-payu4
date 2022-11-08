@@ -31,7 +31,7 @@ $merchant = new Merchant('CC1', 'SECRET_KEY');
 if(isset($_GET['function'])){
     try {
         switch ($_GET['function']) {
-            case 'simplaGetPaymentLink':
+            case 'simpleGetPaymentLink':
                 // Оплата по ссылке PayU
                 // Минимальный набор полей
 
@@ -110,7 +110,7 @@ if(isset($_GET['function'])){
                 // Опишем первую позицию
                 $product1 = new Product;
                 // Установим Наименование (название товара или услуги)
-                $product1->setName('Синий Мяч');
+                $product1->setName('Синий Квадрат');
                 // Установим Артикул
                 $product1->setSku('ball-05');
                 // Установим Стоимость за единицу
@@ -122,7 +122,7 @@ if(isset($_GET['function'])){
 
                 //Опишем вторую позицию с помощью сокращённого синтаксиса:
                 $product2 = new Product([
-                    'name'  => 'Жёлтый Круг',
+                    'name'  => 'Оранжевый Круг',
                     'sku'  => 'toy-15',
                     'unitPrice'  => '1600',
                     'quantity'  => '3',
@@ -299,8 +299,10 @@ if(isset($_GET['function'])){
                 break;
 
             case 'returnPage':
-                //забрать GET-параметры из страницы возврата
-                echo '<pre>' . print_r($_GET, true) . '</pre>';
+                // Страница после оплаты:
+                echo '<h1>Благодарим за оплату</h1>Чек выслан вам на почту.';
+                echo '<pre>$_GET: ' . print_r($_GET, true) . '</pre>';
+                echo '<pre>$_POST: ' . print_r($_POST, true) . '</pre>';
                 break;
 
             default:

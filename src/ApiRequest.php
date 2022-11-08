@@ -191,6 +191,7 @@ class ApiRequest implements ApiRequestInterface
     {
         $urlParts = parse_url($url);
         $urlHashableParts = $httpMethod . $urlParts['path'];
+        $this->echoDebugMessage($urlParts);
 
         if (isset($urlParts['query'])) {
             $urlHashableParts .= $urlParts['query'];
