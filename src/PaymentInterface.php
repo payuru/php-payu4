@@ -106,4 +106,9 @@ interface PaymentInterface
      * @throws PaymentException Ошибка оплаты
      */
     public function sumProductsAmount() : int;
+
+    /**
+     * @return string|bool
+     */
+    public function jsonSerialize() : string|bool;
 }
