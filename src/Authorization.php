@@ -7,6 +7,7 @@ use \JsonSerializable;
 class Authorization implements AuthorizationInterface
 {
     const TYPE_CCVISAMC = 'CCVISAMC';
+    const TYPE_FASTER_PAYMENTS = 'FASTER_PAYMENTS';
 
     /**
      * включить страницу оплаты PayU
@@ -36,6 +37,9 @@ class Authorization implements AuthorizationInterface
         switch ($paymentMethodType) {
             case 'CCVISAMC':
                 $this->paymentMethod = self::TYPE_CCVISAMC;
+                break;
+            case 'FASTER_PAYMENTS':
+                $this->paymentMethod = self::TYPE_FASTER_PAYMENTS;
                 break;
             default:
                 throw new PaymentException('Неверный тип оплаты в авторизации');
