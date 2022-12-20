@@ -164,7 +164,7 @@ class Product implements ProductInterface
         return [
             'name'              => $this->getName(),
             'sku'               => $this->getSku(),
-            'unitPrice'         => number_format($this->getUnitPrice(), 2),
+            'unitPrice'         => (null !== $this->getUnitPrice() ? number_format($this->getUnitPrice(), 2) : null),
             'quantity'          => $this->getQuantity(),
             'additionalDetails' => $this->getAdditionalDetails(),
             'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2) : null),
