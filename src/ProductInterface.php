@@ -37,7 +37,7 @@ interface ProductInterface
     public function getSku() : string;
 
     /**
-     * Установить Цена за 1 штуку
+     * Установить Цена за 1 штуку, округление до копейки
      * @param float $unitPrice
      * @return $this Цена за 1 штуку
      */

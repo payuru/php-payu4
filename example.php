@@ -42,8 +42,8 @@ if(isset($_GET['function'])){
                 $orderAsProduct = new Product([
                     'name'  => 'Заказ №' . $merchantPaymentReference,
                     'sku'  => $merchantPaymentReference,
-                    'unitPrice'  => '1600',
-                    'quantity'  => '1'
+                    'unitPrice'  => '1.42',
+                    'quantity'  => '2',
                 ]);
 
                 // Опишем Биллинговую (платёжную) информацию
@@ -90,18 +90,28 @@ if(isset($_GET['function'])){
                 // Отправим запрос
                 $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
                 // Преобразуем ответ из JSON в массив
-                $responseData = json_decode((string) $responseData["response"], true);
-                // Нарисуем кнопку оплаты
-                echo '<a
-                    href="'.$responseData["paymentResult"]['url'].'"
-                    class="btn btn-success"
-                    target="_b"
-                    style="font-weight: bolder; color: green;"
-                    rel="noindex noopener">
-                        Оплата PayU
-                    </a>';
-                // .. или сделаем редирект на форму оплаты (опционально)
-                // header("Location: " . $responseData["paymentResult"]['url']);
+                try {
+                    $responseData = json_decode((string) $responseData["response"], true);
+
+                    // Нарисуем кнопку оплаты
+                    echo Std::drawPayuButton([
+                        'url' => $responseData["paymentResult"]['url'],
+                        'sum' => $payment->sumProductsAmount(),
+                    ]);
+
+                    // .. или сделаем редирект на форму оплаты (опционально)
+                    // Std::redirect($responseData["paymentResult"]['url']);
+                } catch (Exception $exception) {
+                    //TODO: обработка исключения
+                    echo Std::alert([
+                        'text' => '
+                            Извините, платёжный метода временно недоступен.<br>
+                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
+                            <br>
+                            <pre>' . $exception->getMessage() . '</pre>',
+                        'type' => 'danger',
+                    ]);
+                }
                 break;
             case 'getPaymentLink':
                 // Оплата по ссылке PayU
@@ -217,14 +227,28 @@ if(isset($_GET['function'])){
                 // Отправим запрос
                 $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
                 // Преобразуем ответ из JSON в массив
-                $responseData = json_decode((string) $responseData["response"], true);
-                // Нарисуем кнопку оплаты
-                echo Std::drawPayuButton([
-                    'url' => $responseData["paymentResult"]['url'],
-                    'sum' => $payment->sumProductsAmount(),
-                ]);
-                // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
-                // echo Std::redirect($responseData["paymentResult"]['url']);
+                try {
+                    $responseData = json_decode((string) $responseData["response"], true);
+
+                    // Нарисуем кнопку оплаты
+                    echo Std::drawPayuButton([
+                        'url' => $responseData["paymentResult"]['url'],
+                        'sum' => $payment->sumProductsAmount(),
+                    ]);
+
+                    // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
+                    // echo Std::redirect($responseData["paymentResult"]['url']);
+                } catch (Exception $exception) {
+                    //TODO: обработка исключения
+                    echo Std::alert([
+                        'text' => '
+                            <strong>Извините, платёжный метода временно недоступен.</strong><br>
+                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
+                            <br>
+                            <pre>' . $exception->getMessage() . '</pre>',
+                        'type' => 'danger',
+                    ]);
+                }
                 break;
 
             case 'paymentCapture':

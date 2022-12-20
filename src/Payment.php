@@ -125,7 +125,7 @@ class Payment implements PaymentInterface, JsonSerializable, TransactionInterfac
     }
 
     /** @inheritdoc */
-    public function sumProductsAmount() : int
+    public function sumProductsAmount() : float
     {
         $sum = 0;
         foreach ($this->getProducts() as $product) {

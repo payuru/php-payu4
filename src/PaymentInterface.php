@@ -105,7 +105,7 @@ interface PaymentInterface
      * @return int Итог
      * @throws PaymentException Ошибка оплаты
      */
-    public function sumProductsAmount() : int;
+    public function sumProductsAmount() : float;
 
     /**
      * @return string|bool

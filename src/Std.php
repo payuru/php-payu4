@@ -22,6 +22,20 @@ class Std
     }
 
     /**
+     * @param array $params
+     * @return string
+     */
+    public static function alert(array $params)
+    {
+        return '        
+            <div class="alert alert-' . ($params['type'] ?? 'info') . '" role="alert">
+              ' .  $params['text'] . '
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        ';
+    }
+
+    /**
      * Удалить null-значения из массива
      * @param array $array
      * @return array
@@ -100,7 +114,7 @@ class Std
                 />
                 Оплатить
                 '.(isset($params['sum']) ? '<br><strong>'
-                    . number_format($params['sum'], 0, '.', ' ')
+                    . number_format($params['sum'], 2, '.', ' ')
                     . ' '
                     . ( isset($params['currency']) ? htmlspecialchars($params['currency']) : '₽' ) .'</strong>' : '').'
             </a>

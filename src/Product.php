@@ -19,9 +19,9 @@ class Product implements ProductInterface
     private string $sku;
 
     /**
-     * @var int Цена за 1 штуку
+     * @var float Цена за 1 штуку
      */
-    private int $unitPrice;
+    private float $unitPrice;
 
     /**
      * @var int Количество
@@ -34,9 +34,9 @@ class Product implements ProductInterface
     private int $vat = 20;
 
     /**
-     * @var int Подитог
+     * @var float Подитог
      */
-    private int $amount;
+    private float $amount;
 
     /**
      * @var string Любые доп. сведения
@@ -73,7 +73,7 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setName(string $name): Product
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -86,7 +86,7 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setSku(string $sku): Product
+    public function setSku(string $sku): self
     {
         $this->sku = $sku;
         return $this;
@@ -99,9 +99,9 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setUnitPrice(float $unitPrice): Product
+    public function setUnitPrice(float $unitPrice): self
     {
-        $this->unitPrice = $unitPrice;
+        $this->unitPrice = round($unitPrice, 2, PHP_ROUND_HALF_UP);
         return $this;
     }
 
@@ -112,7 +112,7 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setQuantity(int $quantity): Product
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
         return $this;
@@ -125,7 +125,7 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setVat(int $vat): Product
+    public function setVat(int $vat): self
     {
         $this->vat = $vat;
         return $this;
@@ -138,10 +138,10 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setAmount(float $amount): Product
+    public function setAmount(float $amount): self
     {
         //TODO: ВАЖНО: не должно превышать оригинальную стоимость (unitPrice * quantity) продукта при авторизации
-        $this->amount = $amount;
+        $this->amount = round($amount, 2, PHP_ROUND_HALF_UP);
         return $this;
     }
 
@@ -152,7 +152,7 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
-    public function setAdditionalDetails(string $additionalDetails): Product
+    public function setAdditionalDetails(string $additionalDetails): self
     {
         $this->additionalDetails = $additionalDetails;
         return $this;
@@ -164,10 +164,10 @@ class Product implements ProductInterface
         return [
             'name'              => $this->getName(),
             'sku'               => $this->getSku(),
-            'unitPrice'         => $this->getUnitPrice(),
+            'unitPrice'         => number_format($this->getUnitPrice(), 2),
             'quantity'          => $this->getQuantity(),
             'additionalDetails' => $this->getAdditionalDetails(),
-            'amount'            => $this->getAmount(),
+            'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2) : null),
             'vat'               => $this->getVat(),
         ];
     }
