@@ -42,8 +42,8 @@ if(isset($_GET['function'])){
                 $orderAsProduct = new Product([
                     'name'  => 'Заказ №' . $merchantPaymentReference,
                     'sku'  => $merchantPaymentReference,
-                    'unitPrice'  => '1.42',
-                    'quantity'  => '2',
+                    'unitPrice'  => 1.42,
+                    'quantity'  => 2,
                 ]);
 
                 // Опишем Биллинговую (платёжную) информацию
@@ -134,8 +134,8 @@ if(isset($_GET['function'])){
                 $product2 = new Product([
                     'name'  => 'Оранжевый Круг',
                     'sku'  => 'toy-15',
-                    'unitPrice'  => '1600',
-                    'quantity'  => '3',
+                    'unitPrice'  => 160000,
+                    'quantity'  => 3,
                     'vat'  => 0,
                 ]);
 

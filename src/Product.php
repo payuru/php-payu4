@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace payuru\phpPayu4;
 
 /**
@@ -164,10 +166,10 @@ class Product implements ProductInterface
         return [
             'name'              => $this->getName(),
             'sku'               => $this->getSku(),
-            'unitPrice'         => (null !== $this->getUnitPrice() ? number_format($this->getUnitPrice(), 2) : null),
+            'unitPrice'         => (null !== $this->getUnitPrice() ? number_format($this->getUnitPrice(), 2,'.','') : null),
             'quantity'          => $this->getQuantity(),
             'additionalDetails' => $this->getAdditionalDetails(),
-            'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2) : null),
+            'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2,'.','') : null),
             'vat'               => $this->getVat(),
         ];
     }
