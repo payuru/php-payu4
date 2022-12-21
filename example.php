@@ -105,12 +105,14 @@ if(isset($_GET['function'])){
                     //TODO: обработка исключения
                     echo Std::alert([
                         'text' => '
-                            Извините, платёжный метода временно недоступен.<br>
+                            Извините, платёжный метод временно недоступен.<br>
                             Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
                             <br>
                             <pre>' . $exception->getMessage() . '</pre>',
                         'type' => 'danger',
                     ]);
+
+                    throw new PaymentException('Платёжный метод временно недоступен');
                 }
                 break;
             case 'getPaymentLink':
@@ -242,12 +244,14 @@ if(isset($_GET['function'])){
                     //TODO: обработка исключения
                     echo Std::alert([
                         'text' => '
-                            <strong>Извините, платёжный метода временно недоступен.</strong><br>
+                            Извините, платёжный метод временно недоступен.<br>
                             Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
                             <br>
                             <pre>' . $exception->getMessage() . '</pre>',
                         'type' => 'danger',
                     ]);
+
+                    throw new PaymentException('Платёжный метод временно недоступен');
                 }
                 break;
 
