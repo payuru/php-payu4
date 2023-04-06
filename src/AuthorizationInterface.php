@@ -25,6 +25,19 @@ interface AuthorizationInterface
     public function setUsePaymentPage(bool $isUsed) : self;
 
     /**
+     * Получить Данные Карты
+     * @return CardDetailsInterface Данные Карты
+     */
+    public function getCardDetails(): CardDetailsInterface;
+
+    /**
+     * Установить Данные Карты
+     * @param CardDetailsInterface $cardDetails
+     * @return Authorization
+     */
+    public function setCardDetails(CardDetailsInterface $cardDetails): Authorization;
+
+    /**
      * Получить Использование платёжной страницы
      * @return bool Использование платёжной страницы
      */

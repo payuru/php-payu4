@@ -16,6 +16,9 @@ class Authorization implements AuthorizationInterface
     private bool $usePaymentPage = true;
     private string $paymentMethod = self::TYPE_CCVISAMC;
 
+    /** @var CardDetailsInterface|null Данные карты */
+    private ?CardDetailsInterface $cardDetails = null;
+
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
@@ -74,14 +77,33 @@ class Authorization implements AuthorizationInterface
         return $this->paymentMethod;
     }
 
+    /** @inheritDoc */
+    public function getCardDetails(): CardDetailsInterface
+    {
+        return $this->cardDetails;
+    }
+
+    /** @inheritDoc */
+    public function setCardDetails(CardDetailsInterface $cardDetails): Authorization
+    {
+        $this->cardDetails = $cardDetails;
+        return $this;
+    }
+
     /**
      * @return array
      */
     public function arraySerialize(): array
     {
-        return [
+        $resultArray = [
             'usePaymentPage' => ($this->usePaymentPage ? 'YES' : 'NO'),
-            'paymentMethod' => $this->paymentMethod,
+            'paymentMethod'  => $this->paymentMethod,
         ];
+
+        if (!is_null($this->cardDetails)) {
+            $resultArray['cardDetails'] = $this->cardDetails->toArray();
+        }
+
+        return $resultArray;
     }
 }

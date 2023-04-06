@@ -44,7 +44,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setNumber(string $number): CardDetails
+    public function setNumber(string $number): self
     {
         $this->number = $number;
         return $this;
@@ -57,7 +57,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setExpiryMonth(int $expiryMonth): CardDetails
+    public function setExpiryMonth(int $expiryMonth): self
     {
         $this->expiryMonth = $expiryMonth;
         return $this;
@@ -70,8 +70,12 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setYear(int $year): CardDetails
+    public function setYear(int $year): self
     {
+        if ( $year< 1900) {
+            throw new PaymentException('Проверьте год выпуска карты');
+        }
+
         $this->year = $year;
         return $this;
     }
@@ -83,7 +87,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setExpiryYear(int $expiryYear): CardDetails
+    public function setExpiryYear(int $expiryYear): self
     {
         $this->expiryYear = $expiryYear;
         return $this;
@@ -96,7 +100,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setCvv(int $cvv): CardDetails
+    public function setCvv(int $cvv): self
     {
         $this->cvv = $cvv;
         return $this;
@@ -109,7 +113,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setOwner(string $owner): CardDetails
+    public function setOwner(string $owner): self
     {
         $this->owner = $owner;
         return $this;
@@ -122,7 +126,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setTimeSpentTypingNumber(int $timeSpentTypingNumber): CardDetails
+    public function setTimeSpentTypingNumber(int $timeSpentTypingNumber): self
     {
         $this->timeSpentTypingNumber = $timeSpentTypingNumber;
         return $this;
@@ -135,7 +139,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setTimeSpentTypingOwner(int $timeSpentTypingOwner): CardDetails
+    public function setTimeSpentTypingOwner(int $timeSpentTypingOwner): self
     {
         $this->timeSpentTypingOwner = $timeSpentTypingOwner;
         return $this;
@@ -148,7 +152,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setBin(int $bin): CardDetails
+    public function setBin(int $bin): self
     {
         $this->bin = $bin;
         return $this;
@@ -161,7 +165,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setPan(string $pan): CardDetails
+    public function setPan(string $pan): self
     {
         $this->pan = $pan;
         return $this;
@@ -174,7 +178,7 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setType(string $type): CardDetails
+    public function setType(string $type): self
     {
         $this->type = $type;
         return $this;
@@ -187,9 +191,34 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function setCardIssuerBank(string $cardIssuerBank): CardDetails
+    public function setCardIssuerBank(string $cardIssuerBank): self
     {
         $this->cardIssuerBank = $cardIssuerBank;
         return $this;
+    }
+
+    /** @inheritDoc */
+    public function toArray() : array
+    {
+        $resultArray = get_object_vars($this);
+
+        foreach ($resultArray as &$value) {
+            if (is_object($value) && method_exists($value, 'toArray')) {
+
+                $value = $value->toArray();
+
+            } else {
+                if (is_array($value)) {
+                    foreach ($value as &$arrayValue) {
+                        if (is_object($arrayValue) && method_exists($arrayValue, 'toArray')) {
+
+                            $arrayValue = $arrayValue->toArray();
+                        }
+                    }
+                }
+            }
+        }
+
+        return $resultArray;
     }
 }

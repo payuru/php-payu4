@@ -148,4 +148,18 @@ interface CardDetailsInterface
      * @return string Банк, выпустивший карту
      */
     public function getCardIssuerBank() : string;
+
+    /**
+     * Получить Год Карты
+     * @return int Год Карты
+     */
+    public function getYear(): int;
+
+    /**
+     *
+     * Установить Год Карты
+     * @param int $year Год Карты
+     * @return $this Детали Карты
+     */
+    public function setYear(int $year): self;
 }
