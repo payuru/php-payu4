@@ -19,6 +19,9 @@ class Authorization implements AuthorizationInterface
     /** @var CardDetailsInterface|null Данные карты */
     private ?CardDetailsInterface $cardDetails = null;
 
+    /** @var MerchantTokenInterface|null Данные карты (в виде токена) */
+    private ?MerchantTokenInterface $merchantToken = null;
+
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
@@ -33,7 +36,7 @@ class Authorization implements AuthorizationInterface
 
     /**
      * @inheritDoc
-     * @throws PaymentException Ощибка оплаты
+     * @throws PaymentException Ошибка оплаты
      */
     public function setPaymentMethod(string $paymentMethodType) : self
     {
@@ -51,27 +54,29 @@ class Authorization implements AuthorizationInterface
         return $this;
     }
 
-    /**
-     * @param bool $isUsed
-     * @return $this
-     */
+    /** @inheritDoc */
     public function setUsePaymentPage(bool $isUsed) : self
     {
-        $this->usePaymentPage = $isUsed;
+        if ($isUsed === true) {
+            if (is_null($this->merchantToken) && is_null($this->cardDetails)) {
+                $this->usePaymentPage = $isUsed;
+            } else {
+                throw new PaymentException('For using PaymentPage need to make MerchantToken = NULL and CardDetails = NULL');
+            }
+        } else {
+            $this->usePaymentPage = $isUsed;
+        }
+
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function getUsePaymentPage(): bool
     {
         return $this->usePaymentPage;
     }
 
-    /**
-     * @return string
-     */
+    /** @inheritDoc */
     public function getPaymentMethod(): string
     {
         return $this->paymentMethod;
@@ -84,10 +89,36 @@ class Authorization implements AuthorizationInterface
     }
 
     /** @inheritDoc */
-    public function setCardDetails(CardDetailsInterface $cardDetails): Authorization
+    public function setCardDetails(CardDetailsInterface $cardDetails): self
     {
-        $this->cardDetails = $cardDetails;
-        return $this;
+        if (is_null($this->merchantToken) && $this->usePaymentPage === false) {
+            $this->cardDetails = $cardDetails;
+
+            return $this;
+        } else {
+            throw new PaymentException('For using CardDetails need to make MerchantToken = NULL and usePaymentPage = false');
+        }
+    }
+
+    /** @inheritDoc */
+    public function getMerchantToken(): ?MerchantTokenInterface
+    {
+        return $this->merchantToken;
+    }
+
+    /**
+     * @inheritDoc
+     * @throws PaymentException
+     */
+    public function setMerchantToken(?MerchantTokenInterface $merchantToken): self
+    {
+        if (is_null($this->getCardDetails()) && $this->getUsePaymentPage() === false) {
+            $this->merchantToken = $merchantToken;
+
+            return $this;
+        } else {
+            throw new PaymentException('For using MerchantToken need to make CardDetails = NULL and usePaymentPage = false');
+        }
     }
 
     /**
@@ -102,6 +133,10 @@ class Authorization implements AuthorizationInterface
 
         if (!is_null($this->cardDetails)) {
             $resultArray['cardDetails'] = $this->cardDetails->toArray();
+        }
+
+        if (!is_null($this->merchantToken)) {
+            $resultArray['merchantToken'] = $this->merchantToken->toArray();
         }
 
         return $resultArray;
