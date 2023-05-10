@@ -1,7 +1,7 @@
-# php-payu4
-Примеры использования PayU API v4.
+# PHP API Client для платёжноц системы YourPayments
+Примеры использования YourPayments API
  
-PayU - многофункциональная платёжная система, поддерживающая не только простые платежи с банковских карт, но и множество
+YourPayments (Твои Платежи) - многофункциональная платёжная система, поддерживающая не только простые платежи с банковских карт, но и множество
 форм оплаты, а также подписки и выплаты на карты.
  
 Данный репозиторий написан по принципам SOLID, и каждый программный интерфейс снабжен подробной документацией на
@@ -291,7 +291,7 @@ try {
 ```php
 print_r($_POST);
 ```
-### Получить номер транзакции в PayU (GetStatus)
+### Получить номер транзакции в YourPayments (GetStatus)
 ```php
 <php
 // Получить номер транзакции в PayU
@@ -366,13 +366,13 @@ $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
 ```
 
 ## Ссылки
-- [Докуметация по API](https://dev.payu.ru/ru/documents/apiv4/)
-- [Основной сайт PayU Россия](https://payu.ru/)
+- [Докуметация по API](https://dev.YPMN.ru/ru/documents/apiv4/)
+- [Основной сайт Твои Платежи](https://YPMN.ru/)
 - Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
   класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
 - [Задать вопрос или сообщить о проблеме](https://github.com/payuru/php-payu4/issues/new)
 
 -------------
-![](https://www.nco-payu.ru/media/images/global/payu@2x.png)
+![](https://ypmn.ru/s/img/logo/ru/dark/horizontal_logo.svg)
  
-[PayU.ru](https://PayU.ru/ "Платёжная система для сайтов и не только")
+[YPMN.ru](https:/YPMN.ru/ "Платёжная система для сайтов и не только")
