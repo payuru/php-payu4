@@ -1,5 +1,5 @@
 {
-  "name": "yourpayments/php-api-client ",
+  "name": "yourpayments/php-api-client",
   "description": "Your Payments - powerful payment gateway PHP integration",
   "type": "package",
   "keywords": ["payments", "processing"],
