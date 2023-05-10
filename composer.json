@@ -1,6 +1,6 @@
 {
-  "name": "payuru/php-payu4",
-  "description": "PayU - powerful payment gateway PHP integration",
+  "name": "yourpayments/php-api-client ",
+  "description": "Your Payments - powerful payment gateway PHP integration",
   "type": "package",
   "keywords": ["payments", "processing"],
   "require": {
@@ -12,9 +12,9 @@
   "license": "mit",
   "authors": [
     {
-      "name": "PayU Team",
-      "email": "help@payu.ru",
-      "homepage": "https://dev.payu.ru/ru/documents/apiv4/"
+      "name": "YPMN Team",
+      "email": "itsupport@ypmn.ru",
+      "homepage": "https://dev.ypmn.ru/ru/documents/apiv4/"
     }
   ],
   "minimum-stability": "dev",
