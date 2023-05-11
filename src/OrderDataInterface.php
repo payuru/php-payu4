@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface OrderDataInterface
 {
@@ -19,14 +19,14 @@ interface OrderDataInterface
     public function setOrderDate(string $orderDate): self;
 
     /**
-     * Получить Номер Заказа в PayU
-     * @return string Номер Заказа в PayU
+     * Получить Номер Заказа в Ypmn
+     * @return string Номер Заказа в Ypmn
      */
     public function getPayuPaymentReference(): string;
 
     /**
-     * Установить Номер Заказа в PayU
-     * @param string $payuPaymentReference Номер Заказа в PayU
+     * Установить Номер Заказа в Ypmn
+     * @param string $payuPaymentReference Номер Заказа в Ypmn
      * @return $this
      */
     public function setPayuPaymentReference(string $payuPaymentReference): self;

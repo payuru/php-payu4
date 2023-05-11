@@ -1,6 +1,6 @@
 <?php
 //TODO: CaptureInterface и PaymentInterface и RefundInterface имеют много общих методов, реорганизовать интерфейсы
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface CaptureInterface
 {
@@ -13,7 +13,7 @@ interface CaptureInterface
     public function setDebugMode(bool $isOn) : self;
 
     /**
-     * Переключить режим тестирования PayU Sandbox
+     * Переключить режим тестирования Ypmn Sandbox
      * оплата будет перенаправлена на тестовый сервер
      * https://sandbox.payu.ru
      * @param bool $isOn
@@ -22,16 +22,16 @@ interface CaptureInterface
     public function setSandboxMode(bool $isOn) : self;
 
     /**
-     * Установить Номер платежа PayU
+     * Установить Номер платежа Ypmn
      * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'payuPaymentReference')
-     * @param string $paymentIdString Номер платежа PayU
+     * @param string $paymentIdString Номер платежа Ypmn
      * @return $this
      */
     public function setPayuPaymentReference(string $paymentIdString) : self;
 
     /**
-     * Получить Номер платежа PayU
-     * @return string Номер платежа PayU
+     * Получить Номер платежа Ypmn
+     * @return string Номер платежа Ypmn
      */
     public function getPayuPaymentReference() : string;
 

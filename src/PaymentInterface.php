@@ -1,5 +1,5 @@
 <?php
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface PaymentInterface
 {

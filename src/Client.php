@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 class Client implements ClientInterface
 {

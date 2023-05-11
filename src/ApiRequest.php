@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 use \DateTime;
 use \DateTimeInterface;
@@ -21,7 +21,7 @@ class ApiRequest implements ApiRequestInterface
     /** @var MerchantInterface Мерчант, от имени которого отправляется запрос */
     private MerchantInterface $merchant;
 
-    /** @var bool Режим Песочницы (тестовая панель PayU */
+    /** @var bool Режим Песочницы (тестовая панель Ypmn */
     private bool $sandboxModeIsOn = false;
 
     /** @var bool Режим Отладки (вывод системных сообщений) */
@@ -36,7 +36,7 @@ class ApiRequest implements ApiRequestInterface
     /**
      * Отправка GET-запроса
      * @param string $api адрес API (URI)
-     * @return array ответ сервера PayU
+     * @return array ответ сервера Ypmn
      */
     private function sendGetRequest(string $api): array
     {
@@ -81,7 +81,7 @@ class ApiRequest implements ApiRequestInterface
      * Отправка POST-запроса
      * @param JsonSerializable $data запрос
      * @param string $api адрес API (URI)
-     * @return array ответ сервера PayU
+     * @return array ответ сервера Ypmn
      * @throws PaymentException
      */
     private function sendPostRequest(JsonSerializable $data, string $api): array
@@ -124,9 +124,9 @@ class ApiRequest implements ApiRequestInterface
         curl_close($curl);
 
         if (true === $this->getDebugMode()) {
-            $this->echoDebugMessage('Запрос к серверу PayU:');
+            $this->echoDebugMessage('Запрос к серверу Ypmn:');
             $this->echoDebugMessage($encodedJsonData);
-            $this->echoDebugMessage('Ответ от сервера PayU:');
+            $this->echoDebugMessage('Ответ от сервера Ypmn:');
             $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
 
             if (mb_strlen($err) > 0) {

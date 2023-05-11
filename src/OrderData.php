@@ -1,13 +1,13 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 class OrderData implements OrderDataInterface
 {
     /** @var string Дата Заказа */
     private string $orderDate;
 
-    /** @var string Номер платежа PayU */
+    /** @var string Номер платежа Ypmn */
     private string $payuPaymentReference;
 
     /** @var string */

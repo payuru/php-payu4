@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 /**
  * Принятие информации о запросе на стороне мерчанта
  * https://secure.payu.ru/docs/#tag/Webhooks/paths/~1merchant-ipn-url/post

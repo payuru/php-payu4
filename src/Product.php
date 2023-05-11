@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 /**
  * Продукт или Услуга

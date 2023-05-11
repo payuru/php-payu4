@@ -1,11 +1,11 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface WebhookInterface
 {
     /**
-     * Принять запрос от сервера PayU
+     * Принять запрос от сервера Ypmn
      * @return $this
      * @throws PaymentException Ошибка оплаты
      */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Пример интеграции API многофункциональной платёжной системы PayU, версия 4
+ * Пример интеграции API многофункциональной платёжной системы Ypmn, версия 4
  * Документация:
  *      https://dev.payu.ru/ru/documents/apiv4/
  *      https://secure.payu.ru/docs/#tag/Payment-API
@@ -8,19 +8,19 @@
  *  и класса PaymentInterface
  */
 
-use payuru\phpPayu4\Authorization;
-use payuru\phpPayu4\Delivery;
-use payuru\phpPayu4\IdentityDocument;
-use payuru\phpPayu4\Merchant;
-use payuru\phpPayu4\Payment;
-use payuru\phpPayu4\Client;
-use payuru\phpPayu4\Billing;
-use payuru\phpPayu4\ApiRequest;
-use payuru\phpPayu4\PaymentException;
-use payuru\phpPayu4\Product;
-use payuru\phpPayu4\Capture;
-use payuru\phpPayu4\Refund;
-use payuru\phpPayu4\Std;
+use Ypmn\Authorization;
+use Ypmn\Delivery;
+use Ypmn\IdentityDocument;
+use Ypmn\Merchant;
+use Ypmn\Payment;
+use Ypmn\Client;
+use Ypmn\Billing;
+use Ypmn\ApiRequest;
+use Ypmn\PaymentException;
+use Ypmn\Product;
+use Ypmn\Capture;
+use Ypmn\Refund;
+use Ypmn\Std;
 
 // TODO: нужен публичный тестовый мерчант, которого можно включить в документацию
 // Создадим тестового мерчанта
@@ -32,7 +32,7 @@ if(isset($_GET['function'])){
     try {
         switch ($_GET['function']) {
             case 'simpleGetPaymentLink':
-                // Оплата по ссылке PayU
+                // Оплата по ссылке Ypmn
                 // Минимальный набор полей
 
                 // Представим, что мы не хотим передавать товары, только номер заказа и сумму
@@ -55,7 +55,7 @@ if(isset($_GET['function'])){
                 // Установим Фамилия Плательщика
                 $billing->setLastName('Петров');
                 // Установим Email Плательщика
-                $billing->setEmail('test1@payu.ru');
+                $billing->setEmail('test1@ypmn.ru');
                 // Установим Телефон Плательщика
                 $billing->setPhone('+7-800-555-35-35');
                 // Установим Город
@@ -94,7 +94,7 @@ if(isset($_GET['function'])){
                     $responseData = json_decode((string) $responseData["response"], true);
 
                     // Нарисуем кнопку оплаты
-                    echo Std::drawPayuButton([
+                    echo Std::drawYpmnButton([
                         'url' => $responseData["paymentResult"]['url'],
                         'sum' => $payment->sumProductsAmount(),
                     ]);
@@ -116,7 +116,7 @@ if(isset($_GET['function'])){
                 }
                 break;
             case 'getPaymentLink':
-                // Оплата по ссылке PayU
+                // Оплата по ссылке Ypmn
                 // Представим, что нам надо оплатить пару позиций: Синий Мяч и Жёлтый Круг
 
                 // Опишем первую позицию
@@ -152,7 +152,7 @@ if(isset($_GET['function'])){
                 // Установим Адрес Плательщика (первая строка)
                 $billing->setAddressLine1('Улица Старый Арбат, дом 10');
                 // Установим Адрес Плательщика (вторая строка)
-                $billing->setAddressLine1('Офис PayU');
+                $billing->setAddressLine1('Офис Ypmn');
                 // Установим Почтовый Индекс Плательщика
                 $billing->setZipCode('121000');
                 // Установим Имя Плательщика
@@ -162,7 +162,7 @@ if(isset($_GET['function'])){
                 // Установим Телефон Плательщика
                 $billing->setPhone('+79670660742');
                 // Установим Email Плательщика
-                $billing->setEmail('test1@payu.ru');
+                $billing->setEmail('test1@ypmn.ru');
 
                 // (необязательно) Опишем Доствку и принимающее лицо
                 $delivery = new Delivery;
@@ -179,7 +179,7 @@ if(isset($_GET['function'])){
                 // Установим Адрес Лица, принимающего заказ (первая строка)
                 $delivery->setAddressLine1('Улица Старый Арбат, дом 10');
                 // Установим Адрес Лица, принимающего заказ (вторая строка)
-                $delivery->setAddressLine1('Офис PayU');
+                $delivery->setAddressLine1('Офис Ypmn');
                 // Установим Почтовый Индекс Лица, принимающего заказ
                 $delivery->setZipCode('121000');
                 // Установим Имя Лица, принимающего заказ
@@ -189,7 +189,7 @@ if(isset($_GET['function'])){
                 // Установим Телефон Лица, принимающего заказ
                 $delivery->setPhone('+79670660743');
                 // Установим Email Лица, принимающего заказ
-                $delivery->setEmail('test2@payu.ru');
+                $delivery->setEmail('test2@ypmn.ru');
                 // Установим Название Компании, в которой можно оставить заказ
                 $delivery->setCompanyName('ООО "Вектор"');
 
@@ -233,7 +233,7 @@ if(isset($_GET['function'])){
                     $responseData = json_decode((string) $responseData["response"], true);
 
                     // Нарисуем кнопку оплаты
-                    echo Std::drawPayuButton([
+                    echo Std::drawYpmnButton([
                         'url' => $responseData["paymentResult"]['url'],
                         'sum' => $payment->sumProductsAmount(),
                     ]);
@@ -257,13 +257,13 @@ if(isset($_GET['function'])){
 
             case 'paymentCapture':
                 // Запрос на списание денег
-                // В зависимости от настройки мерчанта, PayU может списывать денежные средства автоматически,
+                // В зависимости от настройки мерчанта, Ypmn может списывать денежные средства автоматически,
                 // Либо с помощью дополнительного запроса, описанного ниже.
 
                 // Создадим такой запрос:
                 $capture = (new Capture);
 
-                // Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response)
+                // Номер платежа Ypmn (возвращается в ответ на запрос на авторизацию в JSON Response)
                 $capture->setPayuPaymentReference(2297597);
 
                 // Cумма исходной операции на авторизацию
@@ -284,7 +284,7 @@ if(isset($_GET['function'])){
 
                 break;
             case 'paymentGetStatus':
-                // Получить номер транзакции в PayU
+                // Получить номер транзакции в Ypmn
 
                 // Номер заказа
                 $merchantPaymentReference = 'primer_nomer__184';
@@ -307,7 +307,7 @@ if(isset($_GET['function'])){
                 // Создадим запрос
                 $refund = (new Refund);
 
-                // Установим номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
+                // Установим номер платежа Ypmn - возвращается в ответ на запрос на авторизацию платежа в JSON Response
                 // См. пример с запросом Payment выше
                 $refund->setPayuPaymentReference(2297597);
                 // Cумма исходной операции на авторизацию

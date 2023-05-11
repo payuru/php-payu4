@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface ApiRequestInterface
 {
@@ -40,7 +40,7 @@ interface ApiRequestInterface
 
     /**
      * Установить режим песочницы
-     * Переключить режим тестирования PayU Sandbox
+     * Переключить режим тестирования Ypmn Sandbox
      * оплата будет перенаправлена на тестовый сервер
      * @param bool $sandboxModeIsOn Режим песочницы включен?
      * @return $this

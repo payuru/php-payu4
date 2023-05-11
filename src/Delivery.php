@@ -1,12 +1,12 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 /**
  * Доставка
- * PayU поддерживает широкие возможности
+ * Ypmn поддерживает широкие возможности
  * по интеграции с системами доставок.
- * Обратитесь к вашему менеджеру PayU
+ * Обратитесь к вашему менеджеру Ypmn
  * за подробностями
  */
 class Delivery implements DeliveryInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 use \JsonSerializable;
 
@@ -10,7 +10,7 @@ use \JsonSerializable;
 class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 {
     /**
-     * @var string Номер платежа PayU
+     * @var string Номер платежа Ypmn
      */
     private string $payuPaymentReference;
 

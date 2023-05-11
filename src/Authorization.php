@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 use \JsonSerializable;
 
@@ -10,8 +10,8 @@ class Authorization implements AuthorizationInterface
     const TYPE_FASTER_PAYMENTS = 'FASTER_PAYMENTS';
 
     /**
-     * включить страницу оплаты PayU
-     * @var bool страница оплаты PayU включена?
+     * включить страницу оплаты Ypmn
+     * @var bool страница оплаты Ypmn включена?
      */
     private bool $usePaymentPage = true;
     private string $paymentMethod = self::TYPE_CCVISAMC;
@@ -22,7 +22,7 @@ class Authorization implements AuthorizationInterface
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
-     * @param bool $isUsed страница оплаты PayU включена?
+     * @param bool $isUsed страница оплаты Ypmn включена?
      * @return void
      * @throws PaymentException Ошибка оплаты
      */

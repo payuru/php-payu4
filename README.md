@@ -27,24 +27,24 @@ Eclipse, Netbeans, etc), чтобы получать подробные подс
 [Composer](https://getcomposer.org/) - это инструмент для управления зависимостями в PHP. Он позволяет вам объявить
 библиотеки, от которых зависит ваш проект, и он будет управлять ими (устанавливать/обновлять) за вас.
 ```shell
-composer require payuru/php-payu4
+composer require Ypmn
 ```
 
 ```php
 // Для использования классов, например:
-use payuru\phpPayu4\Authorization;
-use payuru\phpPayu4\Delivery;
-use payuru\phpPayu4\IdentityDocument;
-use payuru\phpPayu4\Merchant;
-use payuru\phpPayu4\Payment;
-use payuru\phpPayu4\Client;
-use payuru\phpPayu4\Billing;
-use payuru\phpPayu4\ApiRequest;
-use payuru\phpPayu4\PaymentException;
-use payuru\phpPayu4\Product;
-use payuru\phpPayu4\Capture;
-use payuru\phpPayu4\Refund;
-use payuru\phpPayu4\Std;
+use Ypmn\Authorization;
+use Ypmn\Delivery;
+use Ypmn\IdentityDocument;
+use Ypmn\Merchant;
+use Ypmn\Payment;
+use Ypmn\Client;
+use Ypmn\Billing;
+use Ypmn\ApiRequest;
+use Ypmn\PaymentException;
+use Ypmn\Product;
+use Ypmn\Capture;
+use Ypmn\Refund;
+use Ypmn\Std;
 
 // Подключите загрузчик классов от Composer
 require vendor/autoload.php;
@@ -60,13 +60,13 @@ require vendor/autoload.php;
 $merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
 ```
 ### Создание (авторизация) платежа
-Метод создаёт платёж (транзакцию) в системе PayU.
+Метод создаёт платёж (транзакцию) в системе Ypmn.
 В зависимости от настройки, средства списываются либо сразу, 
 либо после отправки метода "capture". 
 ####  Упрощённая интеграция, минимальный набор полей
 ```php
 <?php
-// Оплата по ссылке PayU
+// Оплата по ссылке Ypmn
 // Минимальный набор полей
 
 // Представим, что мы не хотим передавать товары, только номер заказа и сумму
@@ -89,7 +89,7 @@ $billing->setFirstName('Иван');
 // Установим Фамилия Плательщика
 $billing->setLastName('Петров');
 // Установим Email Плательщика
-$billing->setEmail('test1@payu.ru');
+$billing->setEmail('test1@ypmn.ru');
 // Установим Телефон Плательщика
 $billing->setPhone('+7-800-555-35-35');
 // Установим Город
@@ -150,7 +150,7 @@ try {
 ####  Расширенные возможности, полный набор полей
 ```php
 <?php
-// Оплата по ссылке PayU
+// Оплата по ссылке Ypmn
 // Представим, что нам надо оплатить пару позиций: Синий Мяч и Жёлтый Круг
 
 // Опишем первую позицию
@@ -186,7 +186,7 @@ $billing->setState('Центральный регион');
 // Установим Адрес Плательщика (первая строка)
 $billing->setAddressLine1('Улица Старый Арбат, дом 10');
 // Установим Адрес Плательщика (вторая строка)
-$billing->setAddressLine1('Офис PayU');
+$billing->setAddressLine1('Офис Ypmn');
 // Установим Почтовый Индекс Плательщика
 $billing->setZipCode('121000');
 // Установим Имя Плательщика
@@ -196,7 +196,7 @@ $billing->setLastName('Петров');
 // Установим Телефон Плательщика
 $billing->setPhone('+79670660742');
 // Установим Email Плательщика
-$billing->setEmail('test1@payu.ru');
+$billing->setEmail('test1@ypmn.ru');
 
 // (необязательно) Опишем Доствку и принимающее лицо
 $delivery = new Delivery;
@@ -213,7 +213,7 @@ $delivery->setState('Центральный регион');
 // Установим Адрес Лица, принимающего заказ (первая строка)
 $delivery->setAddressLine1('Улица Старый Арбат, дом 10');
 // Установим Адрес Лица, принимающего заказ (вторая строка)
-$delivery->setAddressLine1('Офис PayU');
+$delivery->setAddressLine1('Офис Ypmn');
 // Установим Почтовый Индекс Лица, принимающего заказ
 $delivery->setZipCode('121000');
 // Установим Имя Лица, принимающего заказ
@@ -223,7 +223,7 @@ $delivery->setLastName('Петрова');
 // Установим Телефон Лица, принимающего заказ
 $delivery->setPhone('+79670660743');
 // Установим Email Лица, принимающего заказ
-$delivery->setEmail('test2@payu.ru');
+$delivery->setEmail('test2@ypmn.ru');
 // Установим Название Компании, в которой можно оставить заказ
 $delivery->setCompanyName('ООО "Вектор"');
 
@@ -294,7 +294,7 @@ print_r($_POST);
 ### Получить номер транзакции в YourPayments (GetStatus)
 ```php
 <php
-// Получить номер транзакции в PayU
+// Получить номер транзакции в Ypmn
 
 // Номер заказа
 $merchantPaymentReference = 'primer_nomer__184';
@@ -309,7 +309,7 @@ $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
 ```
 
 ### Списание средств (Capture)
-В зависимости от настройки мерчанта, PayU может списывать денежные средства автоматически,
+В зависимости от настройки мерчанта, Ypmn может списывать денежные средства автоматически,
 // Либо с помощью дополнительного запроса, описанного ниже.
 ```php
 <php
@@ -318,7 +318,7 @@ $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
 // Создадим такой запрос:
 $capture = (new Capture);
 
-// Номер платежа PayU (возвращается в ответ на запрос на авторизацию в JSON Response)
+// Номер платежа Ypmn (возвращается в ответ на запрос на авторизацию в JSON Response)
 $capture->setPayuPaymentReference(2297597);
 
 // Cумма исходной операции на авторизацию
@@ -345,7 +345,7 @@ $responseData = $apiRequest->sendCaptureRequest($capture, $merchant);
 // Создадим запрос
 $refund = (new Refund);
 
-// Установим номер платежа PayU - возвращается в ответ на запрос на авторизацию платежа в JSON Response
+// Установим номер платежа Ypmn - возвращается в ответ на запрос на авторизацию платежа в JSON Response
 // См. пример с запросом Payment выше
 $refund->setPayuPaymentReference(2297597);
 // Cумма исходной операции на списание (Capture)
