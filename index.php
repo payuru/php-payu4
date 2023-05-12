@@ -3,7 +3,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// Эта фукнция подключает клас
+// Эта фукнция подключает классы
 spl_autoload_register(function ($className) {
     $className = explode('\\', $className);
     $className =  end($className);
