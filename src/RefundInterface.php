@@ -23,17 +23,17 @@ interface RefundInterface
 
     /**
      * Установить Номер платежа Ypmn
-     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'payuPaymentReference')
+     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'ypmnPaymentReference')
      * @param string $paymentIdString Номер платежа Ypmn
      * @return $this
      */
-    public function setPayuPaymentReference(string $paymentIdString) : self;
+    public function setYpmnPaymentReference(string $paymentIdString) : self;
 
     /**
      * Получить Номер платежа Ypmn
      * @return string Номер платежа Ypmn
      */
-    public function getPayuPaymentReference() : string;
+    public function getYpmnPaymentReference() : string;
 
     /**
      * Установить сумму исходной операции на авторизацию

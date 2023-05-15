@@ -128,7 +128,7 @@ try {
     $responseData = json_decode((string) $responseData["response"], true);
 
     // Нарисуем кнопку оплаты
-    echo Std::drawPayuButton([
+    echo Std::drawYpmnButton([
         'url' => $responseData["paymentResult"]['url'],
         'sum' => $payment->sumProductsAmount(),
     ]);
@@ -267,7 +267,7 @@ try {
     $responseData = json_decode((string) $responseData["response"], true);
 
     // Нарисуем кнопку оплаты
-    echo Std::drawPayuButton([
+    echo Std::drawYpmnButton([
         'url' => $responseData["paymentResult"]['url'],
         'sum' => $payment->sumProductsAmount(),
     ]);
@@ -319,7 +319,7 @@ $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
 $capture = (new Capture);
 
 // Номер платежа Ypmn (возвращается в ответ на запрос на авторизацию в JSON Response)
-$capture->setPayuPaymentReference(2297597);
+$capture->setPaymentReference(2297597);
 
 // Cумма исходной операции на авторизацию
 $capture->setOriginalAmount(5300);
@@ -347,7 +347,7 @@ $refund = (new Refund);
 
 // Установим номер платежа Ypmn - возвращается в ответ на запрос на авторизацию платежа в JSON Response
 // См. пример с запросом Payment выше
-$refund->setPayuPaymentReference(2297597);
+$refund->setPaymentReference(2297597);
 // Cумма исходной операции на списание (Capture)
 // Пример: если сумма авторизации была 5300, а сумма списания 3700 (частичное списание), указать 3700 
 $refund->setOriginalAmount(3700);

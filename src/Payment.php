@@ -140,7 +140,7 @@ class Payment implements PaymentInterface, JsonSerializable, TransactionInterfac
     }
 
     #[\ReturnTypeWillChange]
-    public function jsonSerialize(): string|bool
+    public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
         $requestData = [

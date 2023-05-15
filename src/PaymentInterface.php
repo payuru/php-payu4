@@ -110,5 +110,5 @@ interface PaymentInterface
     /**
      * @return string|bool
      */
-    public function jsonSerialize() : string|bool;
+    public function jsonSerialize();
 }

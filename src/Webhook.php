@@ -25,7 +25,7 @@ class Webhook implements WebhookInterface
 
         $this->orderData = new OrderData;
         $this->orderData->setOrderDate($request['orderData']['orderDate']);
-        $this->orderData->setPayuPaymentReference($request['orderData']['payuPaymentReference']);
+        $this->orderData->setYpmnPaymentReference($request['orderData']['ypmnPaymentReference']);
         $this->orderData->setMerchantPaymentReference($request['orderData']['merchantPaymentReference']);
         $this->orderData->setStatus($request['orderData']['status']);
         $this->orderData->setCurrency($request['orderData']['currency']);

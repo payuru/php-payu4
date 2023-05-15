@@ -9,7 +9,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     /**
      * @var string Номер платежа Ypmn
      */
-    private string $payuPaymentReference;
+    private string $ypmnPaymentReference;
 
     /**
      * @var float Cумма исходной операции на авторизацию
@@ -27,17 +27,17 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     private string $currency;
 
     /** @inheritDoc */
-    public function setPayuPaymentReference(string $paymentIdString): CaptureInterface
+    public function setYpmnPaymentReference(string $paymentIdString): CaptureInterface
     {
-        $this->payuPaymentReference = $paymentIdString;
+        $this->ypmnPaymentReference = $paymentIdString;
 
         return $this;
     }
 
     /** @inheritDoc */
-    public function getPayuPaymentReference(): string
+    public function getYpmnPaymentReference(): string
     {
-        return $this->payuPaymentReference;
+        return $this->ypmnPaymentReference;
     }
 
     /** @inheritDoc */
@@ -110,7 +110,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     {
         //TODO: проверка необходимых параметров
         $requestData = [
-            'payuPaymentReference'	=> $this->getPayuPaymentReference(),
+            'ypmnPaymentReference'	=> $this->getYpmnPaymentReference(),
             'originalAmount'	=> $this->getOriginalAmount(),
             'amount'	=> $this->getAmount(),
             'currency' => $this->getCurrency()

@@ -22,14 +22,14 @@ interface OrderDataInterface
      * Получить Номер Заказа в Ypmn
      * @return string Номер Заказа в Ypmn
      */
-    public function getPayuPaymentReference(): string;
+    public function getYpmnPaymentReference(): string;
 
     /**
      * Установить Номер Заказа в Ypmn
-     * @param string $payuPaymentReference Номер Заказа в Ypmn
+     * @param string $ypmnPaymentReference Номер Заказа в Ypmn
      * @return $this
      */
-    public function setPayuPaymentReference(string $payuPaymentReference): self;
+    public function setYpmnPaymentReference(string $ypmnPaymentReference): self;
 
     /**
      * Получить Номер Заказа у Мерчанта
