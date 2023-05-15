@@ -9,7 +9,7 @@ YourPayments (Твои Платежи) - многофункциональная 
  
 Репозиторий также содержит примеры по принципу "одна строка кода - одна строка документации".
 
-Репозиторий опубликован в виде [пакета Composer](https://packagist.org/packages/payuru/php-payu4) и может использоваться со всеми современными
+Репозиторий опубликован в виде [пакета Composer](https://packagist.org/packages/Ypmn) и может использоваться со всеми современными
 фреймворками: Laravel, Symfony, Yii и другими.
 
 Для работы рекомендуется использовать любую современную IDE (VS Code, Intellij Idea/PHPStorm,
@@ -19,7 +19,7 @@ Eclipse, Netbeans, etc), чтобы получать подробные подс
 
 ## Требования
 Актуальные требования для использования пакета можно посмотреть 
-в файле [composer.json](https://github.com/payuru/php-payu4/blob/main/composer.json)
+в файле [composer.json](https://github.com/yourpayments/php-api-client/blob/main/composer.json)
 в секции "require"
 
 ## Установка
@@ -368,9 +368,9 @@ $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
 ## Ссылки
 - [Докуметация по API](https://dev.YPMN.ru/ru/documents/apiv4/)
 - [Основной сайт Твои Платежи](https://YPMN.ru/)
-- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/payuru/php-payu4/blob/main/example.php) и
-  класса [PaymentInterface.php](https://github.com/payuru/php-payu4/blob/main/src/PaymentInterface.php)
-- [Задать вопрос или сообщить о проблеме](https://github.com/payuru/php-payu4/issues/new)
+- Начните знакомство с кодом с этих файлов: [example.php](https://github.com/yourpayments/php-api-client/blob/main/example.php) и
+  класса [PaymentInterface.php](https://github.com/yourpayments/php-api-client/blob/main/src/PaymentInterface.php)
+- [Задать вопрос или сообщить о проблеме](https://github.com/yourpayments/php-api-client/issues/new)
 
 -------------
 ![](https://ypmn.ru/s/img/logo/ru/dark/horizontal_logo.svg)

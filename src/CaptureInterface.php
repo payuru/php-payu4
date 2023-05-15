@@ -23,7 +23,7 @@ interface CaptureInterface
 
     /**
      * Установить Номер платежа Ypmn
-     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'payuPaymentReference')
+     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'ypmnPaymentReference')
      * @param string $paymentIdString Номер платежа Ypmn
      * @return $this
      */

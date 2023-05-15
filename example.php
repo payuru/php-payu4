@@ -264,7 +264,7 @@ if(isset($_GET['function'])){
                 $capture = (new Capture);
 
                 // Номер платежа Ypmn (возвращается в ответ на запрос на авторизацию в JSON Response)
-                $capture->setPayuPaymentReference(2297597);
+                $capture->setYpmnPaymentReference(2297597);
 
                 // Cумма исходной операции на авторизацию
                 $capture->setOriginalAmount(5300);
@@ -309,7 +309,7 @@ if(isset($_GET['function'])){
 
                 // Установим номер платежа Ypmn - возвращается в ответ на запрос на авторизацию платежа в JSON Response
                 // См. пример с запросом Payment выше
-                $refund->setPayuPaymentReference(2297597);
+                $refund->setYpmnPaymentReference(2297597);
                 // Cумма исходной операции на авторизацию
                 $refund->setOriginalAmount(3700);
                 // Cумма фактического списания
