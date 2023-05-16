@@ -8,7 +8,7 @@ class OrderData implements OrderDataInterface
     private string $orderDate;
 
     /** @var string Номер платежа Ypmn */
-    private string $ypmnPaymentReference;
+    private string $payuPaymentReference;
 
     /** @var string */
     private string $merchantPaymentReference;
@@ -50,13 +50,13 @@ class OrderData implements OrderDataInterface
     /** @inheritDoc */
     public function getUpmnPaymentReference(): string
     {
-        return $this->ypmnPaymentReference;
+        return $this->payuPaymentReference;
     }
 
     /** @inheritDoc */
     public function setYpmnPaymentReference(string $ypmnPaymentReference): self
     {
-        $this->ypmnPaymentReference = $ypmnPaymentReference;
+        $this->payuPaymentReference = $payuPaymentReference;
         return $this;
     }
 

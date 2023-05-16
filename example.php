@@ -77,7 +77,7 @@ if(isset($_GET['function'])){
                 // Установим номер заказа (должен быть уникальным в вашей системе)
                 $payment->setMerchantPaymentReference($merchantPaymentReference);
                 // Установим адрес перенаправления пользователя после оплаты
-                $payment->setReturnUrl('http://127.0.0.1:8080/?function=returnPage');
+                $payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
                 // Установим клиентское подключение
                 $payment->setClient($client);
 
@@ -216,7 +216,7 @@ if(isset($_GET['function'])){
                 // Установим номер заказа (должен быть уникальным в вашей системе)
                 $payment->setMerchantPaymentReference('primer_nomer__' . time());
                 // Установим адрес перенаправления пользователя после оплаты
-                $payment->setReturnUrl('http://127.0.0.1:8080/?function=returnPage');
+                $payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
                 // Установим клиентское подключение
                 $payment->setClient($client);
 

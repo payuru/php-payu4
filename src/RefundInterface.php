@@ -23,7 +23,7 @@ interface RefundInterface
 
     /**
      * Установить Номер платежа Ypmn
-     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'ypmnPaymentReference')
+     * Используйте значение из JSON-ответа на запрос на авторизацию платежа (ключ 'payuPaymentReference')
      * @param string $paymentIdString Номер платежа Ypmn
      * @return $this
      */

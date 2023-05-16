@@ -12,7 +12,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
     /**
      * @var string Номер платежа Ypmn
      */
-    private string $ypmnPaymentReference;
+    private string $payuPaymentReference;
 
     /**
      * @var float Cумма исходной операции на авторизацию
@@ -54,7 +54,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
      */
     public function setYpmnPaymentReference(string $paymentIdString): RefundInterface
     {
-        $this->ypmnPaymentReference = $paymentIdString;
+        $this->payuPaymentReference = $paymentIdString;
 
         return $this;
     }
@@ -64,7 +64,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
      */
     public function getYpmnPaymentReference(): string
     {
-        return $this->ypmnPaymentReference;
+        return $this->payuPaymentReference;
     }
 
     /**
@@ -133,7 +133,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
     {
         //TODO: проверка необходимых параметров
         $requestData = [
-            'ypmnPaymentReference'	=> $this->getYpmnPaymentReference(),
+            'payuPaymentReference'	=> $this->getYpmnPaymentReference(),
             'originalAmount'	=> $this->getOriginalAmount(),
             'amount'	=> $this->getAmount(),
             'currency' => $this->getCurrency()
