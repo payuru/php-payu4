@@ -370,6 +370,7 @@ $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
 - [Основной сайт Твои Платежи](https://YPMN.ru/)
 - Начните знакомство с кодом с этих файлов: [example.php](https://github.com/yourpayments/php-api-client/blob/main/example.php) и
   класса [PaymentInterface.php](https://github.com/yourpayments/php-api-client/blob/main/src/PaymentInterface.php)
+- [Реквизиты тестовых банковских карт](https://dev.payu.ru/ru/documents/rest-api/testing/#menu-2)
 - [Задать вопрос или сообщить о проблеме](https://github.com/yourpayments/php-api-client/issues/new)
 
 -------------
