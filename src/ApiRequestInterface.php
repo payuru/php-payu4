@@ -66,4 +66,18 @@ interface ApiRequestInterface
      * @return bool Режим отладки включен?
      */
     public function getDebugMode(): bool;
+
+    /**
+     * Отправить Запрос на Токенизацию
+     * @param PaymentReference $payuPaymentReference Оплата
+     * @return array
+     */
+    public function sendTokenCreationRequest(PaymentReference $payuPaymentReference): array;
+
+    /**
+     * Отправить Запрос на Оплату токеном
+     * @param PaymentReference $payuPaymentReference Оплата
+     * @return array
+     */
+    public function sendTokenPaymentRequest(PaymentReference $payuPaymentReference): array;
 }

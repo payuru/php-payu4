@@ -100,9 +100,9 @@ class Std
                     max-height: 150px;
                     display: inline-block;
                     justify-content: space-between;
-                    background: white;
-                    color: dimgrey;
-                    border: 1px solid silver;
+                    background: #ffffff;
+                    color: #000000;
+                    border: 1px solid #000000;
                     border-radius: 5px;
                     padding: 16px;
                 "
@@ -139,7 +139,7 @@ class Std
                         padding-right: 10px;
                         font-size: 14pt;
                     ">Оплатить</strong>
-                '.(isset($params['sum']) ? '<br><strong style="
+                ' .(isset($params['sum']) ? '<br><strong style="
                                                         font-size: 14pt;
                                                         text-align: justify;
                                                         float: left

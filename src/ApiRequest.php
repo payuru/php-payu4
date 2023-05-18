@@ -13,6 +13,7 @@ class ApiRequest implements ApiRequestInterface
 {
     const AUTHORIZE_API = '/api/v4/payments/authorize';
     const CAPTURE_API = '/api/v4/payments/capture';
+    const TOKEN_API = '/api/v4/token';
     const REFUND_API = '/api/v4/payments/refund';
     const STATUS_API = '/api/v4/payments/status';
     const HOST = 'https://secure.payu.ru';
@@ -176,6 +177,18 @@ class ApiRequest implements ApiRequestInterface
     public function sendStatusRequest(string $merchantPaymentReference): array
     {
         return $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference);
+    }
+
+    /** @inheritdoc  */
+    public function sendTokenCreationRequest(PaymentReference $payuPaymentReference): array
+    {
+        return $this->sendPostRequest($payuPaymentReference, self::TOKEN_API);
+    }
+
+    /** @inheritdoc  */
+    public function sendTokenPaymentRequest(PaymentReference $payuPaymentReference): array
+    {
+        return $this->sendPostRequest($payuPaymentReference, self::TOKEN_API);
     }
 
     /**
