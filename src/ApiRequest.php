@@ -186,9 +186,9 @@ class ApiRequest implements ApiRequestInterface
     }
 
     /** @inheritdoc  */
-    public function sendTokenPaymentRequest(PaymentReference $payuPaymentReference): array
+    public function sendTokenPaymentRequest(MerchantToken $tokenHash): array
     {
-        return $this->sendPostRequest($payuPaymentReference, self::TOKEN_API);
+        return $this->sendPostRequest($tokenHash, self::AUTHORIZE_API);
     }
 
     /**

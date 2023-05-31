@@ -12,6 +12,7 @@ use Ypmn\Authorization;
 use Ypmn\Delivery;
 use Ypmn\IdentityDocument;
 use Ypmn\Merchant;
+use Ypmn\MerchantToken;
 use Ypmn\Payment;
 use Ypmn\Client;
 use Ypmn\Billing;
@@ -264,7 +265,7 @@ if(isset($_GET['function'])){
                 // Переключиться на тестовый сервер (удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
                 // Отправим запрос
-                $ypmnPaymentReference = new PaymentReference(2469476);
+                $ypmnPaymentReference = new PaymentReference(2469883);
                 $responseData = $apiRequest->sendTokenCreationRequest($ypmnPaymentReference);
                 // Преобразуем ответ из JSON в массив
                 try {
@@ -293,6 +294,8 @@ if(isset($_GET['function'])){
                 break;
             case 'paymentByToken':
                 // Оплата по токену
+                // Установим номер (ID) заказа (номер заказа в вашем магазине, должен быть уникален в вашей системе)
+                $merchantPaymentReference = "order_id_" . time();
                 $orderAsProduct = new Product([
                     'name'  => 'Заказ №' . $merchantPaymentReference,
                     'sku'  => $merchantPaymentReference,
@@ -326,10 +329,19 @@ if(isset($_GET['function'])){
                 $payment->addProduct($orderAsProduct);
                 // Установим валюту
                 $payment->setCurrency('RUB');
+
+
+                //  токен
+                $token = new MerchantToken();
+                $token->setTokenHash("8080695611129aa71725c413bd330e9e");
+
+                $auth = new Authorization('CCVISAMC',false);
+                $auth->setMerchantToken($token);
+
                 // Создадим и установим авторизацию по типу платежа
-                $payment->setAuthorization(new Authorization('CCVISAMC',true));
+                $payment->setAuthorization($auth);
+
                 // Установим токен транзакции
-                $payment->set
                 // Установим номер заказа (должен быть уникальным в вашей системе)
                 $payment->setMerchantPaymentReference($merchantPaymentReference);
                 // Установим адрес перенаправления пользователя после оплаты
@@ -343,9 +355,8 @@ if(isset($_GET['function'])){
                 $apiRequest->setDebugMode();
                 // Переключиться на тестовый сервер (удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
-                // Отправим запрос
-                $ypmnPaymentReference = new PaymentReference(2469476);
-                $responseData = $apiRequest->sendTokenCreationRequest($ypmnPaymentReference);
+
+                $responseData = $apiRequest->sendAuthRequest($auth, $merchant);
                 // Преобразуем ответ из JSON в массив
                 try {
                     $responseData = json_decode((string) $responseData["response"], true);

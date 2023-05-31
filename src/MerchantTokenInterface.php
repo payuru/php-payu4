@@ -19,16 +19,16 @@ interface MerchantTokenInterface
 
     /**
      * Установить CVV Карты
-     * @param int $cvv CVV Карты
+     * @param string $cvv CVV Карты
      * @return $this
      */
-    public function setCvv(int $cvv) : self;
+    public function setCvv(string $cvv) : self;
 
     /**
      * Получить CVV Карты
-     * @return int CVV Карты
+     * @return string CVV Карты
      */
-    public function getCvv() : int;
+    public function getCvv() : string;
 
     /**
      * Установить Имя Владельца Карты

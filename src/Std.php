@@ -132,7 +132,7 @@ class Std
                         display: inline-block;
                         "
                 <strong style="
-                        display: inline;
+                        display: inline-block;
                         vertical-align: center;
                         text-align: justify;
                         padding-left: 10px;

@@ -79,5 +79,5 @@ interface ApiRequestInterface
      * @param PaymentReference $payuPaymentReference Оплата
      * @return array
      */
-    public function sendTokenPaymentRequest(PaymentReference $payuPaymentReference): array;
+    public function sendTokenPaymentRequest(MerchantToken $tokenHash): array;
 }

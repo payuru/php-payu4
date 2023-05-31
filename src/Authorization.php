@@ -25,13 +25,13 @@ class Authorization implements AuthorizationInterface
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
-     * @param bool $isUsed страница оплаты Ypmn включена?
+     * @param bool $isPaymentPageUsed страница оплаты Ypmn включена?
      * @return void
      * @throws PaymentException Ошибка оплаты
      */
-    public function __constructor(string $paymentMethodType, bool $isUsed) {
+    public function __constructor(string $paymentMethodType, bool $isPaymentPageUsed) {
         $this->setPaymentMethod($paymentMethodType);
-        $this->setUsePaymentPage($isUsed);
+        $this->setUsePaymentPage($isPaymentPageUsed);
     }
 
     /**
@@ -83,7 +83,7 @@ class Authorization implements AuthorizationInterface
     }
 
     /** @inheritDoc */
-    public function getCardDetails(): CardDetailsInterface
+    public function getCardDetails(): ?CardDetailsInterface
     {
         return $this->cardDetails;
     }
@@ -112,6 +112,12 @@ class Authorization implements AuthorizationInterface
      */
     public function setMerchantToken(?MerchantTokenInterface $merchantToken): self
     {
+        if (is_null($this->getCardDetails())){
+            echo "Сработало 1 условие";
+        }
+        if ($this->getUsePaymentPage() === false){
+            echo "Сработало 2 условие";
+        }
         if (is_null($this->getCardDetails()) && $this->getUsePaymentPage() === false) {
             $this->merchantToken = $merchantToken;
 

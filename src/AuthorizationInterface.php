@@ -28,7 +28,7 @@ interface AuthorizationInterface
      * Получить Данные Карты
      * @return CardDetailsInterface Данные Карты
      */
-    public function getCardDetails(): CardDetailsInterface;
+    public function getCardDetails(): ?CardDetailsInterface;
 
     /**
      * Установить Данные Карты
