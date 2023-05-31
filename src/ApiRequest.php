@@ -16,8 +16,8 @@ class ApiRequest implements ApiRequestInterface
     const TOKEN_API = '/api/v4/token';
     const REFUND_API = '/api/v4/payments/refund';
     const STATUS_API = '/api/v4/payments/status';
-    const HOST = 'https://secure.payu.ru';
-    const SANDBOX_HOST = 'https://sandbox.payu.ru';
+    const HOST = 'https://secure.ypmn.ru';
+    const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
 
     /** @var MerchantInterface Мерчант, от имени которого отправляется запрос */
     private MerchantInterface $merchant;
