@@ -54,7 +54,14 @@ require vendor/autoload.php;
 $merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
 ```
 ### Функции
-
+1. [Cамый простой платёж](src/Documentation/simpleGetPaymentLink.md)
+2. [Платёж со всеми полями](src/Documentation/getPaymentLink.md)
+3. Получить токен (чтобы запомнить карту)
+4. Оплата по токену
+5. [Списание средств](src/Documentation/paymentCapture.md)
+6. [src/Documentation/paymentRefund.md](src/Documentation/paymentRefund.md)
+7. Проверка статуса платежа
+8. [Страница после оплаты](src/Documentation/returnPage.md)
 
 Для работы рекомендуется использовать любую современную IDE (VS Code, Intellij Idea/PHPStorm,
 Eclipse, Netbeans, etc), чтобы получать подробные подсказки прямо во время редактирования кода.
