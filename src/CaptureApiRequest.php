@@ -4,6 +4,8 @@ namespace Ypmn;
 
 use DateTime;
 use DateTimeInterface;
+use Ypmn\Interfaces\CaptureInterface;
+use Ypmn\Interfaces\MerchantInterface;
 
 /**
  * Класс отправки запроса к API

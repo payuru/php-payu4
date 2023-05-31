@@ -2,6 +2,8 @@
 
 namespace Ypmn;
 
+use Ypmn\Interfaces\IdentityDocumentInterface;
+
 /**
  * Документ, подтверждающий личность
  */

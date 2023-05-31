@@ -1,8 +1,8 @@
 <?php
 //TODO: CaptureInterface и PaymentInterface и RefundInterface имеют много общих методов, реорганизовать интерфейсы
-namespace Ypmn;
+namespace Ypmn\Interfaces;
 
-interface RefundInterface
+interface CaptureInterface
 {
     /**
      * Переключить режим отладки

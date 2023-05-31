@@ -1,6 +1,10 @@
 <?php
 
 namespace Ypmn;
+use Ypmn\Interfaces\OrderDataInterface;
+use Ypmn\Interfaces\PaymentResultInterface;
+use Ypmn\Interfaces\WebhookInterface;
+
 /**
  * Принятие информации о запросе на стороне мерчанта
  * https://secure.payu.ru/docs/#tag/Webhooks/paths/~1merchant-ipn-url/post

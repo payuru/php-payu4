@@ -2,6 +2,8 @@
 
 namespace Ypmn;
 
+use Ypmn\Interfaces\MerchantTokenInterface;
+
 class MerchantToken implements MerchantTokenInterface, \JsonSerializable
 {
     /** @var string Хэш Токен карты */

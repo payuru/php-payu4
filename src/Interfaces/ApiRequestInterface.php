@@ -1,6 +1,9 @@
 <?php
 
-namespace Ypmn;
+namespace Ypmn\Interfaces;
+
+use Ypmn\MerchantToken;
+use Ypmn\PaymentReference;
 
 interface ApiRequestInterface
 {

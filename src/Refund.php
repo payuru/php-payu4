@@ -2,7 +2,9 @@
 
 namespace Ypmn;
 
-use \JsonSerializable;
+use JsonSerializable;
+use Ypmn\Interfaces\RefundInterface;
+use Ypmn\Interfaces\TransactionInterface;
 
 /**
  * Запрос на возврат средств

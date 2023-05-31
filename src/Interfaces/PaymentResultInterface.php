@@ -1,6 +1,8 @@
 <?php
 
-namespace Ypmn;
+namespace Ypmn\Interfaces;
+
+use Ypmn\PaymentResult;
 
 interface PaymentResultInterface
 {

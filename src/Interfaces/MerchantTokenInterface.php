@@ -1,6 +1,6 @@
 <?php
 
-namespace Ypmn;
+namespace Ypmn\Interfaces;
 
 interface MerchantTokenInterface
 {

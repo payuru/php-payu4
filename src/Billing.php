@@ -2,6 +2,9 @@
 
 namespace Ypmn;
 
+use Ypmn\Interfaces\BillingInterface;
+use Ypmn\Interfaces\IdentityDocumentInterface;
+
 class Billing implements BillingInterface
 {
     /** @var string Имя */

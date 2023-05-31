@@ -1,6 +1,9 @@
 <?php
 
-namespace Ypmn;
+namespace Ypmn\Interfaces;
+
+use Ypmn\PaymentException;
+use Ypmn\Webhook;
 
 interface WebhookInterface
 {

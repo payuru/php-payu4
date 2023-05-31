@@ -2,6 +2,10 @@
 
 namespace Ypmn;
 
+use Ypmn\Interfaces\BillingInterface;
+use Ypmn\Interfaces\ClientInterface;
+use Ypmn\Interfaces\DeliveryInterface;
+
 class Client implements ClientInterface
 {
     /** @var BillingInterface Биллинговая информация */

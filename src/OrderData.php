@@ -2,13 +2,15 @@
 
 namespace Ypmn;
 
+use Ypmn\Interfaces\OrderDataInterface;
+
 class OrderData implements OrderDataInterface
 {
     /** @var string Дата Заказа */
     private string $orderDate;
 
     /** @var string Номер платежа Ypmn */
-    private string $payuPaymentReference;
+    private string $ypmnPaymentReference;
 
     /** @var string */
     private string $merchantPaymentReference;
@@ -50,14 +52,20 @@ class OrderData implements OrderDataInterface
     /** @inheritDoc */
     public function getUpmnPaymentReference(): string
     {
-        return $this->payuPaymentReference;
+        return $this->ypmnPaymentReference;
     }
 
     /** @inheritDoc */
     public function setYpmnPaymentReference(string $ypmnPaymentReference): self
     {
-        $this->payuPaymentReference = $payuPaymentReference;
+        $this->ypmnPaymentReference = $ypmnPaymentReference;
         return $this;
+    }
+
+    /** @inheritDoc */
+    public function getYpmnPaymentReference(): string
+    {
+        return $this->ypmnPaymentReference;
     }
 
     /** @inheritDoc */
@@ -78,7 +86,6 @@ class OrderData implements OrderDataInterface
     {
         return $this->status;
     }
-
 
     /** @inheritDoc */
     public function setStatus(string $status): self

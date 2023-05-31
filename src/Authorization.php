@@ -2,7 +2,9 @@
 
 namespace Ypmn;
 
-use \JsonSerializable;
+use Ypmn\Interfaces\AuthorizationInterface;
+use Ypmn\Interfaces\CardDetailsInterface;
+use Ypmn\Interfaces\MerchantTokenInterface;
 
 class Authorization implements AuthorizationInterface
 {

@@ -2,9 +2,14 @@
 
 namespace Ypmn;
 
-use \DateTime;
-use \DateTimeInterface;
-use \JsonSerializable;
+use DateTime;
+use DateTimeInterface;
+use JsonSerializable;
+use Ypmn\Interfaces\ApiRequestInterface;
+use Ypmn\Interfaces\CaptureInterface;
+use Ypmn\Interfaces\MerchantInterface;
+use Ypmn\Interfaces\PaymentInterface;
+use Ypmn\Interfaces\RefundInterface;
 
 /**
  * Класс отправки запроса к API
