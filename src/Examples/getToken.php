@@ -18,6 +18,8 @@ use Ypmn\Refund;
 use Ypmn\Std;
 use Ypmn\PaymentReference;
 
+include_once 'start.php';
+
 // Хотим получить токен
 // Создадим HTTP-запрос к API
 $apiRequest = new ApiRequest($merchant);

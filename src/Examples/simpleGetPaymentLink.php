@@ -11,6 +11,8 @@ use Ypmn\PaymentException;
 use Ypmn\Product;
 use Ypmn\Std;
 
+include_once 'start.php';
+
 // Оплата по ссылке Ypmn
 // Минимальный набор полей
 

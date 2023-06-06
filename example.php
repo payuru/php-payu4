@@ -25,19 +25,16 @@ use Ypmn\Std;
 use Ypmn\PaymentReference;
 
 
-
-// Создадим тестового мерчанта
-//$merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
-$merchant = new Merchant('CC1', 'SECRET_KEY');
-//ePayment Code: и Secret
-
 if(isset($_GET['function'])){
     try {
         switch ($_GET['function']) {
             case 'start':
+                include './src/Examples/'.$_GET['function'] . '.php';
+                break;
             case 'simpleGetPaymentLink':
             case 'getPaymentLink':
             case 'getToken':
+                include './src/Examples/start.php';
                 include './src/Examples/'.$_GET['function'] . '.php';
                 break;
 
