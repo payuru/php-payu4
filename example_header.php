@@ -25,6 +25,10 @@
         .footer {
             clear: both;
         }
+
+        code {
+            color: darkgreen;
+        }
     </style>
 
 </head>

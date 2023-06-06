@@ -33,6 +33,19 @@ $responseData = $apiRequest->sendTokenCreationRequest($ypmnPaymentReference);
 // Преобразуем ответ из JSON в массив
 try {
     $responseData = json_decode((string) $responseData["response"], true);
+    
+    if (isset($responseData['token'])) {
+        echo Std::alert([
+            'type' => 'success',
+            'text' => '
+                Карта успешно токенизирована (токен получен).
+                <br>
+                <br>Вот он: <code>' . $responseData['token'] . '</code>
+                <br>
+                <br>Тперь его <a href="./?function=paymentByToken&token=' . $responseData['token'] . '">можно использовать</a> в платежах вместо данных карты
+            ',
+        ]);
+    }
 
     // Нарисуем кнопку оплаты 5
 //                    echo Std::drawYpmnButton([
