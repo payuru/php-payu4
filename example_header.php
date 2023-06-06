@@ -68,6 +68,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a target="_blank" href="https://YPMN.ru/ru/">Наш сайт</a></li>
                     <li class="list-group-item"><a target="_blank" href="https://github.com/yourpayments/">Github</a></li>
+                    <li class="list-group-item"><a target="_blank" href="https://dev.payu.ru/ru/documents/rest-api/testing/">Тестовые карты</a></li>
                     <li class="list-group-item"><a target="_blank" href="https://dev.ypmn.ru/ru/documents/kak-eto-rabotaet/">Документация</a></li>
                     <li class="list-group-item"><a target="_blank" href="https://dev.ypmn.ru/ru/faq/">Частые вопросы</a></li>
                     <li class="list-group-item"><a target="_blank" href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a></li>
@@ -80,6 +81,10 @@
             <?php
                 if (isset($_GET['function']) && isset($examples[ $_GET['function'] ]) && isset($examples[ $_GET['function'] ]['about'])) {
                     echo \Ypmn\Std::alert([
-                        'text' => $examples[ $_GET['function'] ]['about'],
+                        'text' => $examples[ $_GET['function'] ]['about'] . '
+                            <br>
+                            <br>
+                            <a target="_blank" href="https://github.com/yourpayments/php-api-client/blob/main/src/Examples/'. $_GET['function'] .'.php" class="alert-link">Адрес этого примера на Github</a> 
+                        ',
                     ]);
                 }

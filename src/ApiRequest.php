@@ -146,7 +146,7 @@ class ApiRequest implements ApiRequestInterface
                         'type' => 'warning',
                         'text' => '
                             Внимание!
-                            У вас включен тестовый режим.
+                            У вас настроен тестовый режим.
                             <br>Все запросы уходят на тестовый сервер <a href="' . $cpanel_url . '" class="alert-link">sandbox.ypmn.ru</a>
                             <br>
                             <br>
