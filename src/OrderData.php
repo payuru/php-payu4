@@ -2,8 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\OrderDataInterface;
-
 class OrderData implements OrderDataInterface
 {
     /** @var string Дата Заказа */

@@ -2,8 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\MerchantInterface;
-
 /**
  * Мерчант
  */

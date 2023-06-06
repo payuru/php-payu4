@@ -2,8 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\StoredCredentialsInterface;
-
 class StoredCredentials implements StoredCredentialsInterface
 {
     /** @var string  */

@@ -2,9 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\DeliveryInterface;
-use Ypmn\Interfaces\IdentityDocumentInterface;
-
 /**
  * Доставка
  * Ypmn поддерживает широкие возможности

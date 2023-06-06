@@ -4,11 +4,6 @@ namespace Ypmn;
 
 
 use JsonSerializable;
-use Ypmn\Interfaces\AuthorizationInterface;
-use Ypmn\Interfaces\ClientInterface;
-use Ypmn\Interfaces\PaymentInterface;
-use Ypmn\Interfaces\ProductInterface;
-use Ypmn\Interfaces\TransactionInterface;
 
 /**
  * Платеж

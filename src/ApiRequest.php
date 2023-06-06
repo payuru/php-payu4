@@ -5,11 +5,6 @@ namespace Ypmn;
 use DateTime;
 use DateTimeInterface;
 use JsonSerializable;
-use Ypmn\Interfaces\ApiRequestInterface;
-use Ypmn\Interfaces\CaptureInterface;
-use Ypmn\Interfaces\MerchantInterface;
-use Ypmn\Interfaces\PaymentInterface;
-use Ypmn\Interfaces\RefundInterface;
 
 /**
  * Класс отправки запроса к API
@@ -144,17 +139,34 @@ class ApiRequest implements ApiRequestInterface
                 echo '<br><a href="https://github.com/payuru/php-payu4/issues">Оставить заявку на улучшение</a>';
                 echo '<br><a href="https://payu.ru/contacts">Контакты</a>';
             } else {
+                $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
+
                 if ($this->getSandboxMode()) {
-                    echo '<br>Внимание! У вас включен тестовый режим (режим песочницы). Все запросы уходят на sandbox.payu.ru';
+                    echo Std::alert([
+                        'type' => 'warning',
+                        'text' => '
+                            Внимание!
+                            У вас включен тестовый режим.
+                            <br>Все запросы уходят на тестовый сервер <a href="' . $cpanel_url . '" class="alert-link">sandbox.ypmn.ru</a>
+                            <br>
+                            <br>
+                            Когда закончите тестирование, закомментируйте или удалите строки кода:
+                            <code class="d-block ml-2">
+                                $apiRequest->setDebugMode(); // вывод отладки
+                                <br>$apiRequest->setSandboxMode(); // тетстовый сервер
+                            </code>
+                        ',
+                    ]);
                 }
-                $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.payu.ru/cpanel/';
-                echo '<br>Отслеживайте состояние транзакции по адресу <a href="' . $cpanel_url . '" target="_b">' . $cpanel_url . '</a>';
-                echo '<br><br>';
             }
         }
 
         if (mb_strlen($err) > 0) {
             throw new PaymentException($err);
+        }
+
+        if ($response == null || strlen($response) === 0) {
+            throw new PaymentException('Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
         }
 
         return ['response' => $response, 'error' => $err];

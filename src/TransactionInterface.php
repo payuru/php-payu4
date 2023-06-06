@@ -1,5 +1,5 @@
 <?php
-namespace Ypmn\Interfaces;
+namespace Ypmn;
 
 interface TransactionInterface
 {

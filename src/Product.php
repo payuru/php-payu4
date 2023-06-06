@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\ProductInterface;
-
 /**
  * Продукт или Услуга
  * (позиция на оплату)

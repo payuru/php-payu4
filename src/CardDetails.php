@@ -2,8 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\CardDetailsInterface;
-
 class CardDetails implements CardDetailsInterface
 {
     /** @var string Номер карты */

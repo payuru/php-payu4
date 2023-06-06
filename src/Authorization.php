@@ -2,10 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\AuthorizationInterface;
-use Ypmn\Interfaces\CardDetailsInterface;
-use Ypmn\Interfaces\MerchantTokenInterface;
-
 class Authorization implements AuthorizationInterface
 {
     const TYPE_CCVISAMC = 'CCVISAMC';

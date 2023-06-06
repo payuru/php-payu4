@@ -1,6 +1,6 @@
 <?php
 
-namespace Ypmn\Interfaces;
+namespace Ypmn;
 
 interface StoredCredentialsInterface
 {

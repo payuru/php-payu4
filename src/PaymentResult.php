@@ -2,9 +2,6 @@
 
 namespace Ypmn;
 
-use Ypmn\Interfaces\CardDetailsInterface;
-use Ypmn\Interfaces\PaymentResultInterface;
-
 /**
  * Результат Платежа
  */

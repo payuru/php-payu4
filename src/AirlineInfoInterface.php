@@ -1,6 +1,6 @@
 <?php
 
-namespace Ypmn\Interfaces;
+namespace Ypmn;
 
 /**
  * Ypmn поддерживает специальные условия транзакции

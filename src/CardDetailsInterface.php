@@ -1,8 +1,6 @@
 <?php
 
-namespace Ypmn\Interfaces;
-
-use Ypmn\PaymentException;
+namespace Ypmn;
 
 interface CardDetailsInterface
 {

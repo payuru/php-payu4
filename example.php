@@ -24,7 +24,8 @@ use Ypmn\Refund;
 use Ypmn\Std;
 use Ypmn\PaymentReference;
 
-// TODO: нужен публичный тестовый мерчант, которого можно включить в документацию
+
+
 // Создадим тестового мерчанта
 //$merchant = new Merchant('rudevru1', 'hE9I1?3@|C8@w[1I&=y)');
 $merchant = new Merchant('CC1', 'SECRET_KEY');
@@ -33,265 +34,14 @@ $merchant = new Merchant('CC1', 'SECRET_KEY');
 if(isset($_GET['function'])){
     try {
         switch ($_GET['function']) {
+            case 'start':
             case 'simpleGetPaymentLink':
-                // Оплата по ссылке Ypmn
-                // Минимальный набор полей
-
-                // Представим, что мы не хотим передавать товары, только номер заказа и сумму
-                // Установим номер (ID) заказа (номер заказа в вашем магазине, должен быть уникален в вашей системе)
-                $merchantPaymentReference = "order_id_" . time();
-
-                $orderAsProduct = new Product([
-                    'name'  => 'Заказ №' . $merchantPaymentReference,
-                    'sku'  => $merchantPaymentReference,
-                    'unitPrice'  => 1.42,
-                    'quantity'  => 2,
-                ]);
-
-                // Опишем Биллинговую (платёжную) информацию
-                $billing = new Billing;
-                // Установим Код страны
-                $billing->setCountryCode('RU');
-                // Установим Имя Плательщика
-                $billing->setFirstName('Иван');
-                // Установим Фамилия Плательщика
-                $billing->setLastName('Петров');
-                // Установим Email Плательщика
-                $billing->setEmail('test1@ypmn.ru');
-                // Установим Телефон Плательщика
-                $billing->setPhone('+7-800-555-35-35');
-                // Установим Город
-                $billing->setCity('Москва');
-
-                // Создадим клиентское подключение
-                $client = new Client;
-                // Установим биллинг
-                $client->setBilling($billing);
-
-                // Создадим платёж
-                $payment = new Payment;
-                // Установим позиции
-                $payment->addProduct($orderAsProduct);
-                // Установим валюту
-                $payment->setCurrency('RUB');
-                // Создадим и установим авторизацию по типу платежа
-                $payment->setAuthorization(new Authorization('CCVISAMC',true));
-                // Установим номер заказа (должен быть уникальным в вашей системе)
-                $payment->setMerchantPaymentReference($merchantPaymentReference);
-                // Установим адрес перенаправления пользователя после оплаты
-                $payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
-                // Установим клиентское подключение
-                $payment->setClient($client);
-
-                // Создадим HTTP-запрос к API
-                $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
-                $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
-                $apiRequest->setSandboxMode();
-                // Отправим запрос
-                $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
-                // Преобразуем ответ из JSON в массив
-                try {
-                    $responseData = json_decode((string) $responseData["response"], true);
-
-                    // Нарисуем кнопку оплаты
-                    echo Std::drawYpmnButton([
-                        'url' => $responseData["paymentResult"]['url'],
-                        'sum' => $payment->sumProductsAmount(),
-                    ]);
-
-                    // .. или сделаем редирект на форму оплаты (опционально)
-                    // Std::redirect($responseData["paymentResult"]['url']);
-                } catch (Exception $exception) {
-                    //TODO: обработка исключения
-                    echo Std::alert([
-                        'text' => '
-                            Извините, платёжный метод временно недоступен.<br>
-                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
-                            <br>
-                            <pre>' . $exception->getMessage() . '</pre>',
-                        'type' => 'danger',
-                    ]);
-
-                    throw new PaymentException('Платёжный метод временно недоступен');
-                }
-                break;
             case 'getPaymentLink':
-                // Оплата по ссылке Ypmn
-                // Представим, что нам надо оплатить пару позиций: Синий Мяч и Жёлтый Круг
-
-                // Опишем первую позицию
-                $product1 = new Product;
-                // Установим Наименование (название товара или услуги)
-                $product1->setName('Синий Квадрат');
-                // Установим Артикул
-                $product1->setSku('ball-05');
-                // Установим Стоимость за единицу
-                $product1->setUnitPrice('500');
-                // Установим Количество
-                $product1->setQuantity(1);
-                // Установим НДС
-                $product1->setVat(20);
-
-                //Опишем вторую позицию с помощью сокращённого синтаксиса:
-                $product2 = new Product([
-                    'name'  => 'Оранжевый Круг',
-                    'sku'  => 'toy-15',
-                    'unitPrice'  => 160000,
-                    'quantity'  => 3,
-                    'vat'  => 0,
-                ]);
-
-                // Опишем Биллинговую (платёжную) информацию
-                $billing = new Billing;
-                // Установим Код страны
-                $billing->setCountryCode('RU');
-                // Установим Город
-                $billing->setCity('Москва');
-                // Установим Регион
-                $billing->setState('Центральный регион');
-                // Установим Адрес Плательщика (первая строка)
-                $billing->setAddressLine1('Улица Старый Арбат, дом 10');
-                // Установим Адрес Плательщика (вторая строка)
-                $billing->setAddressLine1('Офис Ypmn');
-                // Установим Почтовый Индекс Плательщика
-                $billing->setZipCode('121000');
-                // Установим Имя Плательщика
-                $billing->setFirstName('Иван');
-                // Установим Фамилия Плательщика
-                $billing->setLastName('Петров');
-                // Установим Телефон Плательщика
-                $billing->setPhone('+79670660742');
-                // Установим Email Плательщика
-                $billing->setEmail('test1@ypmn.ru');
-
-                // (необязательно) Опишем Доствку и принимающее лицо
-                $delivery = new Delivery;
-                // Установим документ, подтверждающий право приёма доставки
-                $delivery->setIdentityDocument(
-                    new IdentityDocument('123456', 'PERSONALID')
-                );
-                // Установим Код страны
-                $delivery->setCountryCode('RU');
-                // Установим Город
-                $delivery->setCity('Москва');
-                // Установим Регион
-                $delivery->setState('Центральный регион');
-                // Установим Адрес Лица, принимающего заказ (первая строка)
-                $delivery->setAddressLine1('Улица Старый Арбат, дом 10');
-                // Установим Адрес Лица, принимающего заказ (вторая строка)
-                $delivery->setAddressLine1('Офис Ypmn');
-                // Установим Почтовый Индекс Лица, принимающего заказ
-                $delivery->setZipCode('121000');
-                // Установим Имя Лица, принимающего заказ
-                $delivery->setFirstName('Мария');
-                // Установим Фамилия Лица, принимающего заказ
-                $delivery->setLastName('Петрова');
-                // Установим Телефон Лица, принимающего заказ
-                $delivery->setPhone('+79670660743');
-                // Установим Email Лица, принимающего заказ
-                $delivery->setEmail('test2@ypmn.ru');
-                // Установим Название Компании, в которой можно оставить заказ
-                $delivery->setCompanyName('ООО "Вектор"');
-
-                // Создадим клиентское подключение
-                $client = new Client;
-                // Установим биллинг
-                $client->setBilling($billing);
-                // Установим доставку
-                $client->setDelivery($delivery);
-                // Установим IP (автоматически)
-                $client->setCurrentClientIp();
-                // И Установим время (автоматически)
-                $client->setCurrentClientTime();
-
-                // Создадим платёж
-                $payment = new Payment;
-                // Установим позиции
-                $payment->addProduct($product1);
-                $payment->addProduct($product2);
-                // Установим валюту
-                $payment->setCurrency('RUB');
-                // Создадим и установим авторизацию по типу платежа
-                $payment->setAuthorization(new Authorization('CCVISAMC',true));
-                // Установим номер заказа (должен быть уникальным в вашей системе)
-                $payment->setMerchantPaymentReference('primer_nomer__' . time());
-                // Установим адрес перенаправления пользователя после оплаты
-                $payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
-                // Установим клиентское подключение
-                $payment->setClient($client);
-
-                // Создадим HTTP-запрос к API
-                $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
-                $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
-                $apiRequest->setSandboxMode();
-                // Отправим запрос
-                $responseData = $apiRequest->sendAuthRequest($payment, $merchant);
-                // Преобразуем ответ из JSON в массив
-                try {
-                    $responseData = json_decode((string) $responseData["response"], true);
-
-                    // Нарисуем кнопку оплаты
-                    echo Std::drawYpmnButton([
-                        'url' => $responseData["paymentResult"]['url'],
-                        'sum' => $payment->sumProductsAmount(),
-                    ]);
-
-                    // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
-                    // echo Std::redirect($responseData["paymentResult"]['url']);
-                } catch (Exception $exception) {
-                    //TODO: обработка исключения
-                    echo Std::alert([
-                        'text' => '
-                            Извините, платёжный метод временно недоступен.<br>
-                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
-                            <br>
-                            <pre>' . $exception->getMessage() . '</pre>',
-                        'type' => 'danger',
-                    ]);
-
-                    throw new PaymentException('Платёжный метод временно недоступен');
-                }
-                break;
             case 'getToken':
-                // Хотим получить токен
-                // Создадим HTTP-запрос к API
-                $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
-                $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
-                $apiRequest->setSandboxMode();
-                // Отправим запрос
-                $ypmnPaymentReference = new PaymentReference(2469883);
-                $responseData = $apiRequest->sendTokenCreationRequest($ypmnPaymentReference);
-                // Преобразуем ответ из JSON в массив
-                try {
-                    $responseData = json_decode((string) $responseData["response"], true);
-
-                    // Нарисуем кнопку оплаты 5
-//                    echo Std::drawYpmnButton([
-//                        'url' => $responseData["paymentResult"]['url']
-//                    ]);
-
-                    // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
-                    // echo Std::redirect($responseData["paymentResult"]['url']);
-                } catch (Exception $exception) {
-                    //TODO: обработка исключения
-                    echo Std::alert([
-                        'text' => '
-                            Извините, платёжный метод временно недоступен.<br>
-                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
-                            <br>
-                            <pre>' . $exception->getMessage() . '</pre>',
-                        'type' => 'danger',
-                    ]);
-
-                    throw new PaymentException('Платёжный метод временно недоступен');
-                }
+                include './src/Examples/'.$_GET['function'] . '.php';
                 break;
+
+
             case 'paymentByToken':
                 // Оплата по токену
                 // Установим номер (ID) заказа (номер заказа в вашем магазине, должен быть уникален в вашей системе)
@@ -351,9 +101,9 @@ if(isset($_GET['function'])){
 
                 // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
+                // Включить режим отладки (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
 
                 $responseData = $apiRequest->sendAuthRequest($auth, $merchant);
@@ -402,9 +152,9 @@ if(isset($_GET['function'])){
 
                 // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
+                // Включить режим отладки (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
                 // Отправим запрос к API
                 $responseData = $apiRequest->sendCaptureRequest($capture, $merchant);
@@ -417,9 +167,9 @@ if(isset($_GET['function'])){
                 $merchantPaymentReference = 'primer_nomer__184';
                 // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
+                // Включить режим отладки (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
                 // Отправим запрос к API
                 $responseData = $apiRequest->sendStatusRequest($merchantPaymentReference);
@@ -445,9 +195,9 @@ if(isset($_GET['function'])){
                 $refund->setCurrency('RUB');
                 // Создадим HTTP-запрос к API
                 $apiRequest = new ApiRequest($merchant);
-                // Включить режим отладки (удалите в рабочей программе!)
+                // Включить режим отладки (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setDebugMode();
-                // Переключиться на тестовый сервер (удалите в рабочей программе!)
+                // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
                 $apiRequest->setSandboxMode();
                 // Отправим запрос к API
                 $responseData = $apiRequest->sendRefundRequest($refund, $merchant);
@@ -469,5 +219,3 @@ if(isset($_GET['function'])){
         echo $e->getHtmlMessage();
     }
 }
-
-include 'example_template.html';

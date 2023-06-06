@@ -1,9 +1,6 @@
 <?php
 
 namespace Ypmn;
-use Ypmn\Interfaces\OrderDataInterface;
-use Ypmn\Interfaces\PaymentResultInterface;
-use Ypmn\Interfaces\WebhookInterface;
 
 /**
  * Принятие информации о запросе на стороне мерчанта

@@ -3,8 +3,6 @@
 namespace Ypmn;
 
 use JsonSerializable;
-use Ypmn\Interfaces\CaptureInterface;
-use Ypmn\Interfaces\TransactionInterface;
 
 class Capture implements CaptureInterface, JsonSerializable, TransactionInterface
 {

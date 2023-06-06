@@ -1,8 +1,6 @@
 <?php
 
-namespace Ypmn\Interfaces;
-
-use Ypmn\Authorization;
+namespace Ypmn;
 
 interface AuthorizationInterface
 {
