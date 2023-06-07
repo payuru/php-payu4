@@ -10,9 +10,9 @@ class PaymentReference implements \JsonSerializable
     private ?int $paymentReference = null;
 
     /**
-     * @param int $paymentReference номер транзакции
+     * @param string $paymentReference номер транзакции
      */
-    public function __construct(int $paymentReference)
+    public function __construct(string $paymentReference)
     {
         $this->setPaymentReference($paymentReference);
     }

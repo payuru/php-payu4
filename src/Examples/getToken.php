@@ -28,7 +28,8 @@ $apiRequest->setDebugMode();
 // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
 $apiRequest->setSandboxMode();
 // Отправим запрос
-$ypmnPaymentReference = new PaymentReference(2469883);
+$reference = (isset($_GET['reference']) ? $_GET['reference'] : '2450767');
+$ypmnPaymentReference = new PaymentReference($reference);
 $responseData = $apiRequest->sendTokenCreationRequest($ypmnPaymentReference);
 // Преобразуем ответ из JSON в массив
 try {
@@ -47,13 +48,6 @@ try {
         ]);
     }
 
-    // Нарисуем кнопку оплаты 5
-//                    echo Std::drawYpmnButton([
-//                        'url' => $responseData["paymentResult"]['url']
-//                    ]);
-
-    // Либо сделаем редирект (перенаправление) браузера по адресу оплаты:
-    // echo Std::redirect($responseData["paymentResult"]['url']);
 } catch (Exception $exception) {
     //TODO: обработка исключения
     echo Std::alert([

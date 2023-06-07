@@ -137,7 +137,7 @@ class Std
 
 .payment_btn__link {
   display: inline-block;
-  width: 190px;
+  width: 200px;
   max-height: 150px;
   line-height: 20px;
   justify-content: center;
@@ -174,8 +174,7 @@ class Std
 
 .payment_btn__sum {
   display: inlin-block;
-  padding-right: 10px;
-  font-size: 14pt;
+  font-size: 13pt;
 }
 
 .payment_btn__methods {

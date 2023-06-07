@@ -60,9 +60,12 @@ $payment->setCurrency('RUB');
 
 //  токен
 $token = new MerchantToken();
-$token->setTokenHash("8080695611129aa71725c413bd330e9e");
+$tokenHash = (isset($_GET['token']) ? $_GET['token'] : 'f7bcd9b9990b2d73cff5ad3df306b343');
+$token->setTokenHash($tokenHash);
 
-$auth = new Authorization('CCVISAMC',false);
+$auth = new Authorization();
+$auth->setUsePaymentPage(false);
+$auth->setPaymentMethod('CCVISAMC');
 $auth->setMerchantToken($token);
 
 // Создадим и установим авторизацию по типу платежа
@@ -83,7 +86,7 @@ $apiRequest->setDebugMode();
 // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
 $apiRequest->setSandboxMode();
 
-$responseData = $apiRequest->sendAuthRequest($auth, $merchant);
+$responseData = $apiRequest->sendAuthRequest($payment, $merchant);
 // Преобразуем ответ из JSON в массив
 try {
     $responseData = json_decode((string) $responseData["response"], true);

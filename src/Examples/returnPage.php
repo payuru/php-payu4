@@ -5,5 +5,5 @@
  */
 echo '<h1>Благодарим за оплату</h1>Чек выслан вам на почту.';
 
-//echo '<pre>$_GET: ' . print_r($_GET, true) . '</pre>';
-//echo '<pre>$_POST: ' . print_r($_POST, true) . '</pre>';
+echo '<pre>$_GET: ' . print_r($_GET, true) . '</pre>';
+echo '<pre>$_POST: ' . print_r($_POST, true) . '</pre>';

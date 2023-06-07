@@ -30,6 +30,7 @@ class Authorization implements AuthorizationInterface
     public function __constructor(string $paymentMethodType, bool $isPaymentPageUsed) {
         $this->setPaymentMethod($paymentMethodType);
         $this->setUsePaymentPage($isPaymentPageUsed);
+        echo 'конструирую';
     }
 
     /**
@@ -110,11 +111,13 @@ class Authorization implements AuthorizationInterface
      */
     public function setMerchantToken(?MerchantTokenInterface $merchantToken): self
     {
-        if (is_null($this->getCardDetails())){
+        if (!is_null($this->getCardDetails())){
             echo "Сработало 1 условие";
+            var_dump($this->getCardDetails());
         }
-        if ($this->getUsePaymentPage() === false){
+        if ($this->getUsePaymentPage() !== false){
             echo "Сработало 2 условие";
+            var_dump($this->getUsePaymentPage());
         }
         if (is_null($this->getCardDetails()) && $this->getUsePaymentPage() === false) {
             $this->merchantToken = $merchantToken;
