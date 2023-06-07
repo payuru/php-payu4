@@ -27,7 +27,7 @@ require vendor/autoload.php;
 ### PHP без фреймворков
 Клонируйте или скачайте, а затем подключите ([require](https://www.php.net/manual/ru/function.require.php)) файлы этого репозитория.
 
-## Примеры использования
+## Документация: Примеры + комментарии
 1. [Начало работы (настройка интеграции)](src/Examples/start.php)
 1. [Cамый простой платёж](src/Examples/simpleGetPaymentLink.php)
 2. [Платёж со всеми полями](src/Examples/getPaymentLink.php)
