@@ -75,6 +75,49 @@ class ApiRequest implements ApiRequestInterface
         $err = curl_error($curl);
         curl_close($curl);
 
+        if (true === $this->getDebugMode()) {
+            $this->echoDebugMessage('GET-Запрос к серверу Ypmn:');
+            $this->echoDebugMessage($urlToPostTo);
+            $this->echoDebugMessage('Ответ от сервера Ypmn:');
+            $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
+
+            if (mb_strlen($err) > 0) {
+                $this->echoDebugMessage('Ошибка');
+                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/">Последняя версия примеров на Github</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
+                echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
+            } else {
+                $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
+
+                if ($this->getSandboxMode()) {
+                    echo Std::alert([
+                        'type' => 'warning',
+                        'text' => '
+                            Внимание!
+                            У вас настроен тестовый режим.
+                            <br>Все запросы уходят на тестовый сервер <a href="' . $cpanel_url . '" class="alert-link">sandbox.ypmn.ru</a>
+                            <br>
+                            <br>
+                            Когда закончите тестирование, закомментируйте или удалите строки кода:
+                            <code class="d-block ml-2">
+                                $apiRequest->setDebugMode(); // вывод отладки
+                                <br>$apiRequest->setSandboxMode(); // тестовый сервер
+                            </code>
+                        ',
+                    ]);
+                }
+            }
+        }
+
+        if (mb_strlen($err) > 0) {
+            throw new PaymentException($err);
+        }
+
+        if ($response == null || strlen($response) === 0) {
+            throw new PaymentException('Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
+        }
+
         return ['response' => $response, 'error' => $err];
     }
 
@@ -125,7 +168,7 @@ class ApiRequest implements ApiRequestInterface
         curl_close($curl);
 
         if (true === $this->getDebugMode()) {
-            $this->echoDebugMessage('Запрос к серверу Ypmn:');
+            $this->echoDebugMessage('POST-Запрос к серверу Ypmn:');
             $this->echoDebugMessage($encodedJsonData);
             $this->echoDebugMessage('Ответ от сервера Ypmn:');
             $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
@@ -133,11 +176,11 @@ class ApiRequest implements ApiRequestInterface
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');
                 $this->echoDebugMessage($encodedJsonData);
-                echo '<br>Следуйте <a href="http://secure.payu.ru/docs/">документации</a>';
-                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:help@payu.ru?subject=INTEGRATE">help@payu.ru</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/">Последняя версия примеров на Github</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/issues">Оставить заявку на улучшение</a>';
-                echo '<br><a href="https://payu.ru/contacts">Контакты</a>';
+
+                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/">Последняя версия примеров на Github</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
+                echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
             } else {
                 $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
 
@@ -153,7 +196,7 @@ class ApiRequest implements ApiRequestInterface
                             Когда закончите тестирование, закомментируйте или удалите строки кода:
                             <code class="d-block ml-2">
                                 $apiRequest->setDebugMode(); // вывод отладки
-                                <br>$apiRequest->setSandboxMode(); // тетстовый сервер
+                                <br>$apiRequest->setSandboxMode(); // тестовый сервер
                             </code>
                         ',
                     ]);
