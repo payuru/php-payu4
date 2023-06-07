@@ -8,7 +8,7 @@
 и предназначена для быстрой интеграции. Подходит для сайтов, платформ и приложений.
 
 Репозиторий опубликован в виде [пакета Composer](https://packagist.org/packages/yourpayments/php-api-client) и может 
-использоваться с любфми фреймворками и CMS.
+использоваться с любыми фреймворками и CMS.
  
 Требования: [PHP 7.4 и выше](https://github.com/yourpayments/php-api-client/blob/main/composer.json)
 
