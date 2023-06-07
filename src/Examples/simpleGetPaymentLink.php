@@ -11,6 +11,7 @@ use Ypmn\PaymentException;
 use Ypmn\Product;
 use Ypmn\Std;
 
+// Подключим файл, в котором заданы параметры мерчанта
 include_once 'start.php';
 
 // Оплата по ссылке Ypmn

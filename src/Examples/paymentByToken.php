@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 use Ypmn\Authorization;
-use Ypmn\Delivery;
-use Ypmn\IdentityDocument;
-use Ypmn\Merchant;
 use Ypmn\MerchantToken;
 use Ypmn\Payment;
 use Ypmn\Client;
@@ -13,11 +10,9 @@ use Ypmn\Billing;
 use Ypmn\ApiRequest;
 use Ypmn\PaymentException;
 use Ypmn\Product;
-use Ypmn\Capture;
-use Ypmn\Refund;
 use Ypmn\Std;
-use Ypmn\PaymentReference;
 
+// Подключим файл, в котором заданы параметры мерчанта
 include_once 'start.php';
 
 // Оплата по токену
@@ -56,7 +51,6 @@ $payment = new Payment;
 $payment->addProduct($orderAsProduct);
 // Установим валюту
 $payment->setCurrency('RUB');
-
 
 //  токен
 $token = new MerchantToken();
