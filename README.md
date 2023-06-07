@@ -39,12 +39,12 @@ require vendor/autoload.php;
 7. [Проверка статуса платежа](src/Examples/paymentGetStatus.php)
 8. [Страница после оплаты](src/Examples/returnPage.php)
 
-
 ## Ссылки
 - [Основной сайт НКО "Твои Платежи"](https://YPMN.ru/)
 - [Докуметация по API](https://dev.YPMN.ru/ru/documents/apiv4/)
 - [Реквизиты тестовых банковских карт](https://dev.payu.ru/ru/documents/rest-api/testing/#menu-2)
 - [Задать вопрос или сообщить о проблеме](https://github.com/yourpayments/php-api-client/issues/new)
+- [Документация Composer](https://getcomposer.org/)
 
 -------------
-[Твои Платежи](https://YPMN.ru/ "Платёжная система для сайтов, платформ и приложений") -- Платёжная система для сайтов, платформ и приложений
+[НКО "Твои Платежи"](https://YPMN.ru/ "Платёжная система для сайтов, платформ и приложений") -- Платёжная система для сайтов, платформ и приложений.
