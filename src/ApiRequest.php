@@ -83,12 +83,10 @@ class ApiRequest implements ApiRequestInterface
 
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');
-                $this->echoDebugMessage($encodedJsonData);
-                echo '<br>Следуйте <a href="http://secure.payu.ru/docs/">документации</a>';
-                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:help@payu.ru?subject=INTEGRATE">help@payu.ru</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/">Последняя версия примеров на Github</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/issues">Оставить заявку на улучшение</a>';
-                echo '<br><a href="https://payu.ru/contacts">Контакты</a>';
+                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/">Последняя версия примеров на Github</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
+                echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
             } else {
                 $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
 
@@ -104,7 +102,7 @@ class ApiRequest implements ApiRequestInterface
                             Когда закончите тестирование, закомментируйте или удалите строки кода:
                             <code class="d-block ml-2">
                                 $apiRequest->setDebugMode(); // вывод отладки
-                                <br>$apiRequest->setSandboxMode(); // тетстовый сервер
+                                <br>$apiRequest->setSandboxMode(); // тестовый сервер
                             </code>
                         ',
                     ]);
@@ -178,11 +176,11 @@ class ApiRequest implements ApiRequestInterface
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');
                 $this->echoDebugMessage($encodedJsonData);
-                echo '<br>Следуйте <a href="http://secure.payu.ru/docs/">документации</a>';
-                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:help@payu.ru?subject=INTEGRATE">help@payu.ru</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/">Последняя версия примеров на Github</a>';
-                echo '<br><a href="https://github.com/payuru/php-payu4/issues">Оставить заявку на улучшение</a>';
-                echo '<br><a href="https://payu.ru/contacts">Контакты</a>';
+
+                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/">Последняя версия примеров на Github</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
+                echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
             } else {
                 $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
 
@@ -198,7 +196,7 @@ class ApiRequest implements ApiRequestInterface
                             Когда закончите тестирование, закомментируйте или удалите строки кода:
                             <code class="d-block ml-2">
                                 $apiRequest->setDebugMode(); // вывод отладки
-                                <br>$apiRequest->setSandboxMode(); // тетстовый сервер
+                                <br>$apiRequest->setSandboxMode(); // тестовый сервер
                             </code>
                         ',
                     ]);
