@@ -76,7 +76,7 @@ class ApiRequest implements ApiRequestInterface
         curl_close($curl);
 
         if (true === $this->getDebugMode()) {
-            $this->echoDebugMessage('Запрос к серверу Ypmn:');
+            $this->echoDebugMessage('GET-Запрос к серверу Ypmn:');
             $this->echoDebugMessage($urlToPostTo);
             $this->echoDebugMessage('Ответ от сервера Ypmn:');
             $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
@@ -170,7 +170,7 @@ class ApiRequest implements ApiRequestInterface
         curl_close($curl);
 
         if (true === $this->getDebugMode()) {
-            $this->echoDebugMessage('Запрос к серверу Ypmn:');
+            $this->echoDebugMessage('POST-Запрос к серверу Ypmn:');
             $this->echoDebugMessage($encodedJsonData);
             $this->echoDebugMessage('Ответ от сервера Ypmn:');
             $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
