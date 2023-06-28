@@ -77,4 +77,12 @@ interface RefundInterface
      * @return string Код валюты
      */
     public function getCurrency() : string;
+
+    /**
+     * Добавить Сабмерчанта (для маркетплейса)
+     * @param string $merchantCode
+     * @param float $amount
+     * @return $this
+     */
+    public function addMarketPlaceSubmerchant(string $merchantCode, float $amount) : self;
 }

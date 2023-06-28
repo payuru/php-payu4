@@ -45,6 +45,9 @@ class Product implements ProductInterface
      */
     private string $additionalDetails;
 
+    /** @var MarketplaceSubmerchantInterface|null Сабмерчант (для маркетплейса) */
+    private ?MarketplaceSubmerchantInterface $marketplaceSubmerchant = null;
+
     /** @inheritDoc */
     public function __construct(array $params=[])
     {
@@ -65,6 +68,9 @@ class Product implements ProductInterface
         }
         if (isset($params['amount'])) {
             $this->setAmount($params['amount']);
+        }
+        if (isset($params['merchantCode'])) {
+            $this->setMarketplaceSubmerchantByCode($params['merchantCode']);
         }
     }
 
@@ -161,9 +167,17 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
+    public function setMarketplaceSubmerchantByCode(string $merchantCode): self
+    {
+        $this->marketplaceSubmerchant = new MarketplaceSubmerchant($merchantCode);
+
+        return $this;
+    }
+
+    /** @inheritDoc */
     public function arraySerialize(): array
     {
-        return [
+        $resultArray = [
             'name'              => $this->getName(),
             'sku'               => $this->getSku(),
             'unitPrice'         => (null !== $this->getUnitPrice() ? number_format($this->getUnitPrice(), 2,'.','') : null),
@@ -172,5 +186,12 @@ class Product implements ProductInterface
             'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2,'.','') : null),
             'vat'               => $this->getVat(),
         ];
+
+        if (null !== $this->marketplaceSubmerchant) {
+            $resultArray['marketplace']['version'] = 1;
+            $resultArray['marketplace']['merchantCode'] = $this->marketplaceSubmerchant->getMerchantCode();
+        }
+
+        return $resultArray;
     }
 }

@@ -33,12 +33,14 @@ if(isset($_GET['function'])){
                 break;
             case 'simpleGetPaymentLink':
             case 'getPaymentLink':
+            case 'getPaymentLinkMarketplace':
             case 'getToken':
             case 'paymentByToken':
             case 'paymentCapture':
             case 'paymentGetStatus':
             case 'paymentWebhook':
             case 'paymentRefund':
+            case 'paymentRefundMarketplace':
             case 'returnPage':
                 include './src/Examples/start.php';
                 include './src/Examples/'.$_GET['function'] . '.php';

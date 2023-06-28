@@ -29,6 +29,9 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
      */
     private string $currency;
 
+    /** @var MarketplaceSubmerchant[] */
+    private array $marketplaceSubmerchants = [];
+
     /**
      * @inheritDoc
      */
@@ -128,7 +131,19 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 
     /**
      * @inheritDoc
+     * @throws PaymentException
      */
+    public function addMarketPlaceSubmerchant(string $merchantCode, float $amount): self
+    {
+        $this->marketplaceSubmerchants[$merchantCode] = new MarketplaceSubmerchant($merchantCode, $amount);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
@@ -138,6 +153,12 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
             'amount'	=> $this->getAmount(),
             'currency' => $this->getCurrency()
         ];
+
+        if (count($this->marketplaceSubmerchants) > 0) {
+            foreach ($this->marketplaceSubmerchants as $marketplaceSubmerchant) {
+                $requestData['marketplaceV1'][] = $marketplaceSubmerchant;
+            }
+        }
 
         return json_encode($requestData, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }

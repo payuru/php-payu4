@@ -104,6 +104,16 @@ interface ProductInterface
     public function getAdditionalDetails() : ?string;
 
     /**
+     * Добавить к Продукту Сабмерчанта
+     * (для маркетплейса/сплита/разделения платежа)
+     * с помощью Кода Сабмерчанта
+     * (его надо получить в личном кабинете)
+     * @param string $merchantCode
+     * @return $this
+     */
+    public function setMarketplaceSubmerchantByCode(string $merchantCode) : self;
+
+    /**
      * Получить Продукт в виде массива
      * @return array Продукт в виде массива
      */

@@ -3,7 +3,7 @@
 namespace Ypmn;
 
 /**
- * Это объект Сабмерчанта (для маркетплейса)
+ * Это интерфейс Сабмерчанта (для маркетплейса)
  */
 interface MarketplaceSubmerchantInterface
 {
@@ -22,17 +22,16 @@ interface MarketplaceSubmerchantInterface
 
     /**
      * Установить Сумму
-     * @param int $amount
+     * @param float $amount
      * @return $this
      */
-    public function setAmount(int $amount) : self;
+    public function setAmount(float $amount) : self;
 
     /**
      * Получить Сумму
-     * @return int
+     * @return float
      */
-    public function getAmount() : int;
-
+    public function getAmount() : float;
 
     /**
      * Преобразовать в массив
