@@ -32,10 +32,4 @@ interface MarketplaceSubmerchantInterface
      * @return float
      */
     public function getAmount() : float;
-
-    /**
-     * Преобразовать в массив
-     * @return mixed объект в виде массива
-     */
-    public function arraySerialize();
 }

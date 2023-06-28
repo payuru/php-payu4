@@ -9,7 +9,7 @@ use stdClass;
  * Это объект Сабмерчанта
  * (для маркетплейса/сплита/разделения платежа)
  */
-class MarketplaceSubmerchant implements MarketplaceSubmerchantInterface, JsonSerializable
+class MarketplaceSubmerchant implements MarketplaceSubmerchantInterface
 {
     /** @var string Код Сабмерчанта (можно получить в личном кабинете) */
     private string $merchantCode;
@@ -58,28 +58,5 @@ class MarketplaceSubmerchant implements MarketplaceSubmerchantInterface, JsonSer
     public function getAmount(): float
     {
         return $this->amount;
-    }
-
-    /** @inheritDoc */
-    public function arraySerialize()
-    {
-        $resultArray = [
-          'merchantCode' => $this->merchantCode,
-        ];
-
-        if ($this->amount > 0) {
-            $resultArray['amount'] = $this->amount;
-        }
-
-        return $resultArray;
-    }
-
-    public function jsonSerialize(){
-        $dto = (object) [
-            'merchantCode' => $this->getMerchantCode(),
-            'amount' => $this->getAmount(),
-        ];
-
-        return json_encode($dto, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }
 }

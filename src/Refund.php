@@ -156,7 +156,10 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 
         if (count($this->marketplaceSubmerchants) > 0) {
             foreach ($this->marketplaceSubmerchants as $marketplaceSubmerchant) {
-                $requestData['marketplaceV1'][] = $marketplaceSubmerchant;
+                $requestData['marketplaceV1'][] = (object) [
+                    'amount' => $marketplaceSubmerchant->getAmount(),
+                    'merchant' => $marketplaceSubmerchant->getMerchantCode(),
+                ];
             }
         }
 

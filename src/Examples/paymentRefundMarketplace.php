@@ -21,9 +21,11 @@ $refund->setYpmnPaymentReference("2297597");
 $refund->setOriginalAmount(3700);
 // Cумма фактического списания
 $refund->setAmount(3700);
+
 // Добавим Сабмерчантов
 $refund->addMarketPlaceSubmerchant('SUBMERCHANT_1', 3000);
 $refund->addMarketPlaceSubmerchant('SUBMERCHANT_2', 700);
+
 // Установим валюту
 $refund->setCurrency('RUB');
 // Создадим HTTP-запрос к API
