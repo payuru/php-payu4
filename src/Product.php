@@ -109,7 +109,11 @@ class Product implements ProductInterface
     /** @inheritDoc */
     public function setUnitPrice(float $unitPrice): self
     {
+        if ($unitPrice <= 0) {
+            throw new PaymentException('Нулевая цена не принимается');
+        }
         $this->unitPrice = round($unitPrice, 2, PHP_ROUND_HALF_UP);
+
         return $this;
     }
 
@@ -122,7 +126,12 @@ class Product implements ProductInterface
     /** @inheritDoc */
     public function setQuantity(int $quantity): self
     {
+        if ($quantity <= 0) {
+            throw new PaymentException('Нулевое количество не принимается');
+        }
+
         $this->quantity = $quantity;
+
         return $this;
     }
 

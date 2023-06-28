@@ -40,6 +40,7 @@ interface ProductInterface
      * Установить Цена за 1 штуку, округление до копейки
      * @param float $unitPrice
      * @return $this Цена за 1 штуку
+     * @throws PaymentException
      */
     public function setUnitPrice(float $unitPrice) : self;
 
@@ -53,6 +54,7 @@ interface ProductInterface
      * Установить Количество
      * @param int $quantity Количество
      * @return $this
+     * @throws PaymentException
      */
     public function setQuantity(int $quantity) : self;
 
