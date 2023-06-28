@@ -26,7 +26,7 @@ $product1->setName('Синий Квадрат');
 // Установим Артикул
 $product1->setSku('ball-05');
 // Установим Стоимость за единицу
-$product1->setUnitPrice(500);
+$product1->setUnitPrice(10);
 // Установим Количество
 $product1->setQuantity(1);
 // Установим НДС
@@ -36,7 +36,7 @@ $product1->setVat(20);
 $product2 = new Product([
     'name'  => 'Оранжевый Круг',
     'sku'  => 'toy-15',
-    'unitPrice'  => 160000,
+    'unitPrice'  => 2,
     'quantity'  => 3,
     'vat'  => 0,
 ]);
