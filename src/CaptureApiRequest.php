@@ -13,7 +13,6 @@ class CaptureApiRequest
     const AUTHORIZE_API = '/api/v4/payments/refund';
     const HOST = 'https://sandbox.payu.ru';
 
-//    public function sendRequest(array $data, $merchantCode, $secret): array
     public function sendRequest(CaptureInterface $capture, MerchantInterface $merchant): array
     {
         $encodedJsonData = $capture->jsonSerialize();
@@ -54,7 +53,6 @@ class CaptureApiRequest
         return ['response' => $response, 'error' => $err];
     }
 
-//    private function getSignature($merchantCode, $secret, $date, $url, $httpMethod, $bodyHash): string
     private function getSignature(MerchantInterface $merchant, $date, $url, $httpMethod, $bodyHash): string
     {
         $urlParts = parse_url($url);
