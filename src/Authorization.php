@@ -20,6 +20,9 @@ class Authorization implements AuthorizationInterface
     /** @var MerchantTokenInterface|null Данные карты (в виде токена) */
     private ?MerchantTokenInterface $merchantToken = null;
 
+    /** @var PaymentPageOptions|null */
+    private ?PaymentPageOptions $paymentPageOptions = null;
+
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
@@ -111,14 +114,6 @@ class Authorization implements AuthorizationInterface
      */
     public function setMerchantToken(?MerchantTokenInterface $merchantToken): self
     {
-        if (!is_null($this->getCardDetails())){
-            echo "Сработало 1 условие";
-            var_dump($this->getCardDetails());
-        }
-        if ($this->getUsePaymentPage() !== false){
-            echo "Сработало 2 условие";
-            var_dump($this->getUsePaymentPage());
-        }
         if (is_null($this->getCardDetails()) && $this->getUsePaymentPage() === false) {
             $this->merchantToken = $merchantToken;
 
@@ -126,6 +121,20 @@ class Authorization implements AuthorizationInterface
         } else {
             throw new PaymentException('For using MerchantToken need to make CardDetails = NULL and usePaymentPage = false');
         }
+    }
+
+    /** @inheritDoc */
+    public function setPaymentPageOptions(PaymentPageOptionsInterface $paymentPageOptions): self
+    {
+        $this->paymentPageOptions = $paymentPageOptions;
+
+        return $this;
+    }
+
+    /** @inheritDoc */
+    public function getPaymentPageOptions(): PaymentPageOptionsInterface
+    {
+        return $this->paymentPageOptions;
     }
 
     /**
@@ -144,6 +153,10 @@ class Authorization implements AuthorizationInterface
 
         if (!is_null($this->merchantToken)) {
             $resultArray['merchantToken'] = $this->merchantToken->toArray();
+        }
+
+        if (!is_null($this->paymentPageOptions) && $this->paymentPageOptions->getOrderTimeout() > 0) {
+            $resultArray['paymentPageOptions'] = $this->paymentPageOptions->toArray();
         }
 
         return $resultArray;

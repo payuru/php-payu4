@@ -55,4 +55,13 @@ interface AuthorizationInterface
      * @return $this
      */
     public function setMerchantToken(?MerchantTokenInterface $merchantToken): self;
+
+    /**
+     * Установить настройки платёжной страницы
+     * @param paymentPageOptionsInterface $paymentPageOptions
+     * @return $this
+     */
+    public function setPaymentPageOptions(PaymentPageOptionsInterface $paymentPageOptions): self;
+
+    public function getPaymentPageOptions(): PaymentPageOptionsInterface;
 }
