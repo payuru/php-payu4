@@ -10,6 +10,7 @@ use Ypmn\Client;
 use Ypmn\Billing;
 use Ypmn\ApiRequest;
 use Ypmn\PaymentException;
+use Ypmn\PaymentPageOptions;
 use Ypmn\Product;
 use Ypmn\Std;
 
@@ -111,8 +112,14 @@ $payment->addProduct($product1);
 $payment->addProduct($product2);
 // Установим валюту
 $payment->setCurrency('RUB');
-// Создадим и установим авторизацию по типу платежа
-$payment->setAuthorization(new Authorization('CCVISAMC',true));
+
+// Создадим авторизацию по типу платежа
+$authorization = new Authorization('CCVISAMC',true);
+// Можно установить лимит времени для оплаты заказа (в секундах)
+$authorization->setPaymentPageOptions(new PaymentPageOptions(600));
+// Назначим авторизацию для нашего платежа
+$payment->setAuthorization($authorization);
+
 // Установим номер заказа (должен быть уникальным в вашей системе)
 $payment->setMerchantPaymentReference('primer_nomer__' . time());
 // Установим адрес перенаправления пользователя после оплаты

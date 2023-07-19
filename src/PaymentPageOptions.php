@@ -22,7 +22,7 @@ class PaymentPageOptions implements PaymentPageOptionsInterface
     }
 
     /** @inheritDoc */
-    public function setOrderTimeout(int $timeoutSeconds): paymentPageOptionsInterface
+    public function setOrderTimeout(int $timeoutSeconds): self
     {
         if ($timeoutSeconds < self::MIN_ORDER_TIMEOUT_SECONDS) {
             throw new PaymentException($timeoutSeconds . ' -- слишком маленькое время для оплаты заказа (в секундах)');
