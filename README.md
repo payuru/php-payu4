@@ -36,7 +36,7 @@ require vendor/autoload.php;
 5. [Списание средств](src/Examples/paymentCapture.php)
 6. [Возврат средств](src/Examples/paymentRefund.php)
 7. [Проверка статуса платежа](src/Examples/paymentGetStatus.php)
-7. [Выпдаты на банковские карты физ. лиц](src/Examples/payoutCreate.php)
+7. [Выплаты на банковские карты](src/Examples/payoutCreate.php)
 8. [Страница после оплаты](src/Examples/returnPage.php)
 
 ## Ссылки
