@@ -32,8 +32,8 @@ $payout->setDescription('Тестовое Описание Платежа');
 
 // Опишем и назначим Направление и Получателя платежа
 $destination = new PayoutDestination();
-// Назначим номер карты
-$destination->setCardNumber("4111111111111111");
+// Назначим номер карты (здесь пример передачи данных из формы + стандартное значение)
+$destination->setCardNumber(@$_POST['cc-number'] ?: "4111111111111111");
 // Опишем получателя
 $recipient = new Billing();
 // E-mail получателя
@@ -49,9 +49,9 @@ $recipient->setCountryCode('RU');
 
 // Имя получателя из GET-запроса
 $postRecipientName = explode(' ', @$_POST['reciever-name'] ?: '');
-// Установим Имя получателя для платежа
+// Установим Имя получателя для платежа (здесь пример передачи данных из формы + стандартное значение)
 $recipient->setFirstName(@$postRecipientName[0] ?: 'Иван');
-// Фамилия получателя
+// Фамилия получателя (здесь пример передачи данных из формы + стандартное значение)
 $recipient->setLastName(@$postRecipientName[1] ?: @$postRecipientName[0] ?: 'Иванович');
 $destination->setRecipient($recipient);
 $payout->setDestination($destination);

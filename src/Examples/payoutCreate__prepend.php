@@ -38,9 +38,9 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <span>Выплата</span>
+                                    <span>Выплата на банковскую карту</span>
                                 </div>
-                                <div class="col-md-6 text-right" style="margin-top: -5px;">
+                                <div class="col-md-6 text-right float-end" style="margin-top: -5px; text-align: right;">
                                     <img src="https://img.icons8.com/color/36/000000/visa.png">
                                     <img src="https://img.icons8.com/color/36/000000/mastercard.png">
                                     <img src="https://img.icons8.com/color/36/000000/mir.png">
@@ -49,20 +49,17 @@
 
                         </div>
                         <div class="card-body" style="min-height: 250px">
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="cc-number" class="control-label">Номер Карты</label>
                                 <input name="cc-number" id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
                             </div>
 
-
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="numeric" class="control-label">Имя и Фамилия Получателя</label>
                                 <input name="reciever-name" type="text" class="input-lg form-control">
                             </div>
 
                             <div class="form-group">
-                                <br>
-                                <br>
                                 <input value="Выплатить" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;">
                             </div>
                         </div>
