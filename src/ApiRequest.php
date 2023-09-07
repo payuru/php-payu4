@@ -16,13 +16,15 @@ class ApiRequest implements ApiRequestInterface
     const TOKEN_API = '/api/v4/token';
     const REFUND_API = '/api/v4/payments/refund';
     const STATUS_API = '/api/v4/payments/status';
+    const PAYOUT_CREATE_API = '/api/v4/payout';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
+
 
     /** @var MerchantInterface Мерчант, от имени которого отправляется запрос */
     private MerchantInterface $merchant;
 
-    /** @var bool Режим Песочницы (тестовая панель Ypmn */
+    /** @var bool Режим Песочницы (тестовая панель Ypmn) */
     private bool $sandboxModeIsOn = false;
 
     /** @var bool Режим Отладки (вывод системных сообщений) */
@@ -251,6 +253,11 @@ class ApiRequest implements ApiRequestInterface
         return $this->sendPostRequest($tokenHash, self::AUTHORIZE_API);
     }
 
+    public function sendPayoutCreateRequest(PayoutInterface $payout)
+    {
+        return $this->sendPostRequest($payout, self::PAYOUT_CREATE_API);
+    }
+
     /**
      * Подпись запроса
      * @param MerchantInterface $merchant Мерчант
@@ -321,4 +328,5 @@ class ApiRequest implements ApiRequestInterface
                 >'.print_r($mixedInput, true).'</pre>';
         }
     }
+
 }

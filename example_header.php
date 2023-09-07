@@ -88,7 +88,8 @@
                         'text' => $examples[ $_GET['function'] ]['about'] . '
                             <br>
                             <br>
-                            <a target="_blank" href="https://github.com/yourpayments/php-api-client/blob/main/src/Examples/'. $_GET['function'] .'.php" class="alert-link">Адрес этого примера на Github</a> 
+                            <a class="btn btn-outline-success mr-3" target="_blank" href="https://github.com/yourpayments/php-api-client/blob/main/src/Examples/'. $_GET['function'] .'.php" class="alert-link">Адрес этого примера на Github</a>
+                            '.( !$examples[ $_GET['function'] ]['docLink'] ? '' : '<a class="btn btn-outline-success m-3" target="_blank" href="'.$examples[ $_GET['function'] ]['docLink'].'" class="alert-link">Документация API</a>' ).'
                         ',
                     ]);
                 }

@@ -17,11 +17,13 @@ $examples = [
     'simpleGetPaymentLink' => [
         'name'  => 'Самая простая кнопка оплаты',
         'about'  => 'В этом примере показана самая простая реализация. С минимальным набором полей без детализации, просто оплата заказа c определённой суммой.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1authorize/post',
         'link'  => '',
     ],
     'getPaymentLink' => [
         'name'  => 'Платёж со всеми подробностями',
         'about'  => 'Это пример платежа с максимальным набором полей.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1authorize/post',
         'link'  => '',
     ],
     'getPaymentLinkMarketplace' => [
@@ -32,31 +34,43 @@ $examples = [
     'getToken' => [
         'name'  => 'Создание токена',
         'about'  => 'Приложение передаёт номер успешно оплаченного заказа в YPMN API, и получает в ответ платёжный токен',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Token-API/paths/~1v4~1token/post',
         'link'  => '',
     ],
     'paymentByToken' => [
         'name'  => 'Оплата токеном',
         'about'  => 'Оплата с помощью токена (теперь не нужно повторно вводить данные банковской карты)',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1authorize/post',
         'link'  => '',
     ],
     'paymentCapture' => [
         'name'  => 'Списание средств',
         'about'  => 'Списание ранее заблокированной на счету суммы. Не обязательно, если у Вас настроена оплата в 1 шаг.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1capture/post',
         'link'  => '',
     ],
     'paymentRefund' => [
         'name'  => 'Возврат средств',
         'about'  => 'Запрос на полный или частичный возврат средств.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1refund/post',
         'link'  => '',
     ],
     'paymentRefundMarketplace' => [
         'name'  => 'Возврат средств со сплитом',
         'about'  => 'Запрос на полный или частичный возврат средств с разделением на несколько получателей.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1refund/posts',
         'link'  => '',
     ],
     'paymentGetStatus' => [
         'name'  => 'Проверка статуса платежа',
         'about'  => 'Запрос к YPMN API о состоянии платежа.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1status~1{merchantPaymentReference}/get',
+        'link'  => '',
+    ],
+    'payoutCreate' => [
+        'name'  => 'Создание выплаты',
+        'about'  => 'Запрос к YPMN для совершения выплаты на карту. У вас должно быть достаточно средств на специальном счету для выплат.',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payouts-API',
         'link'  => '',
     ],
     'returnPage' => [

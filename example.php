@@ -38,12 +38,14 @@ if(isset($_GET['function'])){
             case 'paymentByToken':
             case 'paymentCapture':
             case 'paymentGetStatus':
+            case 'payoutCreate':
             case 'paymentWebhook':
             case 'paymentRefund':
             case 'paymentRefundMarketplace':
             case 'returnPage':
-                include './src/Examples/start.php';
-                include './src/Examples/'.$_GET['function'] . '.php';
+                require './src/Examples/start.php';
+                @include './src/Examples/'.$_GET['function'] . '__prepend.php';
+                require './src/Examples/'.$_GET['function'] . '.php';
                 break;
 
             default:

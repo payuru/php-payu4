@@ -46,7 +46,9 @@ class CardDetails implements CardDetailsInterface
     /** @inheritDoc */
     public function setNumber(string $number): self
     {
+        //TODO: проверка на валидность
         $this->number = $number;
+
         return $this;
     }
 
