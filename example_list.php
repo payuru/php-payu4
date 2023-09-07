@@ -10,7 +10,8 @@ $examples = [
                 <br>
                 <br>Они нужны для отправки всех запросов к API.
                 <br>
-                <br>На стороне клиента они используются для создания объекта Merchant.
+                <br>На стороне клиента они используются для создания объекта Merchant (смотрите <a href="https://github.com/yourpayments/php-api-client/blob/main/src/Examples/start.php">файл с примером</a>).
+                
         ',
         'docLink'  => '',
         'link'  => '',
