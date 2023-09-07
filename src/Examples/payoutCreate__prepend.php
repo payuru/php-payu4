@@ -29,8 +29,7 @@
 </script>
 
 <form method="post">
-    <div class="padding">
-        <div class="row">
+        <div class="row mt-5 mb-5">
             <div class="container-fluid d-flex justify-content-center">
                 <div class="col-sm-8 col-md-6">
                     <div class="card">
@@ -67,5 +66,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </form>
