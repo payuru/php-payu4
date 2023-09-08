@@ -19,6 +19,7 @@ class ApiRequest implements ApiRequestInterface
     const PAYOUT_CREATE_API = '/api/v4/payout';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
+    const LOCAL_HOST = 'http://localhost';
 
 
     /** @var MerchantInterface Мерчант, от имени которого отправляется запрос */
@@ -26,6 +27,9 @@ class ApiRequest implements ApiRequestInterface
 
     /** @var bool Режим Песочницы (тестовая панель Ypmn) */
     private bool $sandboxModeIsOn = false;
+
+    /** @var bool Режим отправки запросов на локальный хост */
+    private bool $localModeIsOn = false;
 
     /** @var bool Режим Отладки (вывод системных сообщений) */
     private bool $debugModeIsOn = false;
@@ -45,8 +49,13 @@ class ApiRequest implements ApiRequestInterface
     {
         $curl = curl_init();
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
-        $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) .  $api;
         $requestHttpVerb = 'GET';
+
+        if ($this->localModeIsOn) {
+            $urlToPostTo = self::LOCAL_HOST;
+        } else {
+            $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
+        }
 
         $setopt_array = [
             CURLOPT_URL => $urlToPostTo,
@@ -138,8 +147,13 @@ class ApiRequest implements ApiRequestInterface
 
         $curl = curl_init();
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
-        $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
         $requestHttpVerb = 'POST';
+
+        if ($this->localModeIsOn) {
+            $urlToPostTo = self::LOCAL_HOST;
+        } else {
+            $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
+        }
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $urlToPostTo,
@@ -184,7 +198,9 @@ class ApiRequest implements ApiRequestInterface
                 echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
                 echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
             } else {
+
                 $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
+
 
                 if ($this->getSandboxMode()) {
                     echo Std::alert([
@@ -290,7 +306,28 @@ class ApiRequest implements ApiRequestInterface
     /** @inheritdoc  */
     public function setSandboxMode(bool $sandboxModeIsOn = true): self
     {
+        if ($sandboxModeIsOn) {
+            $this->setLocalMode(false);
+        }
         $this->sandboxModeIsOn = $sandboxModeIsOn;
+
+        return $this;
+    }
+
+    /** @inheritdoc  */
+    public function getLocalMode(): bool
+    {
+        return $this->localModeIsOn;
+    }
+
+    /** @inheritdoc  */
+    public function setLocalMode(bool $localModeIsOn = true): self
+    {
+        if ($localModeIsOn) {
+            $this->setSandboxMode(false);
+        }
+        $this->localModeIsOn = $localModeIsOn;
+
         return $this;
     }
 
