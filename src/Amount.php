@@ -56,7 +56,7 @@ class Amount implements AmountInterface
     {
         return [
             "currency" => $this->getCurrency() ?? 'RUB',
-            "value" => $this->getValue()
+            "value" => round( $this->getValue(), 2),
         ];
     }
 }
