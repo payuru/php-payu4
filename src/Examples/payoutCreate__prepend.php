@@ -28,42 +28,53 @@
     });
 </script>
 
-<form method="post">
-        <div class="row mt-5 mb-5">
-            <div class="container-fluid d-flex justify-content-center">
-                <div class="col-sm-8 col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <span>Выплата на банковскую карту</span>
+<div class="container-fluid">
+    <form method="post">
+            <div class="row mt-5 mb-5">
+                <div class="container-fluid d-flex justify-content-center">
+                    <div class="col-sm-8 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <bold>Выплата на банковскую карту</bold>
+                                    </div>
+                                    <div class="col-md-6 text-right float-end" style="margin-top: -5px; text-align: right;">
+                                        <img src="https://img.icons8.com/color/36/000000/mir.png">
+                                        <img src="https://img.icons8.com/color/36/000000/visa.png">
+                                        <img src="https://img.icons8.com/color/36/000000/mastercard.png">
+                                    </div>
                                 </div>
-                                <div class="col-md-6 text-right float-end" style="margin-top: -5px; text-align: right;">
-                                    <img src="https://img.icons8.com/color/36/000000/visa.png">
-                                    <img src="https://img.icons8.com/color/36/000000/mastercard.png">
-                                    <img src="https://img.icons8.com/color/36/000000/mir.png">
+                            </div>
+
+                            <div class="card-body" style="min-height: 250px">
+                                <div class="form-group mb-3">
+                                    <label for="cc-number" class="control-label">Номер Карты</label>
+                                    <input name="cc-number" id="cc-number" type="number" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
                                 </div>
-                            </div>
 
-                        </div>
-                        <div class="card-body" style="min-height: 250px">
-                            <div class="form-group mb-3">
-                                <label for="cc-number" class="control-label">Номер Карты</label>
-                                <input name="cc-number" id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="summ" class="control-label">Сумма в рублях</label>
+                                    <input name="summ" id="summ" type="number" min="1" step="0.01" class="input-lg form-control" required>
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="numeric" class="control-label">Имя и Фамилия Получателя</label>
-                                <input name="reciever-name" type="text" class="input-lg form-control">
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="reciever-name" class="control-label">Имя и Фамилия Получателя</label>
+                                    <input name="reciever-name" id="reciever-name" type="text" class="input-lg form-control">
+                                </div>
 
-                            <div class="form-group">
-                                <input value="Выплатить" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;">
+                                <div class="form-group mb-3">
+                                    <label for="description" class="control-label">Назначение платежа</label>
+                                    <textarea name="description" id="description" class="input-lg form-control" maxlength="255"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <input value="Выплатить" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-</form>
+    </form>
+</div>

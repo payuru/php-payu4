@@ -22,18 +22,18 @@ $payout = new Payout();
 // даже если выплата неудачная
 $payout->setMerchantPayoutReference('payout__' . time());
 
-// Назначим сумму
+// Назначим сумму (здесь пример передачи данных из формы + стандартное значение)
 $payout->setAmount(
-    new Amount(15, 'RUB')
+    new Amount((float) @$_POST['summ'] ?: 150.00, 'RUB')
 );
 
 // Назначим Описание
-$payout->setDescription('Тестовое Описание Платежа');
+$payout->setDescription(@$_POST['description'] ?: 'Тестовое Описание Платежа');
 
 // Опишем и назначим Направление и Получателя платежа
 $destination = new PayoutDestination();
 // Назначим номер карты (здесь пример передачи данных из формы + стандартное значение)
-$destination->setCardNumber(@$_POST['cc-number'] ?: "4111111111111111");
+$destination->setCardNumber(@$_POST['cc-number'] ?: "4149605380309302");
 // Опишем получателя
 $recipient = new Billing();
 // E-mail получателя
