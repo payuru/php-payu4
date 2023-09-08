@@ -97,6 +97,13 @@ class Payout implements PayoutInterface, \JsonSerializable
 
         $requestData = Std::removeNullValues($requestData);
 
+        /**
+         * В некоторых версиях PHP необходима тонкая настройка округления при сериализации
+         * https://stackoverflow.com/questions/42981409/php7-1-json-encode-float-issue
+         */
+        ini_set('serialize_precision', '14');
+        ini_set('precision', '14');
+
         return json_encode($requestData, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }
 }
