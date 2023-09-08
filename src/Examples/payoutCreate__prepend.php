@@ -50,7 +50,7 @@
                             <div class="card-body" style="min-height: 250px">
                                 <div class="form-group mb-3">
                                     <label for="cc-number" class="control-label">Номер Карты</label>
-                                    <input name="cc-number" id="cc-number" type="number" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
+                                    <input name="cc-number" id="cc-number" type="number" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required autofocus>
                                 </div>
 
                                 <div class="form-group mb-3">
