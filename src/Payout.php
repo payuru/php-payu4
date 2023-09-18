@@ -15,7 +15,7 @@ class Payout implements PayoutInterface, \JsonSerializable
 
     public function __construct(string $merchantPayoutReference = null)
     {
-        $this->$merchantPayoutReference = $merchantPayoutReference;
+        $this->merchantPayoutReference = $merchantPayoutReference;
     }
 
     /** @inheritdoc */
