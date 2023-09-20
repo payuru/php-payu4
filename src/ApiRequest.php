@@ -150,7 +150,7 @@ class ApiRequest implements ApiRequestInterface
         $requestHttpVerb = 'POST';
 
         if ($this->localModeIsOn) {
-            $urlToPostTo = self::LOCAL_HOST;
+            $urlToPostTo = self::LOCAL_HOST . $api;
         } else {
             $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
         }
