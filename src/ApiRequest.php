@@ -17,6 +17,7 @@ class ApiRequest implements ApiRequestInterface
     const REFUND_API = '/api/v4/payments/refund';
     const STATUS_API = '/api/v4/payments/status';
     const PAYOUT_CREATE_API = '/api/v4/payout';
+    const REPORTS_ORDERS_API = '/reports/orders';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
     const LOCAL_HOST = 'http://localhost';
@@ -40,10 +41,132 @@ class ApiRequest implements ApiRequestInterface
         $this->merchant = $merchant;
     }
 
+    public function getHost() : string
+    {
+        if ($this->localModeIsOn) {
+            return self::LOCAL_HOST;
+        } else {
+            return ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST);
+        }
+    }
+
+    public function sendGetReportRequest(?string $startDate = null, ?string $endDate = null, ?array $orderStatus = null): string
+    {
+        //проверить даты
+        if ($startDate !== null) {
+            if (($startDate = strtotime($startDate)) === false) {
+                throw new \Exception('Неверная дата для формирования запроса');
+            } else {
+                $startDate = date('Y-m-d', $startDate);
+            }
+        } else {
+            $startDate = date('Y-m-d', strtotime('today'));
+        }
+
+        if ($endDate !== null) {
+            if (($endDate = strtotime($endDate)) === false) {
+                throw new \Exception('Неверная дата для формирования запроса');
+            } else {
+                $endDate = date('Y-m-d', $endDate);
+            }
+        } else {
+            $endDate = date('Y-m-d', strtotime('tomorrow'));
+        }
+
+        $merchant = $this->merchant->getCode();
+        $timeStamp = time();
+
+//        $parameters = compact('merchant', 'startDate', 'endDate', 'orderStatus', 'timeStamp');
+        $parameters = compact('merchant', 'startDate', 'endDate', 'timeStamp');
+
+
+        //сформировать URL
+        $url = $this->getHost()
+            . $this::REPORTS_ORDERS_API
+            . '?'
+            .  http_build_query($parameters)
+            . '&signature='
+            . $this->reportsSign($parameters);
+
+
+        if ($this->getDebugMode()) {
+            echo Std::alert([
+                'text' => $url,
+            ]);
+        }
+
+        // отправить запрос
+        $curl = curl_init();
+        $requestHttpVerb = 'GET';
+
+        $date = (new DateTime())->format(DateTimeInterface::ATOM);
+        $setopt_array = [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $requestHttpVerb,
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'Content-Type: application/json',
+                'X-Header-Date: ' . $date,
+//                'X-Header-Merchant: ' . $this->merchant->getCode()
+            ]
+        ];
+
+        curl_setopt_array($curl, $setopt_array);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if ($this->getDebugMode()) {
+            $this->echoDebugMessage('Ответ от ' . $this->getHost() . ':');
+            $this->echoDebugMessage(Std::json_fix_cyr($response));
+
+            if ($err) {
+                $this->echoDebugMessage('Ошибка:');
+                $this->echoDebugMessage($err);
+            }
+        }
+
+        // вернуть результат
+        return Std::json_fix_cyr($response);
+    }
+
+    private function buildReportsSourceString($parameters)
+    {
+        $hashString = '';
+
+        foreach ($parameters as $currentData) {
+//            if (is_array($currentData)) {
+//                //TODO
+//                $currentData = '';
+//            }
+
+            if (strlen($currentData) > 0) {
+                $hashString .= strlen($currentData);
+                $hashString .= $currentData;
+            }
+        }
+
+        return $hashString;
+    }
+
+    private function reportsSign($parameters)
+    {
+        $sourceString = $this->buildReportsSourceString($parameters);
+
+        return hash_hmac('MD5', $sourceString, $this->merchant->getSecret());
+    }
+
     /**
      * Отправка GET-запроса
      * @param string $api адрес API (URI)
      * @return array ответ сервера Ypmn
+     * @throws PaymentException
      */
     private function sendGetRequest(string $api): array
     {
@@ -51,14 +174,8 @@ class ApiRequest implements ApiRequestInterface
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
         $requestHttpVerb = 'GET';
 
-        if ($this->localModeIsOn) {
-            $urlToPostTo = self::LOCAL_HOST . $api;
-        } else {
-            $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
-        }
-
         $setopt_array = [
-            CURLOPT_URL => $urlToPostTo,
+            CURLOPT_URL => $this->getHost() . $api,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -73,7 +190,7 @@ class ApiRequest implements ApiRequestInterface
                 'X-Header-Signature:' . $this->getSignature(
                     $this->merchant,
                     $date,
-                    $urlToPostTo,
+                    $this->getHost() . $api,
                     $requestHttpVerb,
                     md5(''),
                 )
@@ -88,7 +205,7 @@ class ApiRequest implements ApiRequestInterface
 
         if (true === $this->getDebugMode()) {
             $this->echoDebugMessage('GET-Запрос к серверу Ypmn:');
-            $this->echoDebugMessage($urlToPostTo);
+            $this->echoDebugMessage($this->getHost() . $api);
             $this->echoDebugMessage('Ответ от сервера Ypmn:');
             $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
 
@@ -149,14 +266,8 @@ class ApiRequest implements ApiRequestInterface
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
         $requestHttpVerb = 'POST';
 
-        if ($this->localModeIsOn) {
-            $urlToPostTo = self::LOCAL_HOST . $api;
-        } else {
-            $urlToPostTo = ($this->getSandboxMode() ? self::SANDBOX_HOST : self::HOST) . $api;
-        }
-
         curl_setopt_array($curl, [
-            CURLOPT_URL => $urlToPostTo,
+            CURLOPT_URL => $this->getHost() . $api,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -172,7 +283,7 @@ class ApiRequest implements ApiRequestInterface
                 'X-Header-Signature:' . $this->getSignature(
                     $this->merchant,
                     $date,
-                    $urlToPostTo,
+                    $this->getHost() . $api,
                     $requestHttpVerb,
                     $encodedJsonDataHash
                 )

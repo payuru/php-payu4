@@ -123,7 +123,7 @@ $payment->setAuthorization($authorization);
 // Установим номер заказа (должен быть уникальным в вашей системе)
 $payment->setMerchantPaymentReference('primer_nomer__' . time());
 // Установим адрес перенаправления пользователя после оплаты
-$payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
+$payment->setReturnUrl('http://' . $_SERVER['SERVER_NAME'] . '/php-api-client/?function=returnPage');
 // Установим клиентское подключение
 $payment->setClient($client);
 
@@ -151,10 +151,10 @@ try {
     //TODO: обработка исключения
     echo Std::alert([
         'text' => '
-                            Извините, платёжный метод временно недоступен.<br>
-                            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
-                            <br>
-                            <pre>' . $exception->getMessage() . '</pre>',
+            Извините, платёжный метод временно недоступен.<br>
+            Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.<br>
+            <br>
+            <pre>' . $exception->getMessage() . '</pre>',
         'type' => 'danger',
     ]);
 

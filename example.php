@@ -42,6 +42,7 @@ if(isset($_GET['function'])){
             case 'paymentWebhook':
             case 'paymentRefund':
             case 'paymentRefundMarketplace':
+            case 'getReport':
             case 'returnPage':
                 require './src/Examples/start.php';
                 @include './src/Examples/'.$_GET['function'] . '__prepend.php';
