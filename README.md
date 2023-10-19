@@ -36,7 +36,8 @@ require vendor/autoload.php;
 6. [Возврат средств](src/Examples/paymentRefund.php)
 7. [Проверка статуса платежа](src/Examples/paymentGetStatus.php)
 7. [Выплаты на банковские карты](src/Examples/payoutCreate.php)
-8. [Страница после оплаты](src/Examples/returnPage.php)
+8. [Запрос отчёта](src/Examples/getReport.php)
+9. [Страница после оплаты](src/Examples/returnPage.php)
 
 ## Ссылки
 - [Основной сайт НКО "Твои Платежи"](https://YPMN.ru/)
