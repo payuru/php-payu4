@@ -40,7 +40,7 @@ require vendor/autoload.php;
 11. [Выплаты на банковские карты](src/Examples/payoutCreate.php)
 12. [Запрос отчёта](src/Examples/getReport.php)
 13. [Создание сессии](src/Examples/getSession.php)
-14. [Создание сессии](src/Examples/oneTimeTokenPayment.php)
+14. [Оплата одноразовым токеном](src/Examples/oneTimeTokenPayment.php)
 15. [Страница после оплаты](src/Examples/returnPage.php)
 
 ## Ссылки
