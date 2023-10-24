@@ -18,6 +18,7 @@ class ApiRequest implements ApiRequestInterface
     const STATUS_API = '/api/v4/payments/status';
     const PAYOUT_CREATE_API = '/api/v4/payout';
     const REPORTS_ORDERS_API = '/reports/orders';
+    const SESSION_API = '/api/v4/payments/sessions';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
     const LOCAL_HOST = 'http://localhost';
@@ -309,9 +310,7 @@ class ApiRequest implements ApiRequestInterface
                 echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
                 echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
             } else {
-
                 $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
-
 
                 if ($this->getSandboxMode()) {
                     echo Std::alert([
@@ -342,6 +341,14 @@ class ApiRequest implements ApiRequestInterface
         }
 
         return ['response' => $response, 'error' => $err];
+    }
+
+    /** @inheritdoc
+     * @throws PaymentException
+     */
+    public function sendSessionRequest(SessionRequest $sessionRequest): array
+    {
+        return $this->sendPostRequest($sessionRequest, self::SESSION_API);
     }
 
     /** @inheritdoc  */
@@ -380,6 +387,7 @@ class ApiRequest implements ApiRequestInterface
         return $this->sendPostRequest($tokenHash, self::AUTHORIZE_API);
     }
 
+    /** @inheritDoc */
     public function sendPayoutCreateRequest(PayoutInterface $payout)
     {
         return $this->sendPostRequest($payout, self::PAYOUT_CREATE_API);

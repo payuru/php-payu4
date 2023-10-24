@@ -43,6 +43,8 @@ if(isset($_GET['function'])){
             case 'paymentRefund':
             case 'paymentRefundMarketplace':
             case 'getReport':
+            case 'getSession':
+            case 'oneTimeTokenPayment':
             case 'returnPage':
                 require './src/Examples/start.php';
                 @include './src/Examples/'.$_GET['function'] . '__prepend.php';

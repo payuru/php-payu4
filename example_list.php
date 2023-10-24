@@ -82,6 +82,18 @@ $examples = [
         'docLink'  => 'https://dev.ypmn.ru/ru/documents/api-dlia-otchetov/',
         'link'  => '',
     ],
+    'getSession' => [
+        'name'  => 'Создание сессии',
+        'about'  => 'Создание уникальной сессии YPMN',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Sessions/paths/~1v4~1payments~1sessions/post',
+        'link'  => '',
+    ],
+    'oneTimeTokenPayment' => [
+        'name'  => 'Оплата одноразовым токеном',
+        'about'  => 'Оплата одноразовым токеном',
+        'docLink'  => 'https://secure.ypmn.ru/docs/#tag/Payment-API/paths/~1v4~1payments~1authorize/post',
+        'link'  => '',
+    ],
     'returnPage' => [
         'name'  => 'Страница после оплаты',
         'about'  => 'Это пример странцы, на которую плательщик возвращается после совершения платежа.',

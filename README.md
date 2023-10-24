@@ -37,6 +37,7 @@ require vendor/autoload.php;
 7. [Проверка статуса платежа](src/Examples/paymentGetStatus.php)
 7. [Выплаты на банковские карты](src/Examples/payoutCreate.php)
 8. [Запрос отчёта](src/Examples/getReport.php)
+8. [Создание сессии](src/Examples/getSessionId.php)
 9. [Страница после оплаты](src/Examples/returnPage.php)
 
 ## Ссылки

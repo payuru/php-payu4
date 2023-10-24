@@ -11,6 +11,13 @@ interface ApiRequestInterface
     function __construct(MerchantInterface $merchant);
 
     /**
+     * Запрос ID сессии
+     * @param SessionRequest $sessionRequest
+     * @return array
+     */
+    function sendSessionRequest(SessionRequest $sessionRequest): array;
+
+    /**
      * Отправить Запрос на Оплату
      * @param PaymentInterface $payment Оплата
      * @return array

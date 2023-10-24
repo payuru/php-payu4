@@ -2,6 +2,9 @@
 
 namespace Ypmn;
 
+/**
+ * Авторизация платежа
+ */
 class Authorization implements AuthorizationInterface
 {
     const TYPE_CCVISAMC = 'CCVISAMC';
@@ -22,6 +25,9 @@ class Authorization implements AuthorizationInterface
 
     /** @var PaymentPageOptions|null */
     private ?PaymentPageOptions $paymentPageOptions = null;
+
+    /** @var OneTimeUseToken|null Одноразовый токен оплаты */
+    private ?OneTimeUseToken $oneTimeUseToken;
 
     /**
      * Создать Платёжную Авторизацию
@@ -91,7 +97,7 @@ class Authorization implements AuthorizationInterface
     }
 
     /** @inheritDoc */
-    public function setCardDetails(CardDetailsInterface $cardDetails): self
+    public function setCardDetails(?CardDetailsInterface $cardDetails): self
     {
         if (is_null($this->merchantToken) && $this->usePaymentPage === false) {
             $this->cardDetails = $cardDetails;
@@ -106,6 +112,15 @@ class Authorization implements AuthorizationInterface
     public function getMerchantToken(): ?MerchantTokenInterface
     {
         return $this->merchantToken;
+    }
+
+    public function setOneTimeUseToken(?OneTimeUseToken $oneTimeUseToken): self
+    {
+        $this->setCardDetails(null);
+        $this->setUsePaymentPage(false);
+        $this->oneTimeUseToken = $oneTimeUseToken;
+
+        return $this;
     }
 
     /**
@@ -149,6 +164,10 @@ class Authorization implements AuthorizationInterface
 
         if (!is_null($this->cardDetails)) {
             $resultArray['cardDetails'] = $this->cardDetails->toArray();
+        }
+
+        if (!is_null($this->oneTimeUseToken)) {
+            $resultArray['oneTimeUseToken'] = $this->oneTimeUseToken->toArray();
         }
 
         if (!is_null($this->merchantToken)) {
