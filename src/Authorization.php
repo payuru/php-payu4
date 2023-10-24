@@ -23,11 +23,12 @@ class Authorization implements AuthorizationInterface
     /** @var MerchantTokenInterface|null Данные карты (в виде токена) */
     private ?MerchantTokenInterface $merchantToken = null;
 
+    /** @var OneTimeUseToken|null Одноразовый токен оплаты */
+    private ?OneTimeUseToken $oneTimeUseToken = null;
+
     /** @var PaymentPageOptions|null */
     private ?PaymentPageOptions $paymentPageOptions = null;
 
-    /** @var OneTimeUseToken|null Одноразовый токен оплаты */
-    private ?OneTimeUseToken $oneTimeUseToken;
 
     /**
      * Создать Платёжную Авторизацию

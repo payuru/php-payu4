@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Ypmn\Authorization;
-use Ypmn\MerchantToken;
 use Ypmn\OneTimeUseToken;
 use Ypmn\Payment;
 use Ypmn\Client;
