@@ -33,5 +33,3 @@ $result = $apiRequest->sendGetReportRequest(
     $endDate,
     $transactionStatuses
 );
-
-$report = new Report($result);
