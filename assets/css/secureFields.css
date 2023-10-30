@@ -1,0 +1,138 @@
+body {
+    min-width: 374px;
+}
+
+.form {
+    display: none;
+    justify-content: center;
+    margin: 25px 5px;
+}
+
+.form form {
+    width: 100%;
+    max-width: 500px;
+    min-width: 350px;
+}
+
+.rowDateAndCVV {
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 410px) {
+    .rowDateAndCVV {
+        flex-direction: column;
+    }
+}
+
+.form button {
+    width: 100%;
+}
+
+.secret-field {
+    display: flex;
+    align-items: center;
+}
+
+.left-column-input {
+    /*width: 130px;*/
+}
+
+.right-column-input {
+    /*width: 130px;*/
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #3A9D86;
+    border-color: #3A9D86;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    color: #000;
+    background-color: #83E8AB;
+    border-color: #83E8AB;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:disabled, .btn-primary[disabled] {
+    color: #000;
+    background-color: #aaaaaa;
+    border-color: #999999;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-control, .input-group-text {
+    border: 1px solid #3A9D86;
+}
+
+.result, .load {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 25px 5px;
+}
+
+.result .icon {
+    margin-bottom: 15px;
+}
+
+.result .title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.result .message {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    line-height: 1.6em;
+}
+
+.result .message span {
+    font-size: inherit;
+}
+
+.json {
+    display: block;
+    text-align: left;
+    margin: 5px 0;
+}
+
+.load {
+    display: flex;
+}
+
+.load svg {
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+#submitLoad {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #3A9D86;
+    border-color: #3A9D86;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 6px;
+}
+
+#submitLoad svg {
+    width: 24px;
+    height: 24px;
+}
+
+.reset {
+    display: none;
+}

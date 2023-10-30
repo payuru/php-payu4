@@ -46,6 +46,7 @@ if(isset($_GET['function'])){
             case 'getSession':
             case 'oneTimeTokenPayment':
             case 'returnPage':
+            case 'secureFields':
                 require './src/Examples/start.php';
                 @include './src/Examples/'.$_GET['function'] . '__prepend.php';
                 require './src/Examples/'.$_GET['function'] . '.php';

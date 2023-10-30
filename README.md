@@ -30,7 +30,7 @@ require vendor/autoload.php;
 1. [Начало работы (настройка интеграции)](src/Examples/start.php)
 2. [Cамый простой платёж](src/Examples/simpleGetPaymentLink.php)
 3. [Подробный платёж](src/Examples/getPaymentLink.php)
-4. [Платёж со сплитом)](src/Examples/getPaymentLinkMarketplace.php)
+4. [Платёж со сплитом](src/Examples/getPaymentLinkMarketplace.php)
 5. [Токенизация карты (чтобы запомнить карту клиента и не вводить повторно)](src/Examples/getToken.php)
 6. [Оплата токеном](src/Examples/paymentByToken.php)
 7. [Списание средств](src/Examples/paymentCapture.php)

@@ -15,7 +15,14 @@ spl_autoload_register(function ($className) {
     }
 });
 
-include 'example_list.php';
-include 'example_header.php';
-require 'example.php';
-include 'example_footer.html';
+// обработка json запросов
+$jsonMode = $_REQUEST['json'] ?? false;
+
+if ($jsonMode) {
+    require 'example.php';
+} else {
+    include 'example_list.php';
+    include 'example_header.php';
+    require 'example.php';
+    include 'example_footer.html';
+}
