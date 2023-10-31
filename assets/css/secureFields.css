@@ -136,3 +136,7 @@ body {
 .reset {
     display: none;
 }
+
+#simple-form {
+    display: none;
+}

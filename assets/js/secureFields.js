@@ -1,35 +1,37 @@
 /*
 Загрузка SDK Secure Fields
-*/
-
+ */
 const secureFieldsJs = document.createElement('script');
 secureFieldsJs.src = 'https://sandbox.ypmn.ru/js/secure-fields/_sb/secure-fields.min.js';
 
 secureFieldsJs.addEventListener('load', () => {
-    console.log('eventListener secureFieldsJs');
+    debug('eventListener secureFieldsJs');
     initPaymentProcess();
+    initPaymentProcessSimple();
 })
 
 document.body.appendChild(secureFieldsJs);
 
 /*
-Процесс получения одноразового токена и оплаты
-*/
-
+Процесс получения одноразового токена
+ */
 let validationSuccess = [];
 let eventsToListen = ['change', 'blur'];
 let elementsTypesListened = [];
 
+/*
+Настройка Secure Fields, отображение полей Secure Fields, процесс получения одноразового токена
+ */
 function initPaymentProcess() {
-    console.log('function initPaymentProcess');
-    console.log(merchantCode);
-    console.log(sessionId);
+    debug('function initPaymentProcess');
+    debug(merchantCode);
+    debug(sessionId);
 
     /*
-    Create an instance of the secure fields.
-    As the first argument, we'll pass authentication data (this is mandatory).
-    The second argument, we'll pass a list of custom fonts to be applied to the fields (this is optional).
-    */
+    Создание объекта Secure Fields.
+    Первый аргумент (обязательный) - аутентификационные данные.
+    Второй аргумент (опциональный) - пользовательские стили.
+     */
     const auth = {
         merchantCode: merchantCode,
         sessionId: sessionId
@@ -44,25 +46,27 @@ function initPaymentProcess() {
     const formElements = new PayUSecureFields.Init(auth, {
         fonts
     })
-    console.log(formElements);
+
+    debug(formElements);
 
     /*
-    Create an object holding additional options that you can pass to the constructor for instantiating
-    the credit card and card expiry fields.
-    There are lots of other options available that you can pass to the constructor,
-    but to keep it simple we'll just show this one object in our example.
-    */
+    Добавление плейсхолдеров для полей Secure Fields.
+     */
     const placeholders = {
         cardNumber: '1234 1234 1234 1234',
         expDate: 'MM / YY',
         cvv: '123'
     };
 
-// Instantiate the fields you want to show and mount them to the DOM.
-
+    /*
+    Отображение формы после загрузки secure-fields.min.js
+     */
     document.getElementById('load').style.display = 'none';
     document.getElementById('form').style.display = 'flex';
 
+    /*
+    Отображение полей Secure Fields и подключение слушателей на поля для валидации введенных данных
+     */
     const cardNumber = formElements.create('cardNumber', {
         placeholders
     });
@@ -81,34 +85,48 @@ function initPaymentProcess() {
     cvv.mount('#cvv');
     formValidation(cvv, eventsToListen, 'cvv');
 
+    /*
+    Валидация поля с именем картодержателя
+     */
     cardHolderValidation();
 
     /*
-    Create a token when the user submits the form, but not until we fetched the card holder's name
-    so that we can pass it in an additional data object to the createToken call.
-    */
+    Создание токена при нажатии на кнопку формы
+     */
     document.getElementById('payment-form').addEventListener('submit', async(event) => {
-        console.log('submit');
+        debug('submit');
 
+        /*
+        svg загрузки вместо кнопки после нажатия
+         */
         document.getElementById('submitLoad').style.display = 'flex';
         document.getElementById('pay_button').style.display = 'none';
 
         event.preventDefault();
 
+        /*
+        Имя картодержателя является обязательным
+         */
         const additionalData = {
-            holder_name: document.getElementById('cardholder-name').value // This field is mandatory
+            holder_name: document.getElementById('cardholder-name').value
         };
 
         try {
-            console.log('cardNumber');
+            /*
+            Получение и обработка ответа при создании одноразового токена
+             */
+            debug('cardNumber');
 
             const result = await PayUSecureFields.createToken(cardNumber, {additionalData});
 
-            console.log('createToken');
-            console.log(result);
+            debug('createToken');
+            debug(result);
             processResult(result);
         } catch (err) {
-            console.log('createTokenError - ' + err.name + ': ' + err.message);
+            /*
+            Вывод об ошибке при наличии
+             */
+            debug('createTokenError - ' + err.name + ': ' + err.message);
             viewResult(false, err.name, [err.message], true);
         }
 
@@ -117,24 +135,30 @@ function initPaymentProcess() {
     })
 }
 
+/*
+Процесс обработки результата получения токена
+*/
 function processResult(result) {
-    console.log('function processResult');
+    debug('function processResult');
 
     if (typeof result.errors == 'object' && Object.keys(result.errors).length) {
-        console.log('createToken errors');
+        debug('createToken errors');
         viewResult(false, 'Tokenization failure', result.errors, true);
         return;
     }
 
     if (result.statusCode === 'SUCCESS') {
-        console.log('createToken success');
+        debug('createToken success');
         pay(result['token']);
     }
 }
 
+/*
+
+*/
 function pay(token) {
-    console.log('function pay');
-    console.log(token);
+    debug('function pay');
+    debug(token);
 
     let oneTimeTokenPaymentResult = jsonRequest(
         '?function=oneTimeTokenPayment&json=true',
@@ -164,7 +188,7 @@ function pay(token) {
 }
 
 function formValidation(object, listeners, containerId) {
-    console.log('function formValidation');
+    debug('function formValidation');
 
     let elementType = object['elementType'];
 
@@ -178,21 +202,21 @@ function formValidation(object, listeners, containerId) {
     listeners.forEach( function(listener) {
 
         object.on(listener, (event) => {
-            console.log('listener');
-            console.log(object);
-            console.log(event);
+            debug('listener');
+            debug(object);
+            debug(event);
 
             if (event['statusCode'] === 'SUCCESS' && event['empty'] === false) {
-                console.log('SUCCESS');
+                debug('SUCCESS');
 
                 container.classList.remove( 'is-invalid');
                 validationContainer.innerHTML = '';
 
                 validationSuccess[elementType] = true;
             } else {
-                console.log('ERROR');
+                debug('ERROR');
 
-                console.log(event['errors']);
+                debug(event['errors']);
 
                 container.classList.add('is-invalid');
                 validationContainer.innerHTML = '';
@@ -202,7 +226,7 @@ function formValidation(object, listeners, containerId) {
                 for (const key in event['errors']) {
                     let error = event['errors'][key];
                     validationContainer.innerHTML += error + '<br/>';
-                    console.log(error);
+                    debug(error);
                 }
 
                 if (event['empty'] === true && elementType === 'cvv') {
@@ -217,7 +241,7 @@ function formValidation(object, listeners, containerId) {
 }
 
 function cardHolderValidation() {
-    console.log('function cardHolderValidation');
+    debug('function cardHolderValidation');
 
     let cardHolderEventsToListen= eventsToListen;
     cardHolderEventsToListen.push('input');
@@ -232,23 +256,23 @@ function cardHolderValidation() {
     let validationContainer = document.getElementById('cardholder-name-validation');
 
     cardHolderEventsToListen.forEach( function(listener) {
-        console.log('listener');
-        console.log('cardHolder');
-        console.log(listener);
+        debug('listener');
+        debug('cardHolder');
+        debug(listener);
 
         let cardHolderInput = document.getElementById('cardholder-name');
 
         cardHolderInput.addEventListener(listener, () => {
 
             if (cardHolderInput.value !== '') {
-                console.log('SUCCESS');
+                debug('SUCCESS');
 
                 container.classList.remove( 'is-invalid');
                 validationContainer.innerHTML = '';
 
                 validationSuccess[elementType] = true;
             } else {
-                console.log('ERROR');
+                debug('ERROR');
 
                 container.classList.add('is-invalid');
                 validationContainer.innerHTML = 'Holder\'s name is mandatory field';
@@ -262,30 +286,30 @@ function cardHolderValidation() {
 }
 
 function changeButtonAbility() {
-    console.log('function changeButtonAbility');
+    debug('function changeButtonAbility');
 
-    console.log(elementsTypesListened);
+    debug(elementsTypesListened);
 
     for (const key in elementsTypesListened) {
         let elementType = elementsTypesListened[key];
 
-        console.log(elementType);
-        console.log(validationSuccess[elementType]);
+        debug(elementType);
+        debug(validationSuccess[elementType]);
 
         if (validationSuccess[elementType] === false) {
-            console.log('disable button');
+            debug('disable button');
             document.getElementById('pay_button').disabled = true;
             return;
         }
 
     }
 
-    console.log('enable button');
+    debug('enable button');
     document.getElementById('pay_button').disabled = false;
 }
 
 function jsonRequest(url, method, requestData, responseType, successCallback) {
-    console.log('function jsonRequest: ' + url);
+    debug('function jsonRequest: ' + url);
 
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, false);
@@ -295,28 +319,32 @@ function jsonRequest(url, method, requestData, responseType, successCallback) {
 
     xhr.onload = function() {
         let status = xhr.status;
+
         if (status === 200) {
-            console.log('jsonRequest success');
-            console.log(xhr.response);
+            debug('jsonRequest success');
+            debug(xhr.response);
+
             successCallback(JSON.parse(xhr.response));
-            jsonRequestResult = true
+            jsonRequestResult = true;
         } else {
-            console.log('jsonRequest error');
-            console.log('Error ' + xhr.status + ': ' + xhr.statusText);
+            debug('jsonRequest error');
+            debug('Error ' + xhr.status + ': ' + xhr.statusText);
+
             viewResult(false, 'Request Error', [], true);
         }
     };
 
     xhr.ontimeout = (e) => {
-        console.log('jsonRequest error');
-        console.log('Error: timeout');
+        debug('jsonRequest timeout error');
         viewResult(false, 'Request Error', [], true);
     };
 
-    console.log(requestData);
+    debug(requestData);
+
     xhr.send(requestData);
 
-    console.log(jsonRequestResult);
+    debug(jsonRequestResult);
+
     return jsonRequestResult;
 }
 
@@ -360,10 +388,10 @@ const failureIcon = '\n' +
     '        </svg>';
 
 function viewResult(success, title, messages, hideForm = false) {
-    console.log('function viewResult');
-    console.log(success);
-    console.log(title);
-    console.log(messages);
+    debug('function viewResult');
+    debug(success);
+    debug(title);
+    debug(messages);
 
     document.getElementById('bootstrap-tab-pane').innerHTML += resultBlock;
 
@@ -389,10 +417,10 @@ function viewResult(success, title, messages, hideForm = false) {
 }
 
 function viewRedirect(title, hideForm = false) {
-    console.log('function viewRedirect');
-    console.log(title);
+    debug('function viewRedirect');
+    debug(title);
 
-    document.body.innerHTML += resultBlock;
+    document.getElementById('bootstrap-tab-pane').innerHTML += resultBlock;
 
     document.getElementById('title').innerHTML = title;
 
@@ -401,4 +429,10 @@ function viewRedirect(title, hideForm = false) {
     }
     document.getElementById('load').style.display = 'none';
     document.getElementById('result').style.display = 'flex';
+}
+
+function debug(message) {
+    if (debugMode === true) {
+        console.log(message);
+    }
 }

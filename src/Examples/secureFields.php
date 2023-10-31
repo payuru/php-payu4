@@ -1,24 +1,88 @@
 <link href="assets/css/secureFields.css" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 <script>
+    /*
+    Аутентификационные данные для получения одноразового токена
+     */
     let merchantCode = '<?= $merchantCode ?>';
     let sessionId = '<?= $sessionId ?>';
+
+    /*
+    Включение вывода отладочной информации в консоль
+     */
+    let debugMode = true;
 </script>
+
 <script src="assets/js/secureFields.js"></script>
+<script src="assets/js/secureFieldsSimple.js"></script>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="simple-tab" data-bs-toggle="tab" data-bs-target="#simple-tab-pane" type="button" role="tab" aria-controls="simple-tab-pane" aria-selected="true">Простая форма</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="bootstrap-tab" data-bs-toggle="tab" data-bs-target="#bootstrap-tab-pane" type="button" role="tab" aria-controls="bootstrap-tab-pane" aria-selected="false">Форма с использованием bootstrap</button>
+        <button class="nav-link" id="bootstrap-tab" data-bs-toggle="tab" data-bs-target="#bootstrap-tab-pane" type="button" role="tab" aria-controls="bootstrap-tab-pane" aria-selected="false">Расширенная форма</button>
     </li>
 </ul>
 
 <div class="tab-content" id="myTabContent">
+
+<!--  Простая форма  -->
     <div class="tab-pane fade show active" id="simple-tab-pane" role="tabpanel" aria-labelledby="simple-tab" tabindex="0">
-        simple
+
+        <div id="simple-load">
+            <svg width="200" height="200" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#3A9D86">
+                <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(1 1)" stroke-width="2">
+                        <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                        <path d="M36 18c0-9.94-8.06-18-18-18">
+                            <animateTransform
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 18 18"
+                                    to="360 18 18"
+                                    dur="2s"
+                                    repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+        <div id="simple-form">
+
+            <form id="simple-payment-form">
+
+                <label for="simple-card-number">Card Number</label>
+                <div id="simple-card-number"></div>
+
+                <br/>
+
+                <label for="simple-exp-date">Exp. date</label>
+                <div id="simple-exp-date"></div>
+
+                <br/>
+
+                <label for="simple-cvv">Cvv</label>
+                <div id="simple-cvv"></div>
+
+                <br/>
+
+                <label for="simple-cardholder-name">Name</label>
+                <input type="text" placeholder="John Doe" id="simple-cardholder-name" required>
+
+                <br/><br/>
+
+                <button type="submit" id="simple-pay_button">Pay</button>
+            </form>
+
+        </div>
+
     </div>
+
+<!--  Bootstrap форма  -->
     <div class="tab-pane fade" id="bootstrap-tab-pane" role="tabpanel" aria-labelledby="bootstrap-tab" tabindex="0">
 
         <div id="load" class="load">

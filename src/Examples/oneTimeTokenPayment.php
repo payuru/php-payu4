@@ -15,15 +15,15 @@ use Ypmn\Std;
 // Подключим файл, в котором заданы параметры мерчанта
 include_once 'start.php';
 
-if ($jsonMode && (empty($_REQUEST['token']) || empty($_REQUEST['sessionId']))) {
-    echo json_encode([
-        'status' => 'FAILED',
-        'message' => 'Token and sessionId are required'
-    ]);
-    exit();
-}
-
 if (empty($_REQUEST['token']) || empty($_REQUEST['sessionId'])) {
+    if ($jsonMode) {
+        echo json_encode([
+            'status' => 'FAILED',
+            'message' => 'Token and sessionId are required'
+        ]);
+        exit();
+    }
+
     throw new PaymentException('Необходимо передать одноразовый токен и ID сессии');
 }
 
