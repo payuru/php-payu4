@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 use Ypmn\Authorization;
@@ -78,7 +77,13 @@ $payment->setAuthorization($auth);
 // Установим номер заказа (должен быть уникальным в вашей системе)
 $payment->setMerchantPaymentReference($merchantPaymentReference);
 // Установим адрес перенаправления пользователя после оплаты
-$payment->setReturnUrl('https://zero.u2go.ru/?function=returnPage');
+$payment->setReturnUrl(
+    ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http') .
+    '://' .
+    $_SERVER['HTTP_HOST'] .
+    '/?function=returnPage'
+);
+
 // Установим клиентское подключение
 $payment->setClient($client);
 

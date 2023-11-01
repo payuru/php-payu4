@@ -15,9 +15,6 @@
     let debugMode = true;
 </script>
 
-<script src="assets/js/secureFields.js"></script>
-<script src="assets/js/secureFieldsSimple.js"></script>
-
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="simple-tab" data-bs-toggle="tab" data-bs-target="#simple-tab-pane" type="button" role="tab" aria-controls="simple-tab-pane" aria-selected="true">Простая форма</button>
@@ -31,6 +28,10 @@
 
 <!--  Простая форма  -->
     <div class="tab-pane fade show active" id="simple-tab-pane" role="tabpanel" aria-labelledby="simple-tab" tabindex="0">
+
+        <p>Форма без использования bootstrap стилей, валидации введенных данных на стороне формы.</p>
+
+        <p>Пример javascript для формы см. по <a href="assets/js/secureFieldsSimple.js">ссылке</a>.</p>
 
         <div id="simple-load">
             <svg width="200" height="200" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#3A9D86">
@@ -55,17 +56,17 @@
 
             <form id="simple-payment-form">
 
-                <label for="simple-card-number">Card Number</label>
+                <label>Card Number</label>
                 <div id="simple-card-number"></div>
 
                 <br/>
 
-                <label for="simple-exp-date">Exp. date</label>
+                <label>Exp. date</label>
                 <div id="simple-exp-date"></div>
 
                 <br/>
 
-                <label for="simple-cvv">Cvv</label>
+                <label>Cvv</label>
                 <div id="simple-cvv"></div>
 
                 <br/>
@@ -84,6 +85,10 @@
 
 <!--  Bootstrap форма  -->
     <div class="tab-pane fade" id="bootstrap-tab-pane" role="tabpanel" aria-labelledby="bootstrap-tab" tabindex="0">
+
+        <p>Форма с использованием bootstrap стилей, валидацией введенных данных на стороне формы в реальном времени.</p>
+
+        <p>Пример javascript для формы см. по <a href="assets/js/secureFields.js">ссылке</a>.</p>
 
         <div id="load" class="load">
             <svg width="200" height="200" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#3A9D86">
@@ -106,28 +111,28 @@
 
         <div class="form" id="form">
             <form id="payment-form">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 has-validation">
                     <span class="input-group-text left-column-input" id="basic-addon2">Card Number</span>
                     <div id="card-number" class="form-control secret-field" aria-describedby="basic-addon2"></div>
                     <div id="card-number-validation" class="invalid-feedback"></div>
                 </div>
                 <div class="row rowDateAndCVV">
                     <div class="col">
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 has-validation">
                             <span class="input-group-text left-column-input" id="basic-addon3">Exp. date</span>
                             <div id="exp-date" class="form-control secret-field" aria-describedby="basic-addon3"></div>
                             <div id="exp-date-validation" class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 has-validation">
                             <span class="input-group-text right-column-input" id="basic-addon4">CVV</span>
                             <div id="cvv" class="form-control secret-field" aria-describedby="basic-addon4"></div>
                             <div id="cvv-validation" class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 has-validation">
                     <span class="input-group-text left-column-input" id="basic-addon1">Name</span>
                     <input type="text" class="form-control" placeholder="John Doe" aria-label="John Doe" aria-describedby="basic-addon1" id="cardholder-name">
                     <div id="cardholder-name-validation" class="invalid-feedback"></div>
@@ -157,3 +162,6 @@
 
     </div>
 </div>
+
+<script src="assets/js/secureFieldsSimple.js"></script>
+<script src="assets/js/secureFields.js"></script>

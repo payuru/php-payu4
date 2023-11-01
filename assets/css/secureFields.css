@@ -1,11 +1,11 @@
 body {
-    min-width: 374px;
+    min-width: 388px;
 }
 
 .form {
     display: none;
     justify-content: center;
-    margin: 25px 5px;
+    margin: 25px 12px;
 }
 
 .form form {
@@ -18,7 +18,7 @@ body {
     flex-direction: row;
 }
 
-@media only screen and (max-width: 410px) {
+@media only screen and (max-width: 438px) {
     .rowDateAndCVV {
         flex-direction: column;
     }
@@ -75,7 +75,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 25px 5px;
+    margin: 25px 12px;
 }
 
 .result .icon {
