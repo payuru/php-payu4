@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 use Ypmn\Authorization;
@@ -14,6 +13,18 @@ use Ypmn\Std;
 
 // Подключим файл, в котором заданы параметры мерчанта
 include_once 'start.php';
+
+if (empty($_REQUEST['token']) || empty($_REQUEST['sessionId'])) {
+    if ($jsonMode) {
+        echo json_encode([
+            'status' => 'FAILED',
+            'message' => 'Token and sessionId are required'
+        ]);
+        exit();
+    }
+
+    throw new PaymentException('Необходимо передать одноразовый токен и ID сессии');
+}
 
 // Оплата по токену
 // Установим номер (ID) заказа (номер заказа в вашем магазине, должен быть уникален в вашей системе)
@@ -66,23 +77,45 @@ $payment->setAuthorization($auth);
 // Установим номер заказа (должен быть уникальным в вашей системе)
 $payment->setMerchantPaymentReference($merchantPaymentReference);
 // Установим адрес перенаправления пользователя после оплаты
-$payment->setReturnUrl('https://test.u2go.ru/php-api-client/?function=returnPage');
+$payment->setReturnUrl(
+    ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http') .
+    '://' .
+    $_SERVER['HTTP_HOST'] .
+    '/?function=returnPage'
+);
+
 // Установим клиентское подключение
 $payment->setClient($client);
 
 // Создадим HTTP-запрос к API
 $apiRequest = new ApiRequest($merchant);
 // Включить режим отладки (закомментируйте или удалите в рабочей программе!)
-$apiRequest->setDebugMode();
+if (!$jsonMode) {
+    $apiRequest->setDebugMode();
+}
 // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
 $apiRequest->setSandboxMode();
 
-$responseData = $apiRequest->sendAuthRequest($payment);
-// Преобразуем ответ из JSON в массив
 try {
+    // Отправляем запрос и получаем ответ
+    $responseData = $apiRequest->sendAuthRequest($payment);
+    // Преобразуем ответ из JSON в массив
     $responseData = json_decode((string) $responseData["response"], true);
 
+    if ($jsonMode) {
+        echo json_encode($responseData);
+        exit();
+    }
 } catch (Exception $exception) {
+
+    if ($jsonMode) {
+        echo json_encode([
+            'status' => 'FAILED',
+            'message' => 'Payment method is unavailable'
+        ]);
+        exit();
+    }
+
     //TODO: обработка исключения
     echo Std::alert([
         'text' => '

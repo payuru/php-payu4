@@ -1,3 +1,4 @@
+<?php if (!$jsonMode) { ?>
 <div class="card mt-3 mb-5">
     <div class="card-body">
         <form method="post">
@@ -13,3 +14,4 @@
         </form>
     </div>
 </div>
+<?php } ?>
