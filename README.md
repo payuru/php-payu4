@@ -42,6 +42,7 @@ require vendor/autoload.php;
 13. [Создание сессии](src/Examples/getSession.php)
 14. [Оплата одноразовым токеном](src/Examples/oneTimeTokenPayment.php)
 15. [Страница после оплаты](src/Examples/returnPage.php)
+16. [Безопасные поля (Secure fields)](src/Examples/secureFields.php)
 
 ## Ссылки
 - [Основной сайт НКО "Твои Платежи"](https://YPMN.ru/)
