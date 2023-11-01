@@ -39,7 +39,8 @@ function initPaymentProcess() {
 
     const fonts = [
         {
-            src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
+            src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+            src: location.protocol + '//' + location.host + '/assets/css/text-security-disk.css'
         }
     ];
 
