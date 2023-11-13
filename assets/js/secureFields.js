@@ -1,11 +1,8 @@
 /*
 Загрузка SDK Secure Fields
  */
-const secureFieldsJs = document.createElement('script');
-secureFieldsJs.src = 'https://sandbox.ypmn.ru/js/secure-fields/_sb/secure-fields.min.js';
-
 secureFieldsJs.addEventListener('load', () => {
-    debug('eventListener secureFieldsJs');
+    console.log('eventListener secureFieldsJs');
     initPaymentProcess();
     initPaymentProcessSimple();
 })
@@ -23,9 +20,9 @@ let elementsTypesListened = [];
 Настройка Secure Fields, отображение полей Secure Fields, процесс получения одноразового токена
  */
 function initPaymentProcess() {
-    debug('function initPaymentProcess');
-    debug(merchantCode);
-    debug(sessionId);
+    console.log('function initPaymentProcess');
+    console.log(merchantCode);
+    console.log(sessionId);
 
     /*
     Создание объекта Secure Fields.
@@ -39,8 +36,7 @@ function initPaymentProcess() {
 
     const fonts = [
         {
-            src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
-            src: location.protocol + '//' + location.host + '/assets/css/text-security-disk.css'
+            // src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
         }
     ];
 
@@ -48,7 +44,7 @@ function initPaymentProcess() {
         fonts
     })
 
-    debug(formElements);
+    console.log(formElements);
 
     /*
     Добавление плейсхолдеров для полей Secure Fields.
@@ -65,6 +61,12 @@ function initPaymentProcess() {
     document.getElementById('load').style.display = 'none';
     document.getElementById('form').style.display = 'flex';
 
+    let style = {
+        base: {
+            fontSize: '1.5em'
+        }
+    };
+
     /*
     Отображение полей Secure Fields и подключение слушателей на поля для валидации введенных данных
      */
@@ -73,6 +75,10 @@ function initPaymentProcess() {
     });
     cardNumber.mount('#card-number');
     formValidation(cardNumber, eventsToListen, 'card-number');
+
+    cardNumber.on('cardInfo', (event) => {
+        console.log('cardInfoEvent', event)
+    });
 
     const expiry = formElements.create('creditCardExpiry', {
         placeholders
@@ -86,6 +92,12 @@ function initPaymentProcess() {
     cvv.mount('#cvv');
     formValidation(cvv, eventsToListen, 'cvv');
 
+    const userAgreement = formElements.create('userAgreement', {
+        style
+    });
+    userAgreement.mount('#user-agreement');
+    formValidation(userAgreement, eventsToListen, 'user-agreement');
+
     /*
     Валидация поля с именем картодержателя
      */
@@ -95,7 +107,7 @@ function initPaymentProcess() {
     Создание токена при нажатии на кнопку формы
      */
     document.getElementById('payment-form').addEventListener('submit', async(event) => {
-        debug('submit');
+        console.log('submit');
 
         /*
         svg загрузки вместо кнопки после нажатия
@@ -116,18 +128,18 @@ function initPaymentProcess() {
             /*
             Получение и обработка ответа при создании одноразового токена
              */
-            debug('cardNumber');
+            console.log('cardNumber');
 
             const result = await PayUSecureFields.createToken(cardNumber, {additionalData});
 
-            debug('createToken');
-            debug(result);
+            console.log('createToken');
+            console.log(result);
             processResult(result);
         } catch (err) {
             /*
             Вывод об ошибке при наличии
              */
-            debug('createTokenError - ' + err.name + ': ' + err.message);
+            console.log('createTokenError - ' + err.name + ': ' + err.message);
             viewResult(false, err.name, [err.message], true);
         }
 
@@ -140,16 +152,16 @@ function initPaymentProcess() {
 Процесс обработки результата получения токена
 */
 function processResult(result) {
-    debug('function processResult');
+    console.log('function processResult');
 
     if (typeof result.errors == 'object' && Object.keys(result.errors).length) {
-        debug('createToken errors');
+        console.log('createToken errors');
         viewResult(false, 'Tokenization failure', result.errors, true);
         return;
     }
 
     if (result.statusCode === 'SUCCESS') {
-        debug('createToken success');
+        console.log('createToken success');
         pay(result['token']);
     }
 }
@@ -158,8 +170,8 @@ function processResult(result) {
 
 */
 function pay(token) {
-    debug('function pay');
-    debug(token);
+    console.log('function pay');
+    console.log(token);
 
     let oneTimeTokenPaymentResult = jsonRequest(
         '?function=oneTimeTokenPayment&json=true',
@@ -189,7 +201,7 @@ function pay(token) {
 }
 
 function formValidation(object, listeners, containerId) {
-    debug('function formValidation');
+    console.log('function formValidation');
 
     let elementType = object['elementType'];
 
@@ -197,27 +209,31 @@ function formValidation(object, listeners, containerId) {
 
     validationSuccess[elementType] = false;
 
+    if (elementType === 'userAgreement') {
+        validationSuccess[elementType] = true;
+    }
+
     let container = document.getElementById(containerId);
     let validationContainer = document.getElementById(containerId + '-validation');
 
     listeners.forEach( function(listener) {
 
         object.on(listener, (event) => {
-            debug('listener');
-            debug(object);
-            debug(event);
+            console.log('listener');
+            console.log(object);
+            console.log(event);
 
             if (event['statusCode'] === 'SUCCESS' && event['empty'] === false) {
-                debug('SUCCESS');
+                console.log('SUCCESS');
 
                 container.classList.remove( 'is-invalid');
                 validationContainer.innerHTML = '';
 
                 validationSuccess[elementType] = true;
             } else {
-                debug('ERROR');
+                console.log('ERROR');
 
-                debug(event['errors']);
+                console.log(event['errors']);
 
                 container.classList.add('is-invalid');
                 validationContainer.innerHTML = '';
@@ -227,7 +243,7 @@ function formValidation(object, listeners, containerId) {
                 for (const key in event['errors']) {
                     let error = event['errors'][key];
                     validationContainer.innerHTML += error + '<br/>';
-                    debug(error);
+                    console.log(error);
                 }
 
                 if (event['empty'] === true && elementType === 'cvv') {
@@ -242,7 +258,7 @@ function formValidation(object, listeners, containerId) {
 }
 
 function cardHolderValidation() {
-    debug('function cardHolderValidation');
+    console.log('function cardHolderValidation');
 
     let cardHolderEventsToListen= eventsToListen;
     cardHolderEventsToListen.push('input');
@@ -257,23 +273,23 @@ function cardHolderValidation() {
     let validationContainer = document.getElementById('cardholder-name-validation');
 
     cardHolderEventsToListen.forEach( function(listener) {
-        debug('listener');
-        debug('cardHolder');
-        debug(listener);
+        console.log('listener');
+        console.log('cardHolder');
+        console.log(listener);
 
         let cardHolderInput = document.getElementById('cardholder-name');
 
         cardHolderInput.addEventListener(listener, () => {
 
             if (cardHolderInput.value !== '') {
-                debug('SUCCESS');
+                console.log('SUCCESS');
 
                 container.classList.remove( 'is-invalid');
                 validationContainer.innerHTML = '';
 
                 validationSuccess[elementType] = true;
             } else {
-                debug('ERROR');
+                console.log('ERROR');
 
                 container.classList.add('is-invalid');
                 validationContainer.innerHTML = 'Holder\'s name is mandatory field';
@@ -287,30 +303,30 @@ function cardHolderValidation() {
 }
 
 function changeButtonAbility() {
-    debug('function changeButtonAbility');
+    console.log('function changeButtonAbility');
 
-    debug(elementsTypesListened);
+    console.log(elementsTypesListened);
 
     for (const key in elementsTypesListened) {
         let elementType = elementsTypesListened[key];
 
-        debug(elementType);
-        debug(validationSuccess[elementType]);
+        console.log(elementType);
+        console.log(validationSuccess[elementType]);
 
         if (validationSuccess[elementType] === false) {
-            debug('disable button');
+            console.log('disable button');
             document.getElementById('pay_button').disabled = true;
             return;
         }
 
     }
 
-    debug('enable button');
+    console.log('enable button');
     document.getElementById('pay_button').disabled = false;
 }
 
 function jsonRequest(url, method, requestData, responseType, successCallback) {
-    debug('function jsonRequest: ' + url);
+    console.log('function jsonRequest: ' + url);
 
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, false);
@@ -322,29 +338,29 @@ function jsonRequest(url, method, requestData, responseType, successCallback) {
         let status = xhr.status;
 
         if (status === 200) {
-            debug('jsonRequest success');
-            debug(xhr.response);
+            console.log('jsonRequest success');
+            console.log(xhr.response);
 
             successCallback(JSON.parse(xhr.response));
             jsonRequestResult = true;
         } else {
-            debug('jsonRequest error');
-            debug('Error ' + xhr.status + ': ' + xhr.statusText);
+            console.log('jsonRequest error');
+            console.log('Error ' + xhr.status + ': ' + xhr.statusText);
 
             viewResult(false, 'Request Error', [], true);
         }
     };
 
     xhr.ontimeout = (e) => {
-        debug('jsonRequest timeout error');
+        console.log('jsonRequest timeout error');
         viewResult(false, 'Request Error', [], true);
     };
 
-    debug(requestData);
+    console.log(requestData);
 
     xhr.send(requestData);
 
-    debug(jsonRequestResult);
+    console.log(jsonRequestResult);
 
     return jsonRequestResult;
 }
@@ -389,10 +405,10 @@ const failureIcon = '\n' +
     '        </svg>';
 
 function viewResult(success, title, messages, hideForm = false) {
-    debug('function viewResult');
-    debug(success);
-    debug(title);
-    debug(messages);
+    console.log('function viewResult');
+    console.log(success);
+    console.log(title);
+    console.log(messages);
 
     document.getElementById('bootstrap-tab-pane').innerHTML += resultBlock;
 
@@ -418,8 +434,8 @@ function viewResult(success, title, messages, hideForm = false) {
 }
 
 function viewRedirect(title, hideForm = false) {
-    debug('function viewRedirect');
-    debug(title);
+    console.log('function viewRedirect');
+    console.log(title);
 
     document.getElementById('bootstrap-tab-pane').innerHTML += resultBlock;
 
@@ -430,10 +446,4 @@ function viewRedirect(title, hideForm = false) {
     }
     document.getElementById('load').style.display = 'none';
     document.getElementById('result').style.display = 'flex';
-}
-
-function debug(message) {
-    if (debugMode === true) {
-        console.log(message);
-    }
 }

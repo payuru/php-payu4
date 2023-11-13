@@ -140,3 +140,7 @@ body {
 #simple-form {
     display: none;
 }
+
+.no-padding-left {
+    padding-left: 0;
+}

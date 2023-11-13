@@ -26,5 +26,6 @@ try {
 
     $merchantCode = $merchant->getCode();
     $sessionId = $response->sessionId;
+    $sandboxMode = $apiRequest->getSandboxMode();
 } catch (PaymentException $e) {
 }
