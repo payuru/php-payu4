@@ -34,7 +34,8 @@ function initPaymentProcessSimple() {
     const placeholders = {
         cardNumber: '1234 1234 1234 1234',
         expDate: 'MM / YY',
-        cvv: '123'
+        cvv: '123',
+        userAgreement: 'ru'
     };
 
     /*
@@ -61,7 +62,9 @@ function initPaymentProcessSimple() {
     });
     cvv.mount('#simple-cvv');
 
-    const userAgreement = formElements.create('userAgreement', {});
+    const userAgreement = formElements.create('userAgreement', {
+        placeholders
+    });
     userAgreement.mount('#simple-user-agreement');
 
     /*

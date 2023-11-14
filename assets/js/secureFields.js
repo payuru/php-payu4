@@ -52,7 +52,8 @@ function initPaymentProcess() {
     const placeholders = {
         cardNumber: '1234 1234 1234 1234',
         expDate: 'MM / YY',
-        cvv: '123'
+        cvv: '123',
+        userAgreement: 'ru'
     };
 
     /*
@@ -63,7 +64,8 @@ function initPaymentProcess() {
 
     let style = {
         base: {
-            fontSize: '1.5em'
+            fontSize: '0.85em',
+            lineHeight: '1.1em'
         }
     };
 
@@ -93,7 +95,8 @@ function initPaymentProcess() {
     formValidation(cvv, eventsToListen, 'cvv');
 
     const userAgreement = formElements.create('userAgreement', {
-        style
+        style,
+        placeholders
     });
     userAgreement.mount('#user-agreement');
     formValidation(userAgreement, eventsToListen, 'user-agreement');
