@@ -13,6 +13,17 @@
     Включение вывода отладочной информации в консоль
      */
     let debugMode = true;
+
+    if (debugMode === true) {
+        console.log = function() {}
+    }
+
+    const secureFieldsJs = document.createElement('script');
+    <?php if ($sandboxMode) { ?>
+        secureFieldsJs.src = 'https://sandbox.ypmn.ru/js/secure-fields/_sb/secure-fields.min.js';
+    <?php } else { ?>
+        secureFieldsJs.src = 'https://secure.ypmn.ru/js/secure-fields/secure-fields.min.js';
+    <?php } ?>
 </script>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -76,6 +87,10 @@
 
                 <br/><br/>
 
+                <div id="simple-user-agreement"></div>
+
+                <br/>
+
                 <button type="submit" id="simple-pay_button">Pay</button>
             </form>
 
@@ -136,6 +151,10 @@
                     <span class="input-group-text left-column-input" id="basic-addon1">Name</span>
                     <input type="text" class="form-control" placeholder="John Doe" aria-label="John Doe" aria-describedby="basic-addon1" id="cardholder-name">
                     <div id="cardholder-name-validation" class="invalid-feedback"></div>
+                </div>
+                <div class="form-check mb-3 has-validation no-padding-left">
+                    <div id="user-agreement" class="form-control secret-field" aria-describedby="basic-addon2"></div>
+                    <div id="user-agreement-validation" class="invalid-feedback"></div>
                 </div>
 
                 <div id="submitLoad">

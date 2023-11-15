@@ -2,9 +2,9 @@
 Настройка Secure Fields, отображение полей Secure Fields, процесс получения одноразового токена
  */
 function initPaymentProcessSimple() {
-    debug('function initPaymentProcessSimple');
-    debug(merchantCode);
-    debug(sessionId);
+    console.log('function initPaymentProcessSimple');
+    console.log(merchantCode);
+    console.log(sessionId);
 
     /*
     Создание объекта Secure Fields.
@@ -18,7 +18,7 @@ function initPaymentProcessSimple() {
 
     const fonts = [
         {
-            src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
+            // src: 'https://fonts.googleapis.com/css?family=Source+Code+Pro'
         }
     ];
 
@@ -26,7 +26,7 @@ function initPaymentProcessSimple() {
         fonts
     })
 
-    debug(formElements);
+    console.log(formElements);
 
     /*
     Добавление плейсхолдеров для полей Secure Fields.
@@ -34,7 +34,8 @@ function initPaymentProcessSimple() {
     const placeholders = {
         cardNumber: '1234 1234 1234 1234',
         expDate: 'MM / YY',
-        cvv: '123'
+        cvv: '123',
+        userAgreement: 'ru'
     };
 
     /*
@@ -61,11 +62,16 @@ function initPaymentProcessSimple() {
     });
     cvv.mount('#simple-cvv');
 
+    const userAgreement = formElements.create('userAgreement', {
+        placeholders
+    });
+    userAgreement.mount('#simple-user-agreement');
+
     /*
     Создание токена при нажатии на кнопку формы
      */
     document.getElementById('simple-payment-form').addEventListener('submit', async(event) => {
-        debug('submit');
+        console.log('submit');
 
         event.preventDefault();
 
@@ -80,19 +86,19 @@ function initPaymentProcessSimple() {
             /*
             Получение и обработка ответа при создании одноразового токена
              */
-            debug('cardNumber');
+            console.log('cardNumber');
 
             const result = await PayUSecureFields.createToken(cardNumber, {additionalData});
 
-            debug('createToken');
-            debug(result);
+            console.log('createToken');
+            console.log(result);
 
             processResultSimple(result);
         } catch (err) {
             /*
             Вывод об ошибке при наличии
              */
-            debug('createTokenError - ' + err.name + ': ' + err.message);
+            console.log('createTokenError - ' + err.name + ': ' + err.message);
 
             viewResultSimple(false, err.name, [err.message], true);
         }
@@ -103,13 +109,13 @@ function initPaymentProcessSimple() {
 Обработка ответа при создании токена
  */
 function processResultSimple(result) {
-    debug('function processResultSimple');
+    console.log('function processResultSimple');
 
     /*
     Вывод ошибок создания токена
      */
     if (typeof result.errors == 'object' && Object.keys(result.errors).length) {
-        debug('createToken errors');
+        console.log('createToken errors');
 
         viewResultSimple(false, 'Tokenization failure', result.errors, true);
         return;
@@ -119,7 +125,7 @@ function processResultSimple(result) {
     В случае успешного создания токена переходим к процессу оплаты
      */
     if (result.statusCode === 'SUCCESS') {
-        debug('createToken success');
+        console.log('createToken success');
 
         paySimple(result['token']);
     }
@@ -129,8 +135,8 @@ function processResultSimple(result) {
 Процесс оплаты
  */
 function paySimple(token) {
-    debug('function paySimple');
-    debug(token);
+    console.log('function paySimple');
+    console.log(token);
 
     let oneTimeTokenPaymentResult = jsonRequest(
         '?function=oneTimeTokenPayment&json=true',
