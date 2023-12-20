@@ -19,6 +19,8 @@ class ApiRequest implements ApiRequestInterface
     const PAYOUT_CREATE_API = '/api/v4/payout';
     const REPORTS_ORDERS_API = '/reports/orders';
     const SESSION_API = '/api/v4/payments/sessions';
+    const REPORT_CHART_API = '/api/v4/reports/chart';
+    const REPORT_GENERAL_API = '/api/v4/reports/general';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
     const LOCAL_HOST = 'http://localhost';
@@ -343,6 +345,84 @@ class ApiRequest implements ApiRequestInterface
         return ['response' => $response, 'error' => $err];
     }
 
+    /**
+     * Отправка GET-запроса для отчетов
+     * @param string $api адрес API (URI)
+     * @return array ответ сервера Ypmn
+     */
+    private function sendGetGeneralReportRequest(string $api): array
+    {
+        $curl = curl_init();
+        $date = (new DateTime())->format(DateTimeInterface::ATOM);
+        $requestHttpVerb = 'GET';
+
+        $setopt_array = [
+            CURLOPT_URL => $this->getHost() . $api,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $requestHttpVerb,
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'Content-Type: application/json',
+                'X-Header-Date: ' . $date,
+                'X-Header-Merchant: ' . $this->merchant->getCode(),
+                'X-Header-Signature:' . $this->getSignature(
+                    $this->merchant,
+                    $date,
+                    $this->getHost() . $api,
+                    $requestHttpVerb,
+                    md5(''),
+                )
+            ]
+        ];
+
+        curl_setopt_array($curl, $setopt_array);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if (true === $this->getDebugMode()) {
+            $this->echoDebugMessage('GET-Запрос к серверу Ypmn:');
+            $this->echoDebugMessage($this->getHost() . $api);
+            $this->echoDebugMessage('Ответ от сервера Ypmn:');
+            $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
+
+            if (mb_strlen($err) > 0) {
+                $this->echoDebugMessage('Ошибка');
+                echo '<br>Вы можете отправить запрос на поддержку на <a href="mailto:itsupport@ypmn.ru?subject=YPMN_Integration">itsupport@ypmn.ru</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/">Последняя версия примеров на Github</a>';
+                echo '<br><a href="https://github.com/yourpayments/php-api-client/issues">Оставить заявку на улучшение</a>';
+                echo '<br><a href="https://ypmn.ru/ru/contacts/">Контакты</a>';
+            } else {
+                $cpanel_url = 'https://' . ($this->getSandboxMode() ? 'sandbox' : 'secure' ). '.ypmn.ru/cpanel/';
+
+                if ($this->getSandboxMode()) {
+                    echo Std::alert([
+                        'type' => 'warning',
+                        'text' => '
+                            Внимание!
+                            У вас настроен тестовый режим.
+                            <br>Все запросы уходят на тестовый сервер <a href="' . $cpanel_url . '" class="alert-link">sandbox.ypmn.ru</a>
+                            <br>
+                            <br>
+                            Когда закончите тестирование, закомментируйте или удалите строки кода:
+                            <code class="d-block ml-2">
+                                $apiRequest->setDebugMode(); // вывод отладки
+                                <br>$apiRequest->setSandboxMode(); // тестовый сервер
+                            </code>
+                        ',
+                    ]);
+                }
+            }
+        }
+
+        return ['response' => $response, 'error' => $err];
+    }
+
     /** @inheritdoc
      * @throws PaymentException
      */
@@ -391,6 +471,35 @@ class ApiRequest implements ApiRequestInterface
     public function sendPayoutCreateRequest(PayoutInterface $payout)
     {
         return $this->sendPostRequest($payout, self::PAYOUT_CREATE_API);
+    }
+
+    /** @inheritdoc  */
+    public function sendReportChartRequest(array $params): array
+    {
+        return $this->sendGetGeneralReportRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
+    }
+
+    /** @inheritdoc  */
+    public function sendReportChartUpdateRequest(array $params): array
+    {
+        $getParams = [
+            'startDate' => $_GET['startDate'],
+            'endDate' => $_GET['endDate'],
+            'status' => $_GET['status'],
+            'type' => $_GET['type'],
+            'periodLength' => $_GET['periodLength'],
+            'jsonForUpdate' => 'true'
+        ];
+
+        $params = array_merge($getParams, $params);
+
+        return $this->sendGetGeneralReportRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
+    }
+
+    /** @inheritdoc  */
+    public function sendReportGeneralRequest(array $params): array
+    {
+        return $this->sendGetGeneralReportRequest(self::REPORT_GENERAL_API . '/?' . http_build_query($params));
     }
 
     /**
