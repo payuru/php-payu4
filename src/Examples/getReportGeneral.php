@@ -18,9 +18,16 @@ $apiRequest->setDebugMode();
 // Переключиться на тестовый сервер (закомментируйте или удалите в рабочей программе!)
 $apiRequest->setSandboxMode();
 
+// Подготовим диапазон дат для отчета
+$endDate = (new DateTime('now'))->format("Y-m-d");
+
+$startDate = (new DateTime($endDate))
+    ->modify('-14 day')
+    ->format("Y-m-d");
+
 // Отправим запрос
 $responseData = $apiRequest->sendReportGeneralRequest([
-    'startDate' => '2023-12-02',
-    'endDate' => '2023-12-08',
+    'startDate' => $startDate,
+    'endDate' => $endDate,
     'periodLength' => 'day'
 ]);
