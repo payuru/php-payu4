@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use Ypmn\ApiRequest;
-use Ypmn\PaymentException;
-use Ypmn\Std;
 
 // Подключим файл, в котором заданы параметры мерчанта
 include_once 'start.php';
