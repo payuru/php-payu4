@@ -87,4 +87,22 @@ interface ApiRequestInterface
      * @return array
      */
     public function sendTokenPaymentRequest(MerchantToken $tokenHash): array;
+
+    /**
+     * Отправить запрос для получения графика
+     * @param array $params
+     */
+    public function sendReportChartRequest(array $params);
+
+    /**
+     * Отправить запрос для получения JSON для обновления графика
+     * @param array $params
+     */
+    public function sendReportChartUpdateRequest(array $params);
+
+    /**
+     * Отправить запрос для получения JSON данных отчета
+     * @param array $params
+     */
+    public function sendReportGeneralRequest(array $params);
 }
