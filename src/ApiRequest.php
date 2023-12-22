@@ -19,6 +19,8 @@ class ApiRequest implements ApiRequestInterface
     const PAYOUT_CREATE_API = '/api/v4/payout';
     const REPORTS_ORDERS_API = '/reports/orders';
     const SESSION_API = '/api/v4/payments/sessions';
+    const REPORT_CHART_API = '/api/v4/reports/chart';
+    const REPORT_GENERAL_API = '/api/v4/reports/general';
     const HOST = 'https://secure.ypmn.ru';
     const SANDBOX_HOST = 'https://sandbox.ypmn.ru';
     const LOCAL_HOST = 'http://localhost';
@@ -239,14 +241,6 @@ class ApiRequest implements ApiRequestInterface
             }
         }
 
-        if (mb_strlen($err) > 0) {
-            throw new PaymentException($err);
-        }
-
-        if ($response == null || strlen($response) === 0) {
-            throw new PaymentException('Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
-        }
-
         return ['response' => $response, 'error' => $err];
     }
 
@@ -372,7 +366,17 @@ class ApiRequest implements ApiRequestInterface
     /** @inheritdoc  */
     public function sendStatusRequest(string $merchantPaymentReference): array
     {
-        return $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference);
+        $responseData = $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference);
+
+        if (mb_strlen($responseData['error']) > 0) {
+            throw new PaymentException($responseData['error']);
+        }
+
+        if ($responseData['response'] == null || strlen($responseData['response']) === 0) {
+            throw new PaymentException('Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
+        }
+
+        return $responseData;
     }
 
     /** @inheritdoc  */
@@ -391,6 +395,35 @@ class ApiRequest implements ApiRequestInterface
     public function sendPayoutCreateRequest(PayoutInterface $payout)
     {
         return $this->sendPostRequest($payout, self::PAYOUT_CREATE_API);
+    }
+
+    /** @inheritdoc  */
+    public function sendReportChartRequest(array $params): array
+    {
+        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
+    }
+
+    /** @inheritdoc  */
+    public function sendReportChartUpdateRequest(array $params): array
+    {
+        $getParams = [
+            'startDate' => $_GET['startDate'],
+            'endDate' => $_GET['endDate'],
+            'status' => $_GET['status'],
+            'type' => $_GET['type'],
+            'periodLength' => $_GET['periodLength'],
+            'jsonForUpdate' => 'true'
+        ];
+
+        $params = array_merge($getParams, $params);
+
+        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
+    }
+
+    /** @inheritdoc  */
+    public function sendReportGeneralRequest(array $params): array
+    {
+        return $this->sendGetRequest(self::REPORT_GENERAL_API . '/?' . http_build_query($params));
     }
 
     /**
