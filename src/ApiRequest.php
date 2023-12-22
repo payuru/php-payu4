@@ -171,7 +171,7 @@ class ApiRequest implements ApiRequestInterface
      * @return array ответ сервера Ypmn
      * @throws PaymentException
      */
-    private function sendGetRequest(string $api, ?string $emptyResponseMessage = null, bool $curlException = true): array
+    private function sendGetRequest(string $api): array
     {
         $curl = curl_init();
         $date = (new DateTime())->format(DateTimeInterface::ATOM);
@@ -239,14 +239,6 @@ class ApiRequest implements ApiRequestInterface
                     ]);
                 }
             }
-        }
-
-        if ($curlException && mb_strlen($err) > 0) {
-            throw new PaymentException($err);
-        }
-
-        if ($emptyResponseMessage !== null && ($response == null || strlen($response) === 0)) {
-            throw new PaymentException($emptyResponseMessage);
         }
 
         return ['response' => $response, 'error' => $err];
@@ -374,7 +366,17 @@ class ApiRequest implements ApiRequestInterface
     /** @inheritdoc  */
     public function sendStatusRequest(string $merchantPaymentReference): array
     {
-        return $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference, 'Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
+        $responseData = $this->sendGetRequest(self::STATUS_API . '/' . $merchantPaymentReference);
+
+        if (mb_strlen($responseData['error']) > 0) {
+            throw new PaymentException($responseData['error']);
+        }
+
+        if ($responseData['response'] == null || strlen($responseData['response']) === 0) {
+            throw new PaymentException('Вы можете попробовать другой способ оплаты, либо свяжитесь с продавцом.');
+        }
+
+        return $responseData;
     }
 
     /** @inheritdoc  */
@@ -398,7 +400,7 @@ class ApiRequest implements ApiRequestInterface
     /** @inheritdoc  */
     public function sendReportChartRequest(array $params): array
     {
-        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params), null, false);
+        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
     }
 
     /** @inheritdoc  */
@@ -415,13 +417,13 @@ class ApiRequest implements ApiRequestInterface
 
         $params = array_merge($getParams, $params);
 
-        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params), null, false);
+        return $this->sendGetRequest(self::REPORT_CHART_API . '/?' . http_build_query($params));
     }
 
     /** @inheritdoc  */
     public function sendReportGeneralRequest(array $params): array
     {
-        return $this->sendGetRequest(self::REPORT_GENERAL_API . '/?' . http_build_query($params), null, false);
+        return $this->sendGetRequest(self::REPORT_GENERAL_API . '/?' . http_build_query($params));
     }
 
     /**
