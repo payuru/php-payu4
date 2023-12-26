@@ -38,6 +38,9 @@ class ApiRequest implements ApiRequestInterface
     /** @var bool Режим Отладки (вывод системных сообщений) */
     private bool $debugModeIsOn = false;
 
+    /** @var bool Формат результата в режиме отладки */
+    private bool $jsonDebugResponse = true;
+
     /** @inheritdoc  */
     public function __construct(MerchantInterface $merchant)
     {
@@ -211,7 +214,11 @@ class ApiRequest implements ApiRequestInterface
             $this->echoDebugMessage('GET-Запрос к серверу Ypmn:');
             $this->echoDebugMessage($this->getHost() . $api);
             $this->echoDebugMessage('Ответ от сервера Ypmn:');
-            $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
+            if ($this->getJsonDebugResponse()) {
+                $this->echoDebugMessage(json_encode(json_decode($response), JSON_PRETTY_PRINT));
+            } else {
+                $this->echoDebugMessage($response);
+            }
 
             if (mb_strlen($err) > 0) {
                 $this->echoDebugMessage('Ошибка');
@@ -495,6 +502,19 @@ class ApiRequest implements ApiRequestInterface
     {
         $this->debugModeIsOn = $debugModeIsOn;
         return $this;
+    }
+
+    /** @inheritdoc  */
+    public function  setJsonDebugResponse(bool $jsonDebugResponse): self
+    {
+        $this->jsonDebugResponse = $jsonDebugResponse;
+        return $this;
+    }
+
+    /** @inheritdoc  */
+    public function  getJsonDebugResponse(): bool
+    {
+        return $this->jsonDebugResponse;
     }
 
     /**

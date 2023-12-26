@@ -75,6 +75,18 @@ interface ApiRequestInterface
     public function getDebugMode(): bool;
 
     /**
+     * Установить тип позвращаемого значения в режиме отладки
+     * @return $this
+     */
+    public function  setJsonDebugResponse(bool $jsonDebugResponse): self;
+
+    /**
+     * Получить тип позвращаемого значения в режиме отладки
+     * @return bool
+     */
+    public function  getJsonDebugResponse(): bool;
+
+    /**
      * Отправить Запрос на Токенизацию
      * @param PaymentReference $payuPaymentReference Оплата
      * @return array
