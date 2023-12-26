@@ -53,6 +53,7 @@ class ApiRequest implements ApiRequestInterface
         }
     }
 
+    /** @deprecated старая версия */
     public function sendGetReportRequest(?string $startDate = null, ?string $endDate = null, ?array $orderStatus = null): string
     {
         //проверить даты
