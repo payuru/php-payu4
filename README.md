@@ -38,11 +38,12 @@ require vendor/autoload.php;
 9. [Возврат средств со сплитом](src/Examples/paymentRefundMarketplace.php)
 10. [Проверка статуса платежа](src/Examples/paymentGetStatus.php)
 11. [Выплаты на банковские карты](src/Examples/payoutCreate.php)
-12. [Запрос отчёта](src/Examples/getReport.php)
-13. [Создание сессии](src/Examples/getSession.php)
-14. [Оплата одноразовым токеном](src/Examples/oneTimeTokenPayment.php)
-15. [Страница после оплаты](src/Examples/returnPage.php)
-16. [Безопасные поля (Secure fields)](src/Examples/secureFields.php)
+12. [Создание сессии](src/Examples/getSession.php)
+13. [Оплата одноразовым токеном](src/Examples/oneTimeTokenPayment.php)
+14. [Страница после оплаты](src/Examples/returnPage.php)
+15. [Безопасные поля (Secure fields)](src/Examples/secureFields.php)
+16. [Запрос отчёта в формате Json](src/Examples/getReportGeneral.php)
+17. [Запрос отчёта в виде графика](src/Examples/getReportChart.php)
 
 ## Ссылки
 - [Основной сайт НКО "Твои Платежи"](https://YPMN.ru/)
