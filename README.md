@@ -1,4 +1,4 @@
-# Твои Платежи -- интеграция на PHP
+# Твои Платежи, интеграция на PHP
 PHP SDK, готовый клиент для нашего API + примеры использования платёжной системы
 
 ![](https://repository-images.githubusercontent.com/638835276/ff494b04-d65b-4843-8759-e85c689a7e80)
@@ -47,10 +47,9 @@ require vendor/autoload.php;
 
 ## Ссылки
 - [Основной сайт НКО "Твои Платежи"](https://YPMN.ru/)
-- [Докуметация по API](https://dev.YPMN.ru/ru/documents/apiv4/)
+- [Докуметация по API](https://ypmn.ru/ru/documentation/)
 - [Реквизиты тестовых банковских карт](https://dev.payu.ru/ru/documents/rest-api/testing/#menu-2)
 - [Задать вопрос или сообщить о проблеме](https://github.com/yourpayments/php-api-client/issues/new)
-- [Документация Composer](https://getcomposer.org/)
 
 -------------
-[НКО "Твои Платежи"](https://YPMN.ru/ "Платёжная система для сайтов, платформ и приложений") - платёжная система для сайтов, платформ, игр и приложений.
+[НКО «Твои Платежи»](https://YPMN.ru/ "Платёжная система для сайтов, платформ и приложений") - платёжная система для сайтов, платформ, игр и приложений.
