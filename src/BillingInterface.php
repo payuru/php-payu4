@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface BillingInterface
 {
@@ -172,4 +172,19 @@ interface BillingInterface
      * @return null|IdentityDocumentInterface Удостоверение Личности
      */
     public function getIdentityDocument(): ?IdentityDocumentInterface;
+
+
+    /**
+     * Получить тип биллинга
+     * @return string
+     */
+    public function getType(): string;
+
+    /**
+     * Установить тип биллинга
+     * @param string $type
+     * @return Billing
+     */
+    public function setType(string $type): self;
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 class CardDetails implements CardDetailsInterface
 {
@@ -13,8 +13,8 @@ class CardDetails implements CardDetailsInterface
     /** @var int Год прекращения действия Карты */
     private int $expiryYear;
 
-    /** @var int CVV Карты */
-    private int $cvv;
+    /** @var string CVV Карты */
+    private string $cvv;
 
     /** @var string Имя Владельца Карты */
     private string $owner;
@@ -46,7 +46,9 @@ class CardDetails implements CardDetailsInterface
     /** @inheritDoc */
     public function setNumber(string $number): self
     {
+        //TODO: проверка на валидность
         $this->number = $number;
+
         return $this;
     }
 
@@ -94,13 +96,13 @@ class CardDetails implements CardDetailsInterface
     }
 
     /** @inheritDoc */
-    public function getCvv(): int
+    public function getCvv(): string
     {
         return $this->cvv;
     }
 
     /** @inheritDoc */
-    public function setCvv(int $cvv): self
+    public function setCvv(string $cvv): self
     {
         $this->cvv = $cvv;
         return $this;

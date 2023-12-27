@@ -1,5 +1,5 @@
 <?php
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface PaymentInterface
 {
@@ -110,5 +110,5 @@ interface PaymentInterface
     /**
      * @return string|bool
      */
-    public function jsonSerialize() : string|bool;
+    public function jsonSerialize();
 }

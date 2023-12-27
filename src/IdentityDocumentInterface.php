@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface IdentityDocumentInterface
 {
@@ -9,7 +9,7 @@ interface IdentityDocumentInterface
      * @param int $number Номер документа
      * @param string $type Вид документа
      */
-    public function __construct(int $number, string $type);
+    public function __construct(string $number, string $type);
 
     /**
      * Получить Номер Документа

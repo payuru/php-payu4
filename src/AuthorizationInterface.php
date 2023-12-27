@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface AuthorizationInterface
 {
@@ -28,7 +28,7 @@ interface AuthorizationInterface
      * Получить Данные Карты
      * @return CardDetailsInterface Данные Карты
      */
-    public function getCardDetails(): CardDetailsInterface;
+    public function getCardDetails(): ?CardDetailsInterface;
 
     /**
      * Установить Данные Карты
@@ -55,4 +55,13 @@ interface AuthorizationInterface
      * @return $this
      */
     public function setMerchantToken(?MerchantTokenInterface $merchantToken): self;
+
+    /**
+     * Установить настройки платёжной страницы
+     * @param paymentPageOptionsInterface $paymentPageOptions
+     * @return $this
+     */
+    public function setPaymentPageOptions(PaymentPageOptionsInterface $paymentPageOptions): self;
+
+    public function getPaymentPageOptions(): PaymentPageOptionsInterface;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 /**
  * Мерчант
@@ -20,7 +20,7 @@ class Merchant implements MerchantInterface
      * !НЕ передавать в открытом виде
      * получить в https://payu.ru/cpanel/account_settings.php
      * Или в https://sandbox.payu.ru/cpanel/account_settings.php для тестов
-     * @var string Секретный Ключ (!НЕ передавать в открытом виде)
+     @var string Секретный Ключ (!НЕ передавать в открытом виде)
      */
     private string $merchantSecret;
 

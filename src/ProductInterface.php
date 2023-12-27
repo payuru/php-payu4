@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface ProductInterface
 {
@@ -40,6 +40,7 @@ interface ProductInterface
      * Установить Цена за 1 штуку, округление до копейки
      * @param float $unitPrice
      * @return $this Цена за 1 штуку
+     * @throws PaymentException
      */
     public function setUnitPrice(float $unitPrice) : self;
 
@@ -53,6 +54,7 @@ interface ProductInterface
      * Установить Количество
      * @param int $quantity Количество
      * @return $this
+     * @throws PaymentException
      */
     public function setQuantity(int $quantity) : self;
 
@@ -102,6 +104,16 @@ interface ProductInterface
      * @return null|string Любые доп. сведения
      */
     public function getAdditionalDetails() : ?string;
+
+    /**
+     * Добавить к Продукту Сабмерчанта
+     * (для маркетплейса/сплита/разделения платежа)
+     * с помощью Кода Сабмерчанта
+     * (его надо получить в личном кабинете)
+     * @param string $merchantCode
+     * @return $this
+     */
+    public function setMarketplaceSubmerchantByCode(string $merchantCode) : self;
 
     /**
      * Получить Продукт в виде массива

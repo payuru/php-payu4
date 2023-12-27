@@ -1,9 +1,9 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 
-use \JsonSerializable;
+use JsonSerializable;
 
 /**
  * Платеж
@@ -140,7 +140,7 @@ class Payment implements PaymentInterface, JsonSerializable, TransactionInterfac
     }
 
     #[\ReturnTypeWillChange]
-    public function jsonSerialize(): string|bool
+    public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
         $requestData = [

@@ -1,14 +1,14 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 class OrderData implements OrderDataInterface
 {
     /** @var string Дата Заказа */
     private string $orderDate;
 
-    /** @var string Номер платежа PayU */
-    private string $payuPaymentReference;
+    /** @var string Номер платежа Ypmn */
+    private string $ypmnPaymentReference;
 
     /** @var string */
     private string $merchantPaymentReference;
@@ -48,16 +48,22 @@ class OrderData implements OrderDataInterface
     }
 
     /** @inheritDoc */
-    public function getPayuPaymentReference(): string
+    public function getUpmnPaymentReference(): string
     {
-        return $this->payuPaymentReference;
+        return $this->ypmnPaymentReference;
     }
 
     /** @inheritDoc */
-    public function setPayuPaymentReference(string $payuPaymentReference): self
+    public function setYpmnPaymentReference(string $ypmnPaymentReference): self
     {
-        $this->payuPaymentReference = $payuPaymentReference;
+        $this->ypmnPaymentReference = $ypmnPaymentReference;
         return $this;
+    }
+
+    /** @inheritDoc */
+    public function getYpmnPaymentReference(): string
+    {
+        return $this->ypmnPaymentReference;
     }
 
     /** @inheritDoc */
@@ -78,7 +84,6 @@ class OrderData implements OrderDataInterface
     {
         return $this->status;
     }
-
 
     /** @inheritDoc */
     public function setStatus(string $status): self

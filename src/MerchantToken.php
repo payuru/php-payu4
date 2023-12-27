@@ -1,14 +1,14 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
-class MerchantToken implements MerchantTokenInterface
+class MerchantToken implements MerchantTokenInterface, \JsonSerializable
 {
     /** @var string Хэш Токен карты */
     private string $tokenHash;
 
-    /** @var int CVV Карты */
-    private int $cvv;
+    /** @var string CVV Карты */
+    private string $cvv;
 
     /** @var string Имя Владельца Карты */
     private string $owner;
@@ -27,13 +27,13 @@ class MerchantToken implements MerchantTokenInterface
     }
 
     /** @inheritDoc */
-    public function getCvv(): int
+    public function getCvv(): string
     {
         return $this->cvv;
     }
 
     /** @inheritDoc */
-    public function setCvv(int $cvv): MerchantToken
+    public function setCvv(string $cvv): MerchantToken
     {
         $this->cvv = $cvv;
         return $this;
@@ -75,5 +75,21 @@ class MerchantToken implements MerchantTokenInterface
         }
 
         return $resultArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function jsonSerialize()
+    {
+        if(is_null($this->tokenHash)){
+            throw new PaymentException("Не хватает токена");
+        }
+
+        $resultArray = [
+            'tokenHash'  => $this->tokenHash,
+        ];
+
+        return json_encode($resultArray, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }
 }

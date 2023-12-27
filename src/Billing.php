@@ -1,13 +1,16 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 class Billing implements BillingInterface
 {
+    /** @var string Тип */
+    private string $type = 'individual';
+
     /** @var string Имя */
     private string $firstName;
 
-    /** @var string Фамилия */
+    /** @var ?string Фамилия */
     private string $lastName;
 
     /** @var string Email */
@@ -211,5 +214,19 @@ class Billing implements BillingInterface
     public function getIdentityDocument(): ?IdentityDocumentInterface
     {
         return $this->identityDocument ?? null;
+    }
+
+    /** @inheritdoc */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /** @inheritdoc */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

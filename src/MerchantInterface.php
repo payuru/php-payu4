@@ -1,12 +1,12 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface MerchantInterface
 {
     /**
      * Установить код мерчанта
-     * (Идентификатор продавца в системе PayU)
+     * (Идентификатор продавца в системе Ypmn)
      * @param string $merchantCode
      * @return $this
      */

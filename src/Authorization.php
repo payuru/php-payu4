@@ -1,17 +1,18 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
-use \JsonSerializable;
-
+/**
+ * Авторизация платежа
+ */
 class Authorization implements AuthorizationInterface
 {
     const TYPE_CCVISAMC = 'CCVISAMC';
     const TYPE_FASTER_PAYMENTS = 'FASTER_PAYMENTS';
 
     /**
-     * включить страницу оплаты PayU
-     * @var bool страница оплаты PayU включена?
+     * включить страницу оплаты Ypmn
+     * @var bool страница оплаты Ypmn включена?
      */
     private bool $usePaymentPage = true;
     private string $paymentMethod = self::TYPE_CCVISAMC;
@@ -22,16 +23,24 @@ class Authorization implements AuthorizationInterface
     /** @var MerchantTokenInterface|null Данные карты (в виде токена) */
     private ?MerchantTokenInterface $merchantToken = null;
 
+    /** @var OneTimeUseToken|null Одноразовый токен оплаты */
+    private ?OneTimeUseToken $oneTimeUseToken = null;
+
+    /** @var PaymentPageOptions|null */
+    private ?PaymentPageOptions $paymentPageOptions = null;
+
+
     /**
      * Создать Платёжную Авторизацию
      * @param string $paymentMethodType Метод оплаты (из справочника)
-     * @param bool $isUsed страница оплаты PayU включена?
+     * @param bool $isPaymentPageUsed страница оплаты Ypmn включена?
      * @return void
      * @throws PaymentException Ошибка оплаты
      */
-    public function __constructor(string $paymentMethodType, bool $isUsed) {
+    public function __constructor(string $paymentMethodType, bool $isPaymentPageUsed) {
         $this->setPaymentMethod($paymentMethodType);
-        $this->setUsePaymentPage($isUsed);
+        $this->setUsePaymentPage($isPaymentPageUsed);
+        echo 'конструирую';
     }
 
     /**
@@ -83,13 +92,13 @@ class Authorization implements AuthorizationInterface
     }
 
     /** @inheritDoc */
-    public function getCardDetails(): CardDetailsInterface
+    public function getCardDetails(): ?CardDetailsInterface
     {
         return $this->cardDetails;
     }
 
     /** @inheritDoc */
-    public function setCardDetails(CardDetailsInterface $cardDetails): self
+    public function setCardDetails(?CardDetailsInterface $cardDetails): self
     {
         if (is_null($this->merchantToken) && $this->usePaymentPage === false) {
             $this->cardDetails = $cardDetails;
@@ -104,6 +113,15 @@ class Authorization implements AuthorizationInterface
     public function getMerchantToken(): ?MerchantTokenInterface
     {
         return $this->merchantToken;
+    }
+
+    public function setOneTimeUseToken(?OneTimeUseToken $oneTimeUseToken): self
+    {
+        $this->setCardDetails(null);
+        $this->setUsePaymentPage(false);
+        $this->oneTimeUseToken = $oneTimeUseToken;
+
+        return $this;
     }
 
     /**
@@ -121,6 +139,20 @@ class Authorization implements AuthorizationInterface
         }
     }
 
+    /** @inheritDoc */
+    public function setPaymentPageOptions(PaymentPageOptionsInterface $paymentPageOptions): self
+    {
+        $this->paymentPageOptions = $paymentPageOptions;
+
+        return $this;
+    }
+
+    /** @inheritDoc */
+    public function getPaymentPageOptions(): PaymentPageOptionsInterface
+    {
+        return $this->paymentPageOptions;
+    }
+
     /**
      * @return array
      */
@@ -135,8 +167,16 @@ class Authorization implements AuthorizationInterface
             $resultArray['cardDetails'] = $this->cardDetails->toArray();
         }
 
+        if (!is_null($this->oneTimeUseToken)) {
+            $resultArray['oneTimeUseToken'] = $this->oneTimeUseToken->toArray();
+        }
+
         if (!is_null($this->merchantToken)) {
             $resultArray['merchantToken'] = $this->merchantToken->toArray();
+        }
+
+        if (!is_null($this->paymentPageOptions) && $this->paymentPageOptions->getOrderTimeout() > 0) {
+            $resultArray['paymentPageOptions'] = $this->paymentPageOptions->toArray();
         }
 
         return $resultArray;

@@ -1,8 +1,8 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
-use \JsonSerializable;
+use JsonSerializable;
 
 /**
  * Запрос на возврат средств
@@ -10,7 +10,7 @@ use \JsonSerializable;
 class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 {
     /**
-     * @var string Номер платежа PayU
+     * @var string Номер платежа Ypmn
      */
     private string $payuPaymentReference;
 
@@ -28,6 +28,9 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
      * @var string Валюта
      */
     private string $currency;
+
+    /** @var MarketplaceSubmerchant[] */
+    private array $marketplaceSubmerchants = [];
 
     /**
      * @inheritDoc
@@ -52,7 +55,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
     /**
      * @inheritDoc
      */
-    public function setPayuPaymentReference(string $paymentIdString): RefundInterface
+    public function setYpmnPaymentReference(string $paymentIdString): RefundInterface
     {
         $this->payuPaymentReference = $paymentIdString;
 
@@ -62,7 +65,7 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
     /**
      * @inheritDoc
      */
-    public function getPayuPaymentReference(): string
+    public function getYpmnPaymentReference(): string
     {
         return $this->payuPaymentReference;
     }
@@ -128,16 +131,37 @@ class Refund implements RefundInterface, JsonSerializable, TransactionInterface
 
     /**
      * @inheritDoc
+     * @throws PaymentException
      */
+    public function addMarketPlaceSubmerchant(string $merchantCode, float $amount): self
+    {
+        $this->marketplaceSubmerchants[$merchantCode] = new MarketplaceSubmerchant($merchantCode, $amount);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         //TODO: проверка необходимых параметров
         $requestData = [
-            'payuPaymentReference'	=> $this->getPayuPaymentReference(),
+            'payuPaymentReference'	=> $this->getYpmnPaymentReference(),
             'originalAmount'	=> $this->getOriginalAmount(),
             'amount'	=> $this->getAmount(),
             'currency' => $this->getCurrency()
         ];
+
+        if (count($this->marketplaceSubmerchants) > 0) {
+            foreach ($this->marketplaceSubmerchants as $marketplaceSubmerchant) {
+                $requestData['marketplaceV1'][] = (object) [
+                    'amount' => $marketplaceSubmerchant->getAmount(),
+                    'merchant' => $marketplaceSubmerchant->getMerchantCode(),
+                ];
+            }
+        }
 
         return json_encode($requestData, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_LINE_TERMINATORS);
     }

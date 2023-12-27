@@ -1,6 +1,6 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 interface ApiRequestInterface
 {
@@ -9,6 +9,13 @@ interface ApiRequestInterface
      * @param MerchantInterface $merchant Мерчант
      */
     function __construct(MerchantInterface $merchant);
+
+    /**
+     * Запрос ID сессии
+     * @param SessionRequest $sessionRequest
+     * @return array
+     */
+    function sendSessionRequest(SessionRequest $sessionRequest): array;
 
     /**
      * Отправить Запрос на Оплату
@@ -40,7 +47,7 @@ interface ApiRequestInterface
 
     /**
      * Установить режим песочницы
-     * Переключить режим тестирования PayU Sandbox
+     * Переключить режим тестирования Ypmn Sandbox
      * оплата будет перенаправлена на тестовый сервер
      * @param bool $sandboxModeIsOn Режим песочницы включен?
      * @return $this
@@ -66,4 +73,48 @@ interface ApiRequestInterface
      * @return bool Режим отладки включен?
      */
     public function getDebugMode(): bool;
+
+    /**
+     * Установить тип позвращаемого значения в режиме отладки
+     * @return $this
+     */
+    public function  setJsonDebugResponse(bool $jsonDebugResponse): self;
+
+    /**
+     * Получить тип позвращаемого значения в режиме отладки
+     * @return bool
+     */
+    public function  getJsonDebugResponse(): bool;
+
+    /**
+     * Отправить Запрос на Токенизацию
+     * @param PaymentReference $payuPaymentReference Оплата
+     * @return array
+     */
+    public function sendTokenCreationRequest(PaymentReference $payuPaymentReference): array;
+
+    /**
+     * Отправить Запрос на Оплату токеном
+     * @param PaymentReference $payuPaymentReference Оплата
+     * @return array
+     */
+    public function sendTokenPaymentRequest(MerchantToken $tokenHash): array;
+
+    /**
+     * Отправить запрос для получения графика
+     * @param array $params
+     */
+    public function sendReportChartRequest(array $params);
+
+    /**
+     * Отправить запрос для получения JSON для обновления графика
+     * @param array $params
+     */
+    public function sendReportChartUpdateRequest(array $params);
+
+    /**
+     * Отправить запрос для получения JSON данных отчета
+     * @param array $params
+     */
+    public function sendReportGeneralRequest(array $params);
 }

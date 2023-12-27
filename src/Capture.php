@@ -1,13 +1,13 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
-use \JsonSerializable;
+use JsonSerializable;
 
 class Capture implements CaptureInterface, JsonSerializable, TransactionInterface
 {
     /**
-     * @var string Номер платежа PayU
+     * @var string Номер платежа Ypmn
      */
     private string $payuPaymentReference;
 
@@ -27,7 +27,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     private string $currency;
 
     /** @inheritDoc */
-    public function setPayuPaymentReference(string $paymentIdString): CaptureInterface
+    public function setYpmnPaymentReference(string $paymentIdString): CaptureInterface
     {
         $this->payuPaymentReference = $paymentIdString;
 
@@ -35,7 +35,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     }
 
     /** @inheritDoc */
-    public function getPayuPaymentReference(): string
+    public function getYpmnPaymentReference(): string
     {
         return $this->payuPaymentReference;
     }
@@ -110,7 +110,7 @@ class Capture implements CaptureInterface, JsonSerializable, TransactionInterfac
     {
         //TODO: проверка необходимых параметров
         $requestData = [
-            'payuPaymentReference'	=> $this->getPayuPaymentReference(),
+            'payuPaymentReference'	=> $this->getYpmnPaymentReference(),
             'originalAmount'	=> $this->getOriginalAmount(),
             'amount'	=> $this->getAmount(),
             'currency' => $this->getCurrency()

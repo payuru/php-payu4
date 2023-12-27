@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
 
-declare(strict_types = 1);
-
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
 /**
  * Продукт или Услуга
@@ -45,6 +43,9 @@ class Product implements ProductInterface
      */
     private string $additionalDetails;
 
+    /** @var MarketplaceSubmerchantInterface|null Сабмерчант (для маркетплейса) */
+    private ?MarketplaceSubmerchantInterface $marketplaceSubmerchant = null;
+
     /** @inheritDoc */
     public function __construct(array $params=[])
     {
@@ -65,6 +66,9 @@ class Product implements ProductInterface
         }
         if (isset($params['amount'])) {
             $this->setAmount($params['amount']);
+        }
+        if (isset($params['merchantCode'])) {
+            $this->setMarketplaceSubmerchantByCode($params['merchantCode']);
         }
     }
 
@@ -103,7 +107,11 @@ class Product implements ProductInterface
     /** @inheritDoc */
     public function setUnitPrice(float $unitPrice): self
     {
+        if ($unitPrice <= 0) {
+            throw new PaymentException('Нулевая цена не принимается');
+        }
         $this->unitPrice = round($unitPrice, 2, PHP_ROUND_HALF_UP);
+
         return $this;
     }
 
@@ -116,7 +124,12 @@ class Product implements ProductInterface
     /** @inheritDoc */
     public function setQuantity(int $quantity): self
     {
+        if ($quantity <= 0) {
+            throw new PaymentException('Нулевое количество не принимается');
+        }
+
         $this->quantity = $quantity;
+
         return $this;
     }
 
@@ -161,9 +174,17 @@ class Product implements ProductInterface
     }
 
     /** @inheritDoc */
+    public function setMarketplaceSubmerchantByCode(string $merchantCode): self
+    {
+        $this->marketplaceSubmerchant = new MarketplaceSubmerchant($merchantCode);
+
+        return $this;
+    }
+
+    /** @inheritDoc */
     public function arraySerialize(): array
     {
-        return [
+        $resultArray = [
             'name'              => $this->getName(),
             'sku'               => $this->getSku(),
             'unitPrice'         => (null !== $this->getUnitPrice() ? number_format($this->getUnitPrice(), 2,'.','') : null),
@@ -172,5 +193,12 @@ class Product implements ProductInterface
             'amount'            => (null !== $this->getAmount() ? number_format($this->getAmount(), 2,'.','') : null),
             'vat'               => $this->getVat(),
         ];
+
+        if (null !== $this->marketplaceSubmerchant) {
+            $resultArray['marketplace']['version'] = 1;
+            $resultArray['marketplace']['merchantCode'] = $this->marketplaceSubmerchant->getMerchantCode();
+        }
+
+        return $resultArray;
     }
 }

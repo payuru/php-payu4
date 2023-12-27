@@ -1,22 +1,9 @@
 <?php
 
-namespace payuru\phpPayu4;
+namespace Ypmn;
 
-interface CardDetailsInterface
+interface CardDetailsInterface extends DetailsInterface
 {
-    /**
-     * Установить Номер карты
-     * @param string $number Номер карты
-     * @return $this
-     */
-    public function setNumber(string $number) : self;
-
-    /**
-     * Получить Номер карты
-     * @return string Номер карты
-     */
-    public function getNumber() : string;
-
     /**
      * Установить Месяц прекращения действия Карты
      * @param int $expiryMonth Месяц прекращения действия Карты
@@ -47,16 +34,16 @@ interface CardDetailsInterface
 
     /**
      * Установить CVV Карты
-     * @param int $cvv CVV Карты
+     * @param string $cvv CVV Карты
      * @return $this
      */
-    public function setCvv(int $cvv) : self;
+    public function setCvv(string $cvv) : self;
 
     /**
      * Получить CVV Карты
-     * @return int CVV Карты
+     * @return string CVV Карты
      */
-    public function getCvv() : int;
+    public function getCvv() : string;
 
     /**
      * Установить Имя Владельца Карты
